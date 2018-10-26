@@ -1,0 +1,128 @@
+[
+  {
+    "comments": [
+      {
+        "line": 1,
+        "value": "#### DLAPDEV-135,"
+      },
+      {
+        "line": 2,
+        "value": "#### CURATE_DAILY_CASH.xlsx"
+      }
+    ],
+    "line": 4,
+    "elements": [
+      {
+        "line": 6,
+        "name": "I have ingested the data set \"data set name or xlsx\"",
+        "description": "",
+        "type": "background",
+        "keyword": "Background"
+      },
+      {
+        "line": 8,
+        "name": "Fields flagged for encryption by the workbook should be encrypted in the target zone.",
+        "description": "",
+        "id": "phi-encryption;fields-flagged-for-encryption-by-the-workbook-should-be-encrypted-in-the-target-zone.",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 7945722135,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "a data set in the RAW zone and its counterpart in the curate zone",
+            "match": {
+              "location": "CurateStepDefs.some_start_condition()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 9762851518,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "I query Cloudera Navigator for the data set\u0027s onboarded workbook metadata",
+            "match": {
+              "location": "CurateStepDefs.something_is_done()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 23290,
+              "status": "passed"
+            },
+            "line": 11,
+            "name": "fields flagged for encryption in the metadata should be actually encrypted in the curate zone",
+            "match": {
+              "location": "CurateStepDefs.something_should_happen()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 6,
+        "name": "I have ingested the data set \"data set name or xlsx\"",
+        "description": "",
+        "type": "background",
+        "keyword": "Background"
+      },
+      {
+        "line": 13,
+        "name": "Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook.",
+        "description": "",
+        "id": "phi-encryption;data-from-the-raw-zone-should-be-completely-ingested-to-the-curate-zone-according-to-the-metadata-provided-by-the-workbook.",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 3667208787,
+              "status": "passed"
+            },
+            "line": 14,
+            "name": "a data set in the RAW zone and its counterpart in the curate zone",
+            "match": {
+              "location": "CurateStepDefs.some_start_condition()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 959940961,
+              "status": "passed"
+            },
+            "line": 15,
+            "name": "I query Cloudera Navigator for the data set\u0027s onboarded workbook metadata",
+            "match": {
+              "location": "CurateStepDefs.something_is_done()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 13816,
+              "status": "passed"
+            },
+            "line": 16,
+            "name": "fields flagged for encryption in the metadata should be actually encrypted in the curate zone",
+            "match": {
+              "location": "CurateStepDefs.something_should_happen()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "PHI Encryption",
+    "description": "",
+    "id": "phi-encryption",
+    "keyword": "Feature",
+    "uri": "C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/Curate.feature"
+  }
+]

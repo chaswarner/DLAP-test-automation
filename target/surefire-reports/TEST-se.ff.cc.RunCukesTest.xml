@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="54" failures="0" name="se.ff.cc.RunCukesTest" time="0.047" errors="0" skipped="6">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\jdk1.8.0_121\jre\bin"/>
+    <property name="java.vm.version" value="25.121-b13"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:/Users/cwarne01/git/DLAP-test-automation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\cwarne01\git\DLAP-test-automation"/>
+    <property name="java.runtime.version" value="1.8.0_121-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\jdk1.8.0_121\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\cwarne01\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="C:/Users/cwarne01/Documents/apache-maven-3.5.4-bin/apache-maven-3.5.4/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;Z:\bin;C:\Users\cwarne01\AppData\Local\Programs\Git\mingw64\bin;C:\Users\cwarne01\AppData\Local\Programs\Git\usr\local\bin;C:\Users\cwarne01\AppData\Local\Programs\Git\usr\bin;C:\Users\cwarne01\AppData\Local\Programs\Git\usr\bin;C:\Users\cwarne01\AppData\Local\Programs\Git\mingw64\bin;C:\Users\cwarne01\AppData\Local\Programs\Git\usr\bin;Z:\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\CCM;C:\Program Files (x86)\Google\Chrome\Application;C:\Program Files (x86)\Microsoft Office\Office15;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\CCM;C:\Users\cwarne01\.m2\bin;C:\Users\cwarne01\Documents\apache-maven-3.5.4-bin\apache-maven-3.5.4\bin;C:\jdk1.8.0_121;C:\Users\cwarne01\AppData\Local\Programs\Git\usr\bin\vendor_perl;C:\Users\cwarne01\AppData\Local\Programs\Git\usr\bin\core_perl;."/>
+    <property name="maven.conf" value="C:/Users/cwarne01/Documents/apache-maven-3.5.4-bin/apache-maven-3.5.4/conf"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="library.jansi.path" value="C:/Users/cwarne01/Documents/apache-maven-3.5.4-bin/apache-maven-3.5.4/lib/jansi-native"/>
+    <property name="user.home" value="C:\Users\cwarne01"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="user.name" value="cwarne01"/>
+    <property name="java.class.path" value="C:/Users/cwarne01/Documents/apache-maven-3.5.4-bin/apache-maven-3.5.4/boot/plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\jdk1.8.0_121\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_121"/>
+    <property name="java.ext.dirs" value="C:\jdk1.8.0_121\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\jdk1.8.0_121\jre\lib\resources.jar;C:\jdk1.8.0_121\jre\lib\rt.jar;C:\jdk1.8.0_121\jre\lib\sunrsasign.jar;C:\jdk1.8.0_121\jre\lib\jsse.jar;C:\jdk1.8.0_121\jre\lib\jce.jar;C:\jdk1.8.0_121\jre\lib\charsets.jar;C:\jdk1.8.0_121\jre\lib\jfr.jar;C:\jdk1.8.0_121\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Users\cwarne01\Documents\apache-maven-3.5.4-bin\apache-maven-3.5.4"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="Scenario: Fields flagged for encryption by the workbook should be encrypted in the target zone." name="Given a data set in the RAW zone and its counterpart in the curate zone" time="0.015"/>
+  <testcase classname="Scenario: Fields flagged for encryption by the workbook should be encrypted in the target zone." name="When I query Cloudera Navigator for the data set&apos;s onboarded workbook metadata" time="0"/>
+  <testcase classname="Scenario: Fields flagged for encryption by the workbook should be encrypted in the target zone." name="Then fields flagged for encryption in the metadata should be actually encrypted in the curate zone" time="0"/>
+  <testcase classname="Scenario: Fields flagged for encryption by the workbook should be encrypted in the target zone." name="Scenario: Fields flagged for encryption by the workbook should be encrypted in the target zone." time="0"/>
+  <testcase classname="Scenario: Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook." name="Given a data set in the RAW zone and its counterpart in the curate zone" time="0"/>
+  <testcase classname="Scenario: Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook." name="When I query Cloudera Navigator for the data set&apos;s onboarded workbook metadata" time="0"/>
+  <testcase classname="Scenario: Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook." name="Then fields flagged for encryption in the metadata should be actually encrypted in the curate zone" time="0"/>
+  <testcase classname="Scenario: Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook." name="Scenario: Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook." time="0"/>
+  <testcase classname="Scenario: Day 1 record are all loaded." name="Given Day 1 RME incremental files are ingested" time="0">
+    <skipped/>
+    <system-out>
+  Scenario: Data from the RAW zone should be completely ingested to the curate zone according to the metadata provided by the workbook. &amp;#27;[90m# se/ff/cc/Curate.feature:13&amp;#27;[0m
+    &amp;#27;[32mGiven &amp;#27;[0m&amp;#27;[32ma data set in the RAW zone and its counterpart in the curate zone&amp;#27;[0m                                                             &amp;#27;[90m# CurateStepDefs.some_start_condition()&amp;#27;[0m
+    &amp;#27;[32mWhen &amp;#27;[0m&amp;#27;[32mI query Cloudera Navigator for the data set&apos;s onboarded workbook metadata&amp;#27;[0m                                                      &amp;#27;[90m# CurateStepDefs.something_is_done()&amp;#27;[0m
+    &amp;#27;[32mThen &amp;#27;[0m&amp;#27;[32mfields flagged for encryption in the metadata should be actually encrypted in the curate zone&amp;#27;[0m                                  &amp;#27;[90m# CurateStepDefs.something_should_happen()&amp;#27;[0m
+Feature: f1
+Feature: f2
+Feature: Incremental file loading
+
+  Background: Full file has been uploaded with action types as null &amp;#27;[90m# se/ff/cc/incremental.feature:6&amp;#27;[0m
+</system-out>
+  </testcase>
+  <testcase classname="Scenario: Day 1 record are all loaded." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0">
+    <skipped/>
+  </testcase>
+  <testcase classname="Scenario: Day 1 record are all loaded." name="Then it should match the parsed workbook" time="0">
+    <skipped/>
+  </testcase>
+  <testcase classname="Scenario: Day 1 record are all loaded." name="Scenario: Day 1 record are all loaded." time="0.016">
+    <skipped/>
+  </testcase>
+  <testcase classname="Scenario: Day 1 record are all loaded." name="Scenario: Day 1 record are all loaded." time="0.016"/>
+  <testcase classname="Scenario: Day 1 record actions are null." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 1 record actions are null." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 1 record actions are null." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 1 record actions are null." name="Scenario: Day 1 record actions are null." time="0"/>
+  <testcase classname="Scenario: Day 2 records have an action type." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records have an action type." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 2 records have an action type." name="Then it should match the parsed" time="0">
+    <skipped/>
+  </testcase>
+  <testcase classname="Scenario: Day 2 records have an action type." name="Scenario: Day 2 records have an action type." time="0">
+    <skipped/>
+  </testcase>
+  <testcase classname="Scenario: Day 2 records have an action type." name="Scenario: Day 2 records have an action type." time="0"/>
+  <testcase classname="Scenario: Day 2 records are updated in Hue SCD." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records are updated in Hue SCD." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 2 records are updated in Hue SCD." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records are updated in Hue SCD." name="Scenario: Day 2 records are updated in Hue SCD." time="0"/>
+  <testcase classname="Scenario: Day 2 records are maybe updated properly in Hue Norm." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records are maybe updated properly in Hue Norm." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 2 records are maybe updated properly in Hue Norm." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records are maybe updated properly in Hue Norm." name="Scenario: Day 2 records are maybe updated properly in Hue Norm." time="0"/>
+  <testcase classname="Scenario: Day 2 records are with dflag should not show up in Hue Norm." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records are with dflag should not show up in Hue Norm." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 2 records are with dflag should not show up in Hue Norm." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 2 records are with dflag should not show up in Hue Norm." name="Scenario: Day 2 records are with dflag should not show up in Hue Norm." time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue SCD." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue SCD." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue SCD." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue SCD." name="Scenario: Day 3 record count is correct in Hue SCD." time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue norm." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue norm." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue norm." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 record count is correct in Hue norm." name="Scenario: Day 3 record count is correct in Hue norm." time="0"/>
+  <testcase classname="Scenario: Day 3 records action type is updated." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 records action type is updated." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 3 records action type is updated." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 records action type is updated." name="Scenario: Day 3 records action type is updated." time="0"/>
+  <testcase classname="Scenario: Day 3 records flags are updated correctly." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 records flags are updated correctly." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: Day 3 records flags are updated correctly." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: Day 3 records flags are updated correctly." name="Scenario: Day 3 records flags are updated correctly." time="0"/>
+  <testcase classname="Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata." name="Given I have parsed a workbook" time="0"/>
+  <testcase classname="Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata." name="When I query Cloudera Navigator for that workbook&apos;s metadata" time="0"/>
+  <testcase classname="Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata." name="Then it should match the parsed workbook" time="0"/>
+  <testcase classname="Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata." name="Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata." time="0"/>
+</testsuite>

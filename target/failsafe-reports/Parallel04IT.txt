@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: Parallel04IT
+-------------------------------------------------------------------------------
+Tests run: 40, Failures: 0, Errors: 4, Skipped: 2, Time elapsed: 58.343 sec <<< FAILURE! - in Parallel04IT
+Given Day 1 RME incremental files are ingested(Scenario: Day 1 record are all loaded.)  Time elapsed: 0.031 sec  <<< ERROR!
+cucumber.api.PendingException: TODO: implement me
+
+Scenario: Day 1 record are all loaded.  Time elapsed: 0.031 sec  <<< ERROR!
+cucumber.api.PendingException: TODO: implement me
+
+Then it should match the parsed(Scenario: Day 2 records have an action type.)  Time elapsed: 0 sec  <<< ERROR!
+cucumber.api.PendingException: TODO: implement me
+
+Scenario: Day 2 records have an action type.  Time elapsed: 0 sec  <<< ERROR!
+cucumber.api.PendingException: TODO: implement me
+

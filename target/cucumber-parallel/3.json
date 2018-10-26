@@ -1,0 +1,64 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 3,
+        "name": "s2",
+        "description": "",
+        "id": "f2;s2",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 1362869045,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "some other start condition",
+            "match": {
+              "location": "F2StepDefs.some_other_start_condition()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1006489659,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "something is else done",
+            "match": {
+              "location": "F2StepDefs.something_is_else_done()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1050474073,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "something else should happen",
+            "match": {
+              "location": "F2StepDefs.something_else_should_happen()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "line": 2,
+            "name": "@Ignore"
+          }
+        ]
+      }
+    ],
+    "name": "f2",
+    "description": "",
+    "id": "f2",
+    "keyword": "Feature",
+    "uri": "C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/f2.feature"
+  }
+]

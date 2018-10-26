@@ -1,0 +1,61 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 3,
+        "name": "s1",
+        "description": "",
+        "id": "f1;s1",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 1866303946,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "some start condition",
+            "match": {
+              "location": "F1StepDefs.some_start_condition()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1122300860,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "something is done",
+            "match": {
+              "location": "F1StepDefs.something_is_done()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "status": "undefined"
+            },
+            "line": 6,
+            "name": "something should happens",
+            "match": {},
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "line": 2,
+            "name": "@Ignore"
+          }
+        ]
+      }
+    ],
+    "name": "f1",
+    "description": "",
+    "id": "f1",
+    "keyword": "Feature",
+    "uri": "C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/f1.feature"
+  }
+]
