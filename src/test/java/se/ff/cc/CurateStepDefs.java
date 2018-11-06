@@ -40,7 +40,6 @@ public class CurateStepDefs {
         wbfile = new File("C:\\Users\\cwarne01\\Documents\\workbooks\\ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
         dataset = metadataWorkbook.getDataset(wbfile, 0, "raw");
-        Thread.sleep(3000);
         System.out.println("DATASET ::: "+dataset.toString());
         System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
         System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
