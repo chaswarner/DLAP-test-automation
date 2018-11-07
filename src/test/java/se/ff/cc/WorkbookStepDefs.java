@@ -5,6 +5,7 @@ import com.prft.cif.guice.inject.CIFInjector;
 import com.prft.cif.metadata.CIFDataset;
 import com.prft.cif.rest.CIFRestClient;
 import com.prft.cif.rest.NavigatorRestClient;
+import com.prft.cif.util.CIFDatasetUtil;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -53,8 +54,15 @@ public class WorkbookStepDefs {
         restClient.setUsername("csaload1");
         restClient.setPasswordPlain("C$@l0adP120d");
         restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
+        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
+        String hiveTableName = CIFDatasetUtil.getHiveTableName(dataset);
+        String scdHiveTableName = CIFDatasetUtil.getSCDHiveTableName(dataset);
+        System.out.println("DATABASENAME     + "+databaseName);
+        System.out.println("HIVE TABLE NAME"+hiveTableName);
+
 //        restClient.setEndpoint("63205918");
-        String query = "?query=type:table&limit=2&offset=0";
+//        String query = "?limit=2&offset=0&query=((type:table)AND(name:"+hiveTableName+"))";
+        String query = "?limit=2&offset=0&query=((type:table)AND(name:cash_detail))";
 //        String query = "metadata?key=test_curate_fin";
 //        String query = "*";
         restClient.setQuery(query);
