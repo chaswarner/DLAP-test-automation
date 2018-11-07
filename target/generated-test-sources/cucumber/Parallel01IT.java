@@ -6,7 +6,7 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         strict = true,
-        features = {"C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/Curate.feature"},
+        features = {"C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/AbcControls.feature"},
         plugin = {"json:C:/Users/cwarne01/git/DLAP-test-automation/target/cucumber-parallel/1.json"},
         monochrome = false,
         tags = {},

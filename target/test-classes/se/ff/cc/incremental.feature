@@ -1,7 +1,9 @@
 
 
-Feature: Incremental file loading
-
+Feature: Incremental file loading incremental testing of scd flag update for views
+## Count of columns should be # + 4 (timestamp, cflag dflag, feeddate) for scd table
+## verify that timestamps get updated as they want feed date - date that the extract came and date that something actually changed
+## RME_Incremental_Test_Cases_2nd_Iteration.xlsx
 
 Background: Full file has been uploaded with action types as null
 
@@ -24,7 +26,7 @@ Background: Full file has been uploaded with action types as null
   Scenario: Day 2 records are updated in Hue SCD.
     Given Day 2 RME incremental files are ingested after Day 1 files
     When I query Hive SCD table for the records
-    Then there should be new records in addition to olds records
+    Then there should be new records in addition to old records
 
   Scenario: Day 2 records are maybe updated properly in Hue Norm.
     Given Day 2 RME incremental files are ingested after Day 1 files

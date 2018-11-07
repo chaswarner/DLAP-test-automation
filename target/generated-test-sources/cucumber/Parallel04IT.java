@@ -6,7 +6,7 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         strict = true,
-        features = {"C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/incremental.feature"},
+        features = {"C:/Users/cwarne01/git/DLAP-test-automation/src/test/resources/se/ff/cc/Publish.feature"},
         plugin = {"json:C:/Users/cwarne01/git/DLAP-test-automation/target/cucumber-parallel/4.json"},
         monochrome = false,
         tags = {},

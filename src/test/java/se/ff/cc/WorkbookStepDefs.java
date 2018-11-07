@@ -21,8 +21,6 @@ public class WorkbookStepDefs {
 //    CIFRestClient restClient = CIFInjector.createInstance(NavigatorRestClient.class);
     CIFRestClient restClient;
     String response;
-    String body = "{\"name\":\"tenant\"}";
-    String query = "metadata?key=test_curate_fin";
     File wbfile;
 
     CIFDataset dataset;
@@ -55,12 +53,13 @@ public class WorkbookStepDefs {
         restClient.setUsername("csaload1");
         restClient.setPasswordPlain("C$@l0adP120d");
         restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
-        restClient.setEndpoint("63205918");
-//        restClient.setQuery(query);
-        response = restClient.get();
-
-//        response = restClient.put(body, CIFRestClient.CONTENT_TYPE_JSON);
-        System.out.println(response);
+//        restClient.setEndpoint("63205918");
+        String query = "?query=type:table&limit=2&offset=0";
+//        String query = "metadata?key=test_curate_fin";
+//        String query = "*";
+        restClient.setQuery(query);
+        String response = restClient.get();
+        System.out.println("$#$#$###$#$#"+response);
 
     }
 
