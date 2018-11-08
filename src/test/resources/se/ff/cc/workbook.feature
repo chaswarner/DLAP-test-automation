@@ -5,11 +5,6 @@ Feature: Workbook dataset to Cloudera on-boarding
 
   Background : A workbook is on-boarded as a data set using cif-onboarding.
 
-  Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata.
-    Given I have parsed a curate workbook
-    When I query Cloudera Navigator for that workbook's metadata
-    Then it should match the parsed workbook
-
 ##Just check that a database exists with the right name. Database name should be
   Scenario: Curate data set db creation.
     Given I have parsed a workbook

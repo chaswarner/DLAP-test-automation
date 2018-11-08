@@ -12,7 +12,8 @@ import cucumber.api.java.en.When;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Before;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 
 import java.io.File;
 
@@ -24,15 +25,17 @@ public class WorkbookStepDefs {
     CIFRestClient restClient;
     String response;
     File wbfile;
-
     CIFDataset dataset;
 
     @Before
     public void setUp() throws Exception {
-
+        System.out.println("############### SetUp Phase @ Before ##################");
 //        //set up REST client here
-
-
+        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
+        System.out.println(restClient.toString());
+        restClient.setUsername("csaload1");
+        restClient.setPasswordPlain("C$@l0adP120d");
+        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
     }
 
     @Given("^I have parsed a workbook$")
@@ -49,23 +52,12 @@ public class WorkbookStepDefs {
 
     @When("^I query Cloudera Navigator for the expected Hive database$")
     public void something_is_done() throws Throwable {
-////    Query Cloudera
-        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-        System.out.println(restClient.toString());
-        restClient.setUsername("csaload1");
-        restClient.setPasswordPlain("C$@l0adP120d");
-        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
         String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
-        String hiveTableName = CIFDatasetUtil.getHiveTableName(dataset);
-        String scdHiveTableName = CIFDatasetUtil.getSCDHiveTableName(dataset);
         System.out.println("DATABASENAME     "+databaseName);
-        System.out.println("HIVE TABLE NAME            "+hiveTableName);
-        System.out.println("HIVE SCD TABLE NAME            "+scdHiveTableName);
         String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
         restClient.setQuery(query);
         response = restClient.get();
         System.out.println("$#$#$###$#$#"+response);
-
     }
 
     @Then("^I should see Hive DB created with appropriate name in the correct location$")
