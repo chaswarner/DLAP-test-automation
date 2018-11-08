@@ -29,10 +29,7 @@ public class WorkbookStepDefs {
 
     @Before
     public void setUp() throws Exception {
-        System.out.println("############### SetUp Phase @ Before ##################");
-//        //set up REST client here
         restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-        System.out.println(restClient.toString());
         restClient.setUsername("csaload1");
         restClient.setPasswordPlain("C$@l0adP120d");
         restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
@@ -40,7 +37,7 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-        wbfile = new File("C:\\Users\\cwarne01\\Documents\\workbooks\\ME_FIN_Cash_Detail.xlsx");
+        wbfile = new File("./src/test/resources/ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
         dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
         Thread.sleep(5000);
