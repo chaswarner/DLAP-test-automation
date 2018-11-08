@@ -6,25 +6,27 @@ Feature: Workbook dataset to Cloudera on-boarding
   Background : A workbook is on-boarded as a data set using cif-onboarding.
 
   Scenario: A workbook, parsed from an excel spreadsheet, should exist in Cloudera Navigator as metadata.
-    Given I have parsed a workbook
+    Given I have parsed a curate workbook
     When I query Cloudera Navigator for that workbook's metadata
     Then it should match the parsed workbook
 
-##Just check that a database exists with the right name
+##Just check that a database exists with the right name. Database name should be
   Scenario: Curate data set db creation.
-    Given I have parsed a curate workbook
-    When I query Cloudera Navigator for the existence of an appropriately named database
+    Given I have parsed a workbook
+    When I query Cloudera Navigator for the expected Hive database
     Then I should see Hive DB created with appropriate name in the correct location
 
-## describe test_curate_fin.test_cash_detail - confirm the columns match what we expect from the workbook.
+## describe test_curate_fin.test_cash_detail - confirm the columns match what we expect from the workbook. Check Impala instead of Hive
   Scenario: Curate data set schema validation.
     Given I have parsed a curate workbook
     When I query Cloudera Navigator for the list of columns in the data set database
-    Then I should see appropriate Hive columns in the appropriate DB
+    Then I should see appropriate columns in the appropriate DB available via Impala
 
-## Test that the data is available in Impala as well.
-  Scenario: On-boarded dataset is available in Impala as well.
+## Test that HBase contains records related
+
+
+##Test that HDFS structure has been created
+Scenario: SUCCESS folder is created in HDFS path at /env/zone/domain/file
     Given I have parsed a curate workbook
-    When I query Impala for the dataset - or Cloudera Navigator for Impala datasets
-    Then I should see the dataset with the right name and columns
-
+    When I query Cloudera Navigator for the existence of HDFS target folder for the parquet files
+    Then I should see the correct path and folder name

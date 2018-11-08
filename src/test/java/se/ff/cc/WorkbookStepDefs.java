@@ -9,6 +9,7 @@ import com.prft.cif.util.CIFDatasetUtil;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,15 +39,15 @@ public class WorkbookStepDefs {
     public void some_start_condition() throws Throwable {
         wbfile = new File("C:\\Users\\cwarne01\\Documents\\workbooks\\ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-        dataset = metadataWorkbook.getDataset(wbfile, 0, "raw");
-        Thread.sleep(3000);
+        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+        Thread.sleep(5000);
         System.out.println("DATASET ::: "+dataset.toString());
         System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
         System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
         System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
     }
 
-    @When("^I query Cloudera Navigator for that workbook\'s metadata$")
+    @When("^I query Cloudera Navigator for the expected Hive database$")
     public void something_is_done() throws Throwable {
 ////    Query Cloudera
         restClient = CIFInjector.createInstance(NavigatorRestClient.class);
@@ -57,24 +58,20 @@ public class WorkbookStepDefs {
         String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
         String hiveTableName = CIFDatasetUtil.getHiveTableName(dataset);
         String scdHiveTableName = CIFDatasetUtil.getSCDHiveTableName(dataset);
-        System.out.println("DATABASENAME     + "+databaseName);
-        System.out.println("HIVE TABLE NAME"+hiveTableName);
-
-//        restClient.setEndpoint("63205918");
-//        String query = "?limit=2&offset=0&query=((type:table)AND(name:"+hiveTableName+"))";
-        String query = "?limit=2&offset=0&query=((type:table)AND(name:cash_detail))";
-//        String query = "metadata?key=test_curate_fin";
-//        String query = "*";
+        System.out.println("DATABASENAME     "+databaseName);
+        System.out.println("HIVE TABLE NAME            "+hiveTableName);
+        System.out.println("HIVE SCD TABLE NAME            "+scdHiveTableName);
+        String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
         restClient.setQuery(query);
-        String response = restClient.get();
+        response = restClient.get();
         System.out.println("$#$#$###$#$#"+response);
 
     }
 
-    @Then("^it should match the parsed workbook$")
+    @Then("^I should see Hive DB created with appropriate name in the correct location$")
     public void something_should_happen() throws Throwable {
-//        JSONObject jsonObj = new JSONObject(response);
-//        assertEquals(jsonObj.getString("name"), "tenant");
+        JSONArray jsonArr = new JSONArray(response);
+        System.out.println(jsonArr.getJSONObject(0).getString("sourceType"));
+        assertEquals(jsonArr.getJSONObject(0).getString("sourceType"), "HIVE");
     }
-
 }
