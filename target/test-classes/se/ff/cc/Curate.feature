@@ -33,9 +33,6 @@ Feature: Data is moved from the RAW to Curate zone and is tranformed according t
     When I query Hive for data rows containing columns that required transform
     Then the data in the row/column should be tranformed correctly
 
-
-
-
   Scenario: RAW zone file transfer.
     Given I have parsed a workbook
     And I have a datafile

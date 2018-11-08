@@ -17,7 +17,7 @@ Feature: Workbook dataset to Cloudera on-boarding
     When I query Cloudera Navigator for the list of columns in the data set database
     Then I should see appropriate columns in the appropriate DB available via Impala
 
-## Test that HBase contains records related
+## Test that HBase contains sort key
 
 
 ##Test that HDFS structure has been created
