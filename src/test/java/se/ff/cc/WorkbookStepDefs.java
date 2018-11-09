@@ -37,7 +37,7 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-        wbfile = new File("./src/test/resources/ME_FIN_Cash_Detail.xlsx");
+        wbfile = new File("./src/test/resources/fixtures/ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
         dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
         Thread.sleep(5000);

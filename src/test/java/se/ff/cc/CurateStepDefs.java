@@ -37,7 +37,7 @@ public class CurateStepDefs {
 
     @Given("^a data set in the RAW zone and its counterpart in the curate zone$")
     public void some_start_condition() throws Throwable {
-        wbfile = new File("C:\\Users\\cwarne01\\Documents\\workbooks\\ME_FIN_Cash_Detail.xlsx");
+        wbfile = new File("./src/test/resources/fixtures/ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
         dataset = metadataWorkbook.getDataset(wbfile, 0, "raw");
         System.out.println("DATASET ::: "+dataset.toString());
