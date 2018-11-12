@@ -1,5 +1,5 @@
 run.pollinginterval=10
-onboarding.dir=/dlap_dev/cif/onboarding
+onboarding.dir=/dlap_tst/cif/onboarding
 cluster.name=cluster2
 dataset.namespace.raw=raw
 dataset.namespace.curate=curate

@@ -6,9 +6,12 @@ import com.prft.cif.test.metadata.CIFDataset;
 import com.prft.cif.test.rest.CIFRestClient;
 import com.prft.cif.test.rest.NavigatorRestClient;
 import com.prft.cif.test.util.CIFDatasetUtil;
+import com.prft.cif.test.util.CIFHDFSUtil;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Assert;
@@ -24,16 +27,30 @@ public class WorkbookStepDefs {
 //    CIFRestClient restClient = CIFInjector.createInstance(NavigatorRestClient.class);
     CIFRestClient restClient;
     String response;
-    File wbfile;
     CIFDataset dataset;
+    CIFHDFSUtil hdfsUtil;
+
+    String wbFilePath = "./src/test/resources/fixtures/ME_FIN_Cash_Detail.xlsx";
+    File wbfile = new File(wbFilePath);
 
     @Before
     public void setUp() throws Exception {
-        // Place workbook .xlsx file at W:\dlap_tst\cif\onboarding\
+        // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
+        hdfsUtil = new CIFHDFSUtil();
+
+//        hdfsUtil.configuration("hdfs://" + cluster.getNameNode().getHostAndPort());
+
+        // Sleep thread ?  I don't think there's a notification to plug in...
+        Thread.sleep(30000);
 
         //Check for .completed file creation
+        String completedFileName = wbFilePath+".completed";
+        String errorFileName = wbFilePath+".error";
 
-        //
+        // throw exception if file not found or .error file found instead
+
+
+        // Set-up REST client
         restClient = CIFInjector.createInstance(NavigatorRestClient.class);
         restClient.setUsername("csaload1");
         restClient.setPasswordPlain("C$@l0adP120d");
@@ -42,7 +59,6 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-        wbfile = new File("./src/test/resources/fixtures/ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
         dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
         Thread.sleep(5000);
