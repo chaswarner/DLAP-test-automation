@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"json" },
+        plugin = {"json","json:target/cucumber-reports/cucumber.json"},
         tags = {"~@Ignore","@SmokeTest"}
         )
 public class RunCukesTest {

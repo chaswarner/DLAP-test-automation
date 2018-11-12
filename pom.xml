@@ -148,31 +148,31 @@
 
     <build>
     <plugins>
-        <plugin>
-            <groupId>com.github.temyers</groupId>
-            <artifactId>cucumber-jvm-parallel-plugin</artifactId>
-            <version>4.2.0</version>
-            <executions>
-                <execution>
-                    <id>generateRunners</id>
-                    <phase>generate-test-sources</phase>
-                    <goals>
-                        <goal>generateRunners</goal>
-                    </goals>
-                    <configuration>
-                        <glue>
-                            <package>com.prft.test</package>
-                        </glue>
-                        <outputDirectory>target/generated-test-sources/cucumber</outputDirectory>
-                        <featuresDirectory>src/test/resources/</featuresDirectory>
-                        <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
-                        <namingPattern>Parallel{c}IT</namingPattern>
-                        <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
-                        <parallelScheme>FEATURE</parallelScheme>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+        <!--<plugin>-->
+            <!--<groupId>com.github.temyers</groupId>-->
+            <!--<artifactId>cucumber-jvm-parallel-plugin</artifactId>-->
+            <!--<version>4.2.0</version>-->
+            <!--<executions>-->
+                <!--<execution>-->
+                    <!--<id>generateRunners</id>-->
+                    <!--<phase>generate-test-sources</phase>-->
+                    <!--<goals>-->
+                        <!--<goal>generateRunners</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                        <!--<glue>-->
+                            <!--<package>com.prft.test</package>-->
+                        <!--</glue>-->
+                        <!--<outputDirectory>target/generated-test-sources/cucumber</outputDirectory>-->
+                        <!--<featuresDirectory>src/test/resources/</featuresDirectory>-->
+                        <!--<cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>-->
+                        <!--<namingPattern>Parallel{c}IT</namingPattern>-->
+                        <!--&lt;!&ndash; One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. &ndash;&gt;-->
+                        <!--<parallelScheme>FEATURE</parallelScheme>-->
+                    <!--</configuration>-->
+                <!--</execution>-->
+            <!--</executions>-->
+        <!--</plugin>-->
 
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
