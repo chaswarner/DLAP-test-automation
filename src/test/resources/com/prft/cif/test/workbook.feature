@@ -1,7 +1,7 @@
 ## Just verify DB tables created and columns are correct
 ## Verify additionally in Impala
 
-Feature: Workbook dataset to Cloudera on-boarding
+Feature: Cash Detail dataset on-boarding
 
   Background : A workbook is on-boarded as a data set using cif-onboarding.
 

@@ -29,6 +29,11 @@ public class WorkbookStepDefs {
 
     @Before
     public void setUp() throws Exception {
+        // Place workbook .xlsx file at W:\dlap_tst\cif\onboarding\
+
+        //Check for .completed file creation
+
+        //
         restClient = CIFInjector.createInstance(NavigatorRestClient.class);
         restClient.setUsername("csaload1");
         restClient.setPasswordPlain("C$@l0adP120d");
@@ -62,6 +67,18 @@ public class WorkbookStepDefs {
         JSONArray jsonArr = new JSONArray(response);
         System.out.println(jsonArr.getJSONObject(0).getString("sourceType"));
         assertEquals(jsonArr.getJSONObject(0).getString("sourceType"), "HIVE");
+    }
+
+    @After
+    public void tearDown () throws Exception{
+    // Remove workbook .xlsx file and .completed files from W:\dlap_tst\cif\onboarding\
+
+    // Truncate Hive table
+
+    // Drop Hive table
+
+    // Delete folder at /env/zone/domain/dataset
+
     }
 
 
