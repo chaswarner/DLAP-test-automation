@@ -1,5 +1,3 @@
-package com.prft.cif.test;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,6 +7,12 @@ public class ImpalaQuery {
     Connection conn;
     String DB_URL = "jdbc:hive2://hive.prod.bcbsma.com:10000/;principal=hive/hive.prod.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
+    public static void main(String args[]){
+
+        ImpalaQuery iq = new ImpalaQuery();
+        iq.createConnection();
+
+    }
     public void createConnection() {
         conn = null;
         Statement stmt = null;

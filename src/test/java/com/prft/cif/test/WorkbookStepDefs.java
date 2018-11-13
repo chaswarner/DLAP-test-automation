@@ -32,15 +32,14 @@ public class WorkbookStepDefs {
     String response;
     CIFDataset dataset;
     CIFHDFSUtil hdfsUtil;
-    String wbFilePath = "./src/test/resources/fixtures/ME_FIN_Cash_Detail.xlsx";
+    String wbFilePath = "./src/test/resources/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
+
     File wbfile = new File(wbFilePath);
 
     @Before
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
-//        ContentSummary summary1 = hdfs.getContentSummary("/dlap_tst/cif/onboarding/");
-//        hdfsUtil.cornfiguration("hdfs://" + cluster.getNameNode().getHostAndPort());
-//        System.out.println(summary1);
+
         // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(30000);
 
@@ -50,23 +49,23 @@ public class WorkbookStepDefs {
 
         // throw exception if file not found or .error file found instead
 
-
-        // Set-up REST client
-        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-        restClient.setUsername("csaload1");
-        restClient.setPasswordPlain("C$@l0adP120d");
-        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
+//
+//        // Set-up REST client
+//        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
+//        restClient.setUsername("csaload1");
+//        restClient.setPasswordPlain("C$@l0adP120d");
+//        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
     }
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-        Thread.sleep(5000);
-        System.out.println("DATASET ::: "+dataset.toString());
-        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
-        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
-        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
+//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
+//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+//        Thread.sleep(5000);
+//        System.out.println("DATASET ::: "+dataset.toString());
+//        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
+//        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
+//        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
     }
 
     @When("^I query Impala for the expected database name$")

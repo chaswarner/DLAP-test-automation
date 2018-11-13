@@ -4,23 +4,29 @@
 
   <groupId>com.prft.cif</groupId>
   <artifactId>cif-test-automation</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <version>1.0</version>
+    <modules>
+        <module>testing</module>
+    </modules>
 
-  <name>cif-test-automation</name>
+    <name>cif-test-automation</name>
   <url>http://maven.apache.org</url>
 
   <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
-      <maven.compile.encoding>UTF-8</maven.compile.encoding>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
       <spark.version>2.1.0</spark.version>
       <jackson.version>2.9.5</jackson.version>
   </properties>
+
+    <repositories>
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+    </repositories>
 
   <dependencies>
       <dependency>
@@ -113,17 +119,67 @@
           <artifactId>mybatis-guice</artifactId>
           <version>3.7</version>
       </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
+      <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-core_2.11</artifactId>
+          <version>2.2.1</version>
+          <scope>provided</scope>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-hive -->
+      <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-hive_2.11</artifactId>
+          <version>2.2.1</version>
+          <scope>provided</scope>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
+      <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-sql_2.11</artifactId>
+          <version>2.2.1</version>
+          <scope>provided</scope>
+      </dependency>
       <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
       <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-lang3</artifactId>
           <version>3.8</version>
       </dependency>
-      <!-- https://mvnrepository.com/artifact/org.apache.hive/hive-jdbc -->
       <dependency>
           <groupId>org.apache.hive</groupId>
           <artifactId>hive-jdbc</artifactId>
           <version>1.1.0-cdh5.15.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>2.6.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-client</artifactId>
+          <version>2.6.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common -->
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>2.6.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-auth -->
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-auth</artifactId>
+          <version>2.6.0</version>
+          <scope>provided</scope>
       </dependency>
   </dependencies>
 
