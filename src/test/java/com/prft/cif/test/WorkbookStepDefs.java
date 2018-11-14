@@ -93,11 +93,11 @@ public class WorkbookStepDefs {
 
 
         File curateStg = new File(onboardingDirCurateStg);
-        File publishStg = new File(onboardingDirPublishStg);
-        File onboardingDirectory = new File(onboardingDir);
+//        File publishStg = new File(onboardingDirPublishStg);
+//        File onboardingDirectory = new File(onboardingDir);
 //        File onboardingDirectoryPublish = new File(onboardingDirPublish);
-        FileUtils.copyFile(curateStg, onboardingDirectory);
-        FileUtils.copyDirectory(publishStg, onboardingDirectory);
+//        FileUtils.copyFile(curateStg, onboardingDirectory);
+//        FileUtils.copyDirectory(publishStg, onboardingDirectory);
 //
 //        // Sleep thread ?  I don't think there's a notification to plug in...
 //        Thread.sleep(30000);
