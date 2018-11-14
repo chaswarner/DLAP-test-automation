@@ -74,7 +74,7 @@ public class WorkbookStepDefs {
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
 
-        File tf = new File("testfile.txt");
+        File tf = new File("superspecificnameforfile.txt");
         tf.createNewFile();
         System.out.println("ABSOLUTE PATH :: " + tf.getAbsolutePath());
 
@@ -86,7 +86,7 @@ public class WorkbookStepDefs {
 ////        System.out.println("-->"+rb.getString("onboarding.dir"));
         onboardingDir=rb.getString("onboarding.dir").trim();
 //        onboardingDirPublish=rb.getString("onboarding.dir.publish");
-        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/*".trim();
+        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/test_curate.xlsx".trim();
         onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
         System.out.println(onboardingDirCurateStg);
         System.out.println(onboardingDirPublishStg);
@@ -96,7 +96,6 @@ public class WorkbookStepDefs {
         File publishStg = new File(onboardingDirPublishStg);
         File onboardingDirectory = new File(onboardingDir);
 //        File onboardingDirectoryPublish = new File(onboardingDirPublish);
-        FileUtils.getTempDirectoryPath();
         FileUtils.copyFile(curateStg, onboardingDirectory);
         FileUtils.copyDirectory(publishStg, onboardingDirectory);
 //
