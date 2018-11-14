@@ -86,7 +86,7 @@ public class WorkbookStepDefs {
 ////        System.out.println("-->"+rb.getString("onboarding.dir"));
         onboardingDir=rb.getString("onboarding.dir").trim();
 //        onboardingDirPublish=rb.getString("onboarding.dir.publish");
-        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/test_curate.xlsx".trim();
+        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/".trim();
         onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
         System.out.println(onboardingDirCurateStg);
         System.out.println(onboardingDirPublishStg);
