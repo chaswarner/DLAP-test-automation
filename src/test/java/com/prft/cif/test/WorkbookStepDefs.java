@@ -90,60 +90,60 @@ public class WorkbookStepDefs {
         onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
         System.out.println(onboardingDirCurateStg);
         System.out.println(onboardingDirPublishStg);
+
+
+        File curateStg = new File(onboardingDirCurateStg);
+        File publishStg = new File(onboardingDirPublishStg);
+        File onboardingDirectory = new File(onboardingDir);
+//        File onboardingDirectoryPublish = new File(onboardingDirPublish);
+        FileUtils.getTempDirectoryPath();
+        FileUtils.copyFile(curateStg, onboardingDirectory);
+        FileUtils.copyDirectory(publishStg, onboardingDirectory);
+//
+//        // Sleep thread ?  I don't think there's a notification to plug in...
+//        Thread.sleep(30000);
+//
+//        String[] extensions = new String[]{"xlsx"};
+//        List<File> afterOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingDir), extensions, true);
+//
+//        for (File file : afterOnboardingFilelist) {
+//
+//            logger.info("***************** FILE NAME:=====>" + file.getName() + "  *******************");
+//            assertTrue(new File(file.getAbsolutePath() + ".completed").exists());
+//        }
+//
+//        //Check for .completed file creation
+//        String completedFileName = wbFilePath+".completed";
+//        String errorFileName = wbFilePath+".error";
+//
+//        // throw exception if file not found or .error file found instead
 //
 //
-//        File curateStg = new File(onboardingDirCurateStg);
-//        File publishStg = new File(onboardingDirPublishStg);
-//        File onboardingDirectory = new File(onboardingDir);
-////        File onboardingDirectoryPublish = new File(onboardingDirPublish);
-//        FileUtils.getTempDirectoryPath()
-//        FileUtils.copyFile(curateStg, onboardingDirectory);
-//        FileUtils.copyDirectory(publishStg, onboardingDirectory);
-
-        // Sleep thread ?  I don't think there's a notification to plug in...
-        Thread.sleep(30000);
-
-        String[] extensions = new String[]{"xlsx"};
-        List<File> afterOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingDir), extensions, true);
-
-        for (File file : afterOnboardingFilelist) {
-
-            logger.info("***************** FILE NAME:=====>" + file.getName() + "  *******************");
-            assertTrue(new File(file.getAbsolutePath() + ".completed").exists());
-        }
-
-        //Check for .completed file creation
-        String completedFileName = wbFilePath+".completed";
-        String errorFileName = wbFilePath+".error";
-
-        // throw exception if file not found or .error file found instead
-
-
-        // Set-up REST client
-        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-        restClient.setUsername("csaload1");
-        restClient.setPasswordPlain("C$@l0adP120d");
-        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
+//        // Set-up REST client
+//        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
+//        restClient.setUsername("csaload1");
+//        restClient.setPasswordPlain("C$@l0adP120d");
+//        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
     }
 
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-        Thread.sleep(5000);
-        System.out.println("DATASET ::: "+dataset.toString());
-        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
-        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
-        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
+//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
+//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+//        Thread.sleep(5000);
+//        System.out.println("DATASET ::: "+dataset.toString());
+//        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
+//        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
+//        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
     }
 
     @When("^I query Impala for the expected database name$")
     public void something_is_done() throws Throwable {
         // Use Impala connection:
-
-        ImpalaQuery impQ = new ImpalaQuery();
-        impQ.createConnection();
+//
+//        ImpalaQuery impQ = new ImpalaQuery();
+//        impQ.createConnection();
 
 //
 //        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
@@ -175,49 +175,49 @@ public class WorkbookStepDefs {
     }
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
-        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-        Thread.sleep(4000);
-        System.out.println("DATASET ::: " + dataset.toString());
-        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
-        System.out.println("Table Name ::: " + dataset.getName());
+//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
+//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+//        Thread.sleep(4000);
+//        System.out.println("DATASET ::: " + dataset.toString());
+//        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
+//        System.out.println("Table Name ::: " + dataset.getName());
     }
     @When("^I query Cloudera Navigator for the list of columns in the data set database$")
 
     public void database_columns() throws Throwable {
-        Connection conn;
-        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-        conn = null;
-        Statement stmt = null;
-        try {
-            //STEP 2: Register JDBC driver
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
-
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
-            String sql;
-            sql = "describe"+dataset.getName();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                //Retrieve by column name
-                String cname = rs.getString("Column Name");
-                String ctype = rs.getString("Column Type");
-
-                //Display values
-                System.out.print(", Column Name: " + cname);
-                columnname.add(cname);
-                System.out.println(", Column Type: " + ctype);
-                columntype.add(ctype);
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+//        Connection conn;
+//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+//        conn = null;
+//        Statement stmt = null;
+//        try {
+//            //STEP 2: Register JDBC driver
+//            Class.forName("org.apache.hive.jdbc.HiveDriver");
+//
+//            //STEP 3: Open a connection
+//            System.out.println("Connecting to database...");
+//            conn = DriverManager.getConnection(DB_URL, "", "");
+//
+//            //STEP 4: Execute a query
+//            System.out.println("Creating statement...");
+//            stmt = conn.createStatement();
+//            String sql;
+//            sql = "describe"+dataset.getName();
+//            ResultSet rs = stmt.executeQuery(sql);
+//            while(rs.next()){
+//                //Retrieve by column name
+//                String cname = rs.getString("Column Name");
+//                String ctype = rs.getString("Column Type");
+//
+//                //Display values
+//                System.out.print(", Column Name: " + cname);
+//                columnname.add(cname);
+//                System.out.println(", Column Type: " + ctype);
+//                columntype.add(ctype);
+//            }
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 //        String query="select rcpnt_id from"+dataset.getName();
 //        ArrayList<String> list = cifimpala.describeTable(query);
 ////        int listSize=list.size();
@@ -236,44 +236,44 @@ public class WorkbookStepDefs {
 //                values[i] = mapping.getValue().toString();
 //                System.out.println(values[i]);
 //                ++i;
-//            }
-//
+            }
+
 
     @Then("^I should see appropriate columns in the appropriate DB available via Impala$")
     public void workbook_columns() throws Throwable {
-        String tableName = null;
-        ArrayList<String> curateColNames = new ArrayList<String>();
-        Workbook workbook = null;
-        try {
-            workbook = WorkbookFactory.create(wbfile);
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
-        Sheet sheet = workbook.getSheetAt(0);
-        DataFormatter dataFormatter = new DataFormatter();
-        Row rownum = sheet.getRow(2);
-        Cell cellnum = rownum.getCell(1);
-        String cellval = dataFormatter.formatCellValue(cellnum);
-        System.out.println("Cell Value :: " + cellval);
-        ArrayList<String> CurateColumn = new ArrayList<String>();
-        ArrayList<String> CurateDataType = new ArrayList<String>();
-        for(int i=46; i<=sheet.getLastRowNum();i++) {
-            rownum = sheet.getRow(i);
-            cellnum = rownum.getCell(11);
-            String CurateCellValue = dataFormatter.formatCellValue(cellnum);
-            CurateColumn.add(CurateCellValue);
-            cellnum = rownum.getCell(12);
-            String CurateCellType = dataFormatter.formatCellValue(cellnum);
-            CurateDataType.add(CurateCellType);
-            System.out.println(CurateCellValue );
-        }
-        if(columnname.size()== CurateColumn.size() ) {
-            for (int i = 0; i < columnname.size(); i++) {
-                String actual = columnname.get(i);
-                String expected = CurateColumn.get(i);
-                assertEquals(actual, expected);
-            }
-        }
+//        String tableName = null;
+//        ArrayList<String> curateColNames = new ArrayList<String>();
+//        Workbook workbook = null;
+//        try {
+//            workbook = WorkbookFactory.create(wbfile);
+//        } catch (IOException ioe) {
+//            System.out.println(ioe);
+//        }
+//        Sheet sheet = workbook.getSheetAt(0);
+//        DataFormatter dataFormatter = new DataFormatter();
+//        Row rownum = sheet.getRow(2);
+//        Cell cellnum = rownum.getCell(1);
+//        String cellval = dataFormatter.formatCellValue(cellnum);
+//        System.out.println("Cell Value :: " + cellval);
+//        ArrayList<String> CurateColumn = new ArrayList<String>();
+//        ArrayList<String> CurateDataType = new ArrayList<String>();
+//        for(int i=46; i<=sheet.getLastRowNum();i++) {
+//            rownum = sheet.getRow(i);
+//            cellnum = rownum.getCell(11);
+//            String CurateCellValue = dataFormatter.formatCellValue(cellnum);
+//            CurateColumn.add(CurateCellValue);
+//            cellnum = rownum.getCell(12);
+//            String CurateCellType = dataFormatter.formatCellValue(cellnum);
+//            CurateDataType.add(CurateCellType);
+//            System.out.println(CurateCellValue );
+//        }
+//        if(columnname.size()== CurateColumn.size() ) {
+//            for (int i = 0; i < columnname.size(); i++) {
+//                String actual = columnname.get(i);
+//                String expected = CurateColumn.get(i);
+//                assertEquals(actual, expected);
+//            }
+//        }
 //            if(columntype.size()== CurateDataType.size() ) {
 //                for (int i = 0; i < columntype.size(); i++) {
 //                    String actual = columntype.get(i);
