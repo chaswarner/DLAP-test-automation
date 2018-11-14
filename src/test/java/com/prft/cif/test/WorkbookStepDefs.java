@@ -74,20 +74,31 @@ public class WorkbookStepDefs {
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
 
-//        System.out.println("-->"+rb.getString("onboarding.dir"));
+        File tf = new File("testfile.txt");
+        tf.createNewFile();
+        System.out.println("ABSOLUTE PATH :: " + tf.getAbsolutePath());
+
+//
+//        boolean fvar = testfile.createNewFile();
+//        System.out.println("File "+ testfile.getAbsolutePath());
+
+//
+////        System.out.println("-->"+rb.getString("onboarding.dir"));
         onboardingDir=rb.getString("onboarding.dir").trim();
 //        onboardingDirPublish=rb.getString("onboarding.dir.publish");
         onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/*".trim();
         onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
-
-
-        File curateStg = new File(onboardingDirCurateStg);
-        File publishStg = new File(onboardingDirPublishStg);
-        File onboardingDirectory = new File(onboardingDir);
-//        File onboardingDirectoryPublish = new File(onboardingDirPublish);
-
-        FileUtils.copyFile(curateStg, onboardingDirectory);
-        FileUtils.copyDirectory(publishStg, onboardingDirectory);
+        System.out.println(onboardingDirCurateStg);
+        System.out.println(onboardingDirPublishStg);
+//
+//
+//        File curateStg = new File(onboardingDirCurateStg);
+//        File publishStg = new File(onboardingDirPublishStg);
+//        File onboardingDirectory = new File(onboardingDir);
+////        File onboardingDirectoryPublish = new File(onboardingDirPublish);
+//        FileUtils.getTempDirectoryPath()
+//        FileUtils.copyFile(curateStg, onboardingDirectory);
+//        FileUtils.copyDirectory(publishStg, onboardingDirectory);
 
         // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(30000);
