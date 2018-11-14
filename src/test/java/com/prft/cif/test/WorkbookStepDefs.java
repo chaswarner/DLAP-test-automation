@@ -59,13 +59,13 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
+        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
         Thread.sleep(5000);
-//        System.out.println("DATASET ::: "+dataset.toString());
-//        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
-//        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
-//        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
+        System.out.println("DATASET ::: "+dataset.toString());
+        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
+        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
+        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
     }
 
     @When("^I query Impala for the expected database name$")

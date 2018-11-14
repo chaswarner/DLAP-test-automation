@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class ImpalaQuery {
     Connection conn;
-    String DB_URL = "jdbc:hive2://hive.prod.bcbsma.com:10000/;principal=hive/hive.prod.bcbsma.com@BCBSMAMD.NET;ssl=true";
+    String DB_URL = "jdbc:hive2://hive.prod.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
     public void createConnection() {
         conn = null;
