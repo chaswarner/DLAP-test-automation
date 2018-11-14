@@ -38,6 +38,14 @@ public class CIFHDFSUtil {
         }
     }
 
+    public void CopyFromLocal(String srcFile, String destFile) throws IOException {
+        Path src = new Path(srcFile);
+        Path dest = new Path(destFile);
+        if (fs.exists(dest.getParent())) {
+            fs.copyFromLocalFile(src, dest);
+        }
+    }
+
 
     public void deleteFile(String file) throws IOException {
         Path path = new Path(file);

@@ -44,7 +44,7 @@ public class WorkbookStepDefs {
 
 
     private String onboardingDir;
-    //    private String onboardingDirPublish;
+
     private String onboardingDirCurateStg;
     private String onboardingDirPublishStg;
 
