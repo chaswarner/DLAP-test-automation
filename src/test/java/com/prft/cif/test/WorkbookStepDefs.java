@@ -43,7 +43,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WorkbookStepDefs {
 
-    //    CIFRestClient restClient = CIFInjector.createInstance(NavigatorRestClient.class);
+//    CIFRestClient restClient = CIFInjector.createInstance(NavigatorRestClient.class);
     CIFRestClient restClient;
     String response;
     CIFDataset dataset;
@@ -53,9 +53,11 @@ public class WorkbookStepDefs {
 
 
     private String onboardingDir;
-
+    private String onboardingDirPublih;
+    private String onboardingBaseStg;
     private String onboardingDirCurateStg;
     private String onboardingDirPublishStg;
+
 
 
     @Inject
@@ -74,57 +76,53 @@ public class WorkbookStepDefs {
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
 
-        File tf = new File("superspecificnameforfile.txt");
-        tf.createNewFile();
-        System.out.println("ABSOLUTE PATH :: " + tf.getAbsolutePath());
-
-//
-//        boolean fvar = testfile.createNewFile();
-//        System.out.println("File "+ testfile.getAbsolutePath());
-
-//
-////        System.out.println("-->"+rb.getString("onboarding.dir"));
-        onboardingDir=rb.getString("onboarding.dir").trim();
-//        onboardingDirPublish=rb.getString("onboarding.dir.publish");
-        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/*".trim();
+        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg").trim();
         onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
-        System.out.println(onboardingDirCurateStg);
-        System.out.println(onboardingDirPublishStg);
+        onboardingBaseStg=rb.getString("onboarding.base.stg").trim();
+        onboardingDir=rb.getString("onboarding.dir").trim();
+        onboardingDirPublih=rb.getString("onboarding.dir.publish").trim();
 
 
+        String[] extensions = new String[]{"xlsx"};
+        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
+//        System.out.println("copied from "+onboardingDirCurateStg+" -->"+onboardingDir);
+        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
+//        System.out.println("copied from "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
+        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
+
+        // Sleep thread ?  I don't think there's a notification to plug in...
+        Thread.sleep(30000);
+
+        for (File file : beforeOnboardingFilelist) {
+
+//            System.out.println("before onboarding file list "+file.getAbsolutePath());
+//            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
+//            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
+            if(file.getParent().endsWith("publish"))
+                assertTrue(new File(""+onboardingDirPublih+"\\"+file.getName() + ".completed").exists());
+            else
+                assertTrue(new File(""+onboardingDir+"\\"+file.getName() + ".completed").exists());
+        }
+
+
+
+
+        //Check for .completed file creation
+        String completedFileName = wbFilePath+".completed";
+        String errorFileName = wbFilePath+".error";
+
+        // throw exception if file not found or .error file found instead
+
+
+        // Set-up REST client
+        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
+        restClient.setUsername("csaload1");
+        restClient.setPasswordPlain("C$@l0adP120d");
+        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
         File curateStg = new File(onboardingDirCurateStg);
-//        File publishStg = new File(onboardingDirPublishStg);
-//        File onboardingDirectory = new File(onboardingDir);
-//        File onboardingDirectoryPublish = new File(onboardingDirPublish);
-//        FileUtils.copyFile(curateStg, onboardingDirectory);
-//        FileUtils.copyDirectory(publishStg, onboardingDirectory);
-//
-//        // Sleep thread ?  I don't think there's a notification to plug in...
-//        Thread.sleep(30000);
-//
-//        String[] extensions = new String[]{"xlsx"};
-//        List<File> afterOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingDir), extensions, true);
-//
-//        for (File file : afterOnboardingFilelist) {
-//
-//            logger.info("***************** FILE NAME:=====>" + file.getName() + "  *******************");
-//            assertTrue(new File(file.getAbsolutePath() + ".completed").exists());
-//        }
-//
-//        //Check for .completed file creation
-//        String completedFileName = wbFilePath+".completed";
-//        String errorFileName = wbFilePath+".error";
-//
-//        // throw exception if file not found or .error file found instead
-//
-//
-//        // Set-up REST client
-//        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-//        restClient.setUsername("csaload1");
-//        restClient.setPasswordPlain("C$@l0adP120d");
-//        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
-    }
 
+    }
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
@@ -139,26 +137,20 @@ public class WorkbookStepDefs {
 
     @When("^I query Impala for the expected database name$")
     public void something_is_done() throws Throwable {
-        // Use Impala connection:
-//
-//        ImpalaQuery impQ = new ImpalaQuery();
-//        impQ.createConnection();
+        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
+        System.out.println("DATABASENAME     "+databaseName);
+        String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
+        restClient.setQuery(query);
+        response = restClient.get();
+        System.out.println("$#$#$###$#$#"+response);
 
-//
-//        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
-//        System.out.println("DATABASENAME     "+databaseName);
-//        String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
-//        restClient.setQuery(query);
-//        response = restClient.get();
-//        System.out.println("$#$#$###$#$#"+response);
     }
 
     @Then("^I should see Hive DB created with appropriate name in the correct location$")
     public void something_should_happen() throws Throwable {
-    //        JSONArray jsonArr = new JSONArray(response);
-    //        System.out.println(jsonArr.getJSONObject(0).getString("sourceType"));
-    //        assertEquals(jsonArr.getJSONObject(0).getString("sourceType"), "HIVE");
-        assertEquals(5,5);
+        JSONArray jsonArr = new JSONArray(response);
+        System.out.println(jsonArr.getJSONObject(0).getString("sourceType"));
+        assertEquals(jsonArr.getJSONObject(0).getString("sourceType"), "HIVE");
     }
 
     @After
