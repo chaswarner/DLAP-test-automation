@@ -83,9 +83,9 @@ public class WorkbookStepDefs {
 
         for (File file : beforeOnboardingFilelist) {
 
-            System.out.println("before onboarding file list "+file.getAbsolutePath());
-            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
-            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
+//            System.out.println("before onboarding file list "+file.getAbsolutePath());
+//            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
+//            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
             if(file.getParent().endsWith("publish"))
                 assertTrue(new File(""+onboardingDirPublih+"\\"+file.getName() + ".completed").exists());
             else
