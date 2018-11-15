@@ -78,6 +78,9 @@ public class WorkbookStepDefs {
 //        System.out.println("copied from "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
         FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 
+        // Sleep thread ?  I don't think there's a notification to plug in...
+        Thread.sleep(30000);
+
         for (File file : beforeOnboardingFilelist) {
 
             System.out.println("before onboarding file list "+file.getAbsolutePath());
@@ -89,12 +92,6 @@ public class WorkbookStepDefs {
                 assertTrue(new File(""+onboardingDir+"\\"+file.getName() + ".completed").exists());
         }
 
-
-
-        // Sleep thread ?  I don't think there's a notification to plug in...
-        Thread.sleep(30000);
-
-//        String[] extensions = new String[]{"xlsx"};
 
 
 
