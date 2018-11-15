@@ -44,9 +44,11 @@ public class WorkbookStepDefs {
 
 
     private String onboardingDir;
-//    private String onboardingDirPublish;
+    private String onboardingDirPublih;
+    private String onboardingBaseStg;
     private String onboardingDirCurateStg;
     private String onboardingDirPublishStg;
+
 
 
     @Inject
@@ -62,32 +64,39 @@ public class WorkbookStepDefs {
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
 
-//        System.out.println("-->"+rb.getString("onboarding.dir"));
-        onboardingDir=rb.getString("onboarding.dir").trim();
-//        onboardingDirPublish=rb.getString("onboarding.dir.publish");
-        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg")+"/*".trim();
+        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg").trim();
         onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
+        onboardingBaseStg=rb.getString("onboarding.base.stg").trim();
+        onboardingDir=rb.getString("onboarding.dir").trim();
+        onboardingDirPublih=rb.getString("onboarding.dir.publish").trim();
+
+        String[] extensions = new String[]{"xlsx"};
+        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
+//        System.out.println("copied from "+onboardingDirCurateStg+" -->"+onboardingDir);
+        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
+//        System.out.println("copied from "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
+        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
+
+        for (File file : beforeOnboardingFilelist) {
+
+            System.out.println("before onboarding file list "+file.getAbsolutePath());
+            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
+            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
+            if(file.getParent().endsWith("publish"))
+                assertTrue(new File(""+onboardingDirPublih+"\\"+file.getName() + ".completed").exists());
+            else
+                assertTrue(new File(""+onboardingDir+"\\"+file.getName() + ".completed").exists());
+        }
 
 
-        File curateStg = new File(onboardingDirCurateStg);
-        File publishStg = new File(onboardingDirPublishStg);
-        File onboardingDirectory = new File(onboardingDir);
-//        File onboardingDirectoryPublish = new File(onboardingDirPublish);
-
-        FileUtils.copyFile(curateStg, onboardingDirectory);
-        FileUtils.copyDirectory(publishStg, onboardingDirectory);
 
         // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(30000);
 
-        String[] extensions = new String[]{"xlsx"};
-        List<File> afterOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingDir), extensions, true);
+//        String[] extensions = new String[]{"xlsx"};
 
-        for (File file : afterOnboardingFilelist) {
 
-            logger.info("***************** FILE NAME:=====>" + file.getName() + "  *******************");
-            assertTrue(new File(file.getAbsolutePath() + ".completed").exists());
-        }
 
         //Check for .completed file creation
         String completedFileName = wbFilePath+".completed";
