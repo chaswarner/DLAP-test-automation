@@ -18,7 +18,6 @@ import java.util.List;
 
 public class CurateStepDefs {
 
-//    CIFRestClient restClient = CIFInjector.createInstance(NavigatorRestClient.class);
     CIFRestClient restClient;
     String response;
     String body = "{\"name\":\"tenant\"}";
@@ -39,7 +38,7 @@ public class CurateStepDefs {
     public void some_start_condition() throws Throwable {
         wbfile = new File("./src/test/resources/fixtures/ME_FIN_Cash_Detail.xlsx");
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-        dataset = metadataWorkbook.getDataset(wbfile, 0, "raw");
+        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
         System.out.println("DATASET ::: "+dataset.toString());
         System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
         System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
