@@ -1,0 +1,21 @@
+Curate Queries
+-------------------------------
+
+select dep_dt, batch_clsd_dt, inv_due_dt, inv_bill_from_dt, inv_bill_to_dt, crt_dt, crt_ts, lst_maint_ts, gl_flag, chk_dt, extract_dt, file_ins_dt, inv_due_dt
+from dt_cash_detail where sort_key = '0010700MA       C0507487990000700                     A20170305110327486518JH' AND	dep_dt IS NULL	AND batch_clsd_dt IS NULL	AND inv_due_dt='2017-02-10 00:00:00.0' AND 	inv_bill_from_dt='2017-02-10 00:00:00.0' AND 	inv_bill_to_dt='2017-02-10 00:00:00.0' AND 	crt_dt='2017-03-05 00:00:00.0'	AND crt_ts='2017-03-05 11:03:27.0' AND 	lst_maint_ts='2017-03-05 11:03:27.0' AND gl_flag=true	AND chk_dt IS NULL	AND extract_dt='2017-03-05 00:00:00.0' AND 	file_ins_dt='20170306' AND 	inv_due_dt='2017-02-10 00:00:00.0'
+
+select dep_dt, batch_clsd_dt, inv_due_dt, inv_bill_from_dt, inv_bill_to_dt, crt_dt, crt_ts, lst_maint_ts, gl_flag, chk_dt, extract_dt, file_ins_dt, inv_due_dt
+from dt_cash_detail where sort_key = '0010700MA       C0507487990000700                     A20170305110327486518JD' AND 	dep_dt IS NULL AND	batch_clsd_dt IS NULL AND	inv_due_dt='2017-02-02 00:00:00.0' AND	inv_bill_from_dt='2017-02-02 00:00:00.0' AND inv_bill_to_dt='2017-02-02 00:00:00.0' AND	crt_dt='2017-03-05 00:00:00.0' AND	crt_ts='2017-03-05 11:03:27.0' AND	lst_maint_ts='2017-03-05 11:03:27.0' AND gl_flag=false AND	chk_dt IS NULL AND	extract_dt='2017-03-05 00:00:00.0' AND	file_ins_dt='20170306' AND inv_due_dt='2017-02-02 00:00:00.0'	
+
+select dep_dt, batch_clsd_dt, inv_due_dt, inv_bill_from_dt, inv_bill_to_dt, crt_dt, crt_ts, lst_maint_ts, gl_flag, chk_dt, extract_dt, file_ins_dt, inv_due_dt
+from dt_cash_detail where sort_key = '0010700MA       C0507488060000700                     A20170305110327486518JH' AND 	dep_dt IS NULL AND	batch_clsd_dt IS NULL	AND inv_due_dt='2017-02-13 00:00:00.0' AND	inv_bill_from_dt='2017-02-13 00:00:00.0' AND inv_bill_to_dt='2017-02-13 00:00:00.0'	AND crt_dt='2017-03-05 00:00:00.0'	AND crt_ts='2017-03-05 11:03:27.0' AND	lst_maint_ts='2017-03-05 11:03:27.0' AND gl_flag=true AND	chk_dt IS NULL AND	extract_dt='2017-03-05 00:00:00.0' AND	file_ins_dt='20170306' AND	inv_due_dt='2017-02-13 00:00:00.0'											
+
+select dep_dt, batch_clsd_dt, inv_due_dt, inv_bill_from_dt, inv_bill_to_dt, crt_dt, crt_ts, lst_maint_ts, gl_flag, chk_dt, extract_dt, file_ins_dt, inv_due_dt
+from dt_cash_detail where sort_key = '0010700MA       C0507488060000700                     R20170305110327486518OD' AND 	dep_dt = '2017-02-28 00:00:00.0' AND	batch_clsd_dt = '2017-02-28 00:00:00.0' AND	inv_due_dt = '2017-02-15 00:00:00.0' AND inv_bill_from_dt='2017-02-15 00:00:00.0' AND	inv_bill_to_dt='2017-02-15 00:00:00.0'	AND crt_dt='2017-03-05 00:00:00.0' AND	crt_ts='2017-03-05 11:03:27.0' AND lst_maint_ts='2017-03-05 11:03:27.0' AND	gl_flag=false	AND chk_dt IS NULL	AND extract_dt='2017-03-05 00:00:00.0' AND	file_ins_dt='20170306'	AND inv_due_dt='2017-02-15 00:00:00.0'											
+
+-------------------------
+Publish Queries
+-------------------------
+select * from dt_cash_detail_mon where dt_cash_detail_mon.rcpnt_typ='C' AND dt_cash_detail_mon.rcpnt_id='0507487990000700         ' AND dt_cash_detail_mon.bill_arr='P' AND	dt_cash_detail_mon.cash_rcpt_id=0	AND dt_cash_detail_mon.dep_dt IS NULL AND	dt_cash_detail_mon.batch_clsd_dt IS NULL AND	dt_cash_detail_mon.cash_txn_typ = 'J' AND	dt_cash_detail_mon.apld_ind = 'H' AND	dt_cash_detail_mon.inv_bill_from_dt = '2017-02-10 00:00:00.0' AND	dt_cash_detail_mon.inv_bill_to_dt = '2017-02-10 00:00:00.0' AND	dt_cash_detail_mon.tot_alloc_amt = 30 AND	dt_cash_detail_mon.typ = 'A' AND	dt_cash_detail_mon.ar_adj_id = '14461399' AND	dt_cash_detail_mon.ar_adj_typ = 'RF'			
+select * from dt_cash_detail_mon where dt_cash_detail_mon.rcpnt_typ='C'  AND dt_cash_detail_mon.rcpnt_id='0507488060000700         '	 AND dt_cash_detail_mon.bill_arr='P'  AND 	dt_cash_detail_mon.cash_rcpt_id=0  AND 	dt_cash_detail_mon.dep_dt IS NULL  AND 	dt_cash_detail_mon.batch_clsd_dt IS NULL  AND dt_cash_detail_mon.cash_txn_typ = 'J'  AND 	dt_cash_detail_mon.apld_ind = 'H'  AND 	dt_cash_detail_mon.inv_bill_from_dt = '2017-02-13 00:00:00.0'  AND 	dt_cash_detail_mon.inv_bill_to_dt = '2017-02-13 00:00:00.0'	 AND  dt_cash_detail_mon.tot_alloc_amt =1025  AND 	dt_cash_detail_mon.typ = 'A'  AND 	dt_cash_detail_mon.ar_adj_id = '674161416'  AND 	dt_cash_detail_mon.ar_adj_typ = 'RF'			
+
