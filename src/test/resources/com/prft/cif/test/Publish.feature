@@ -1,6 +1,3 @@
-#### DLAPDEV-135,
-#### CURATE_DAILY_CASH.xlsx
-
 #Feature: Data is moved from the Curate to the Publish zone and is transformed according to onboarded workbook metadata.
 #
 #  Scenario: Publish scheduling.
