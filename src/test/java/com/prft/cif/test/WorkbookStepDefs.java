@@ -118,9 +118,11 @@ public class WorkbookStepDefs {
         restClient.setPasswordPlain("C$@l0adP120d");
         restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
         String[] extensions = new String[]{"xlsx"};
-        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File("/tmp/onboarding/"), extensions, true);
+//        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File("/"));
+        File root = new File("/");
         System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        System.out.println(beforeOnboardingFilelist.toString());
+//        System.out.println(beforeOnboardingFilelist.toString());
+        System.out.println(root.getAbsolutePath() + "::"+root.getPath());
         System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
     }
@@ -169,7 +171,7 @@ public class WorkbookStepDefs {
     public void parsing_data() throws Throwable {
 //        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
 //        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-//        Thread.sleep(4000);
+        Thread.sleep(4000);
 //        System.out.println("DATASET ::: " + dataset.toString());
 //        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
 //        System.out.println("Table Name ::: " + dataset.getName());
