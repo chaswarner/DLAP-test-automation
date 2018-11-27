@@ -14,13 +14,18 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FileUtils;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.codehaus.jettison.json.JSONArray;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -176,38 +181,29 @@ public class WorkbookStepDefs {
     @When("^I query Cloudera Navigator for the list of columns in the data set database$")
 
     public void database_columns() throws Throwable {
-        Connection conn;
-        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-        conn = null;
-        Statement stmt = null;
-        try {
-            //STEP 2: Register JDBC driver
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
+         Connection conn =null;
+         Configuration conf=null;
+            TableName tableName = TableName.valueOf("dev_cif:filepattern");
 
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
+            conf = HBaseConfiguration.create();
+            conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+            conf.set("hbase.zookeeper.property.clientPort", "2181");
+            conn = ConnectionFactory.createConnection(conf);
 
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
-            String sql;
-            sql = "describe"+dataset.getName();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                //Retrieve by column name
-                String cname = rs.getString("Column Name");
-                String ctype = rs.getString("Column Type");
+/*        Admin admin = conn.getAdmin();
+        if (!admin.tableExists(tableName)) {
+            admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
+        }*/
 
-                //Display values
-                System.out.print(", Column Name: " + cname);
-                columnname.add(cname);
-                System.out.println(", Column Type: " + ctype);
-                columntype.add(ctype);
+            Table table = conn.getTable(tableName);
+            Scan scan = new Scan();
+            ResultScanner scanner1 = table.getScanner(scan);
+
+            for (Result scn :scanner1){
+                System.out.println("Hbase table scan-->"+scn);
+                System.out.println("Key **>"+table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
+
             }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
 
