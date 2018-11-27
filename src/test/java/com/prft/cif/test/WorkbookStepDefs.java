@@ -33,10 +33,7 @@ import java.io.File;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -169,68 +166,50 @@ public class WorkbookStepDefs {
     }
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
-//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
+        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
         Thread.sleep(4000);
-//        System.out.println("DATASET ::: " + dataset.toString());
-//        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
-//        System.out.println("Table Name ::: " + dataset.getName());
+        System.out.println("DATASET ::: " + dataset.toString());
+        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
+        System.out.println("Table Name ::: " + dataset.getName());
     }
     @When("^I query Cloudera Navigator for the list of columns in the data set database$")
 
     public void database_columns() throws Throwable {
-//        Connection conn;
-//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-//        conn = null;
-//        Statement stmt = null;
-//        try {
-//            //STEP 2: Register JDBC driver
-//            Class.forName("org.apache.hive.jdbc.HiveDriver");
-//
-//            //STEP 3: Open a connection
-//            System.out.println("Connecting to database...");
-//            conn = DriverManager.getConnection(DB_URL, "", "");
-//
-//            //STEP 4: Execute a query
-//            System.out.println("Creating statement...");
-//            stmt = conn.createStatement();
-//            String sql;
-//            sql = "describe"+dataset.getName();
-//            ResultSet rs = stmt.executeQuery(sql);
-//            while(rs.next()){
-//                //Retrieve by column name
-//                String cname = rs.getString("Column Name");
-//                String ctype = rs.getString("Column Type");
-//
-//                //Display values
-//                System.out.print(", Column Name: " + cname);
-//                columnname.add(cname);
-//                System.out.println(", Column Type: " + ctype);
-//                columntype.add(ctype);
-//            }
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//        String query="select rcpnt_id from"+dataset.getName();
-//        ArrayList<String> list = cifimpala.describeTable(query);
-////        int listSize=list.size();
-//        int mapSize=list.get(1);
-//
-//
-//        for (int listEntry = 0; listEntry < listSize; listEntry++) {
-//
-//            String[] values = new String[mapSize];
-//            Set entries = list.get(listEntry).entrySet();
-//            Iterator entriesIterator = entries.iterator();
-//            int i = 0;
-//            while (entriesIterator.hasNext()) {
-//
-//                Map.Entry mapping = (Map.Entry) entriesIterator.next();
-//                values[i] = mapping.getValue().toString();
-//                System.out.println(values[i]);
-//                ++i;
+        Connection conn;
+        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+        conn = null;
+        Statement stmt = null;
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql;
+            sql = "describe"+dataset.getName();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                //Retrieve by column name
+                String cname = rs.getString("Column Name");
+                String ctype = rs.getString("Column Type");
+
+                //Display values
+                System.out.print(", Column Name: " + cname);
+                columnname.add(cname);
+                System.out.println(", Column Type: " + ctype);
+                columntype.add(ctype);
             }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Then("^I should see appropriate columns in the appropriate DB available via Impala$")

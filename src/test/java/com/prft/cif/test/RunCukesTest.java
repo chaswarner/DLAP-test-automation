@@ -1,3 +1,5 @@
+package com.prft.cif.test;
+
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
@@ -9,4 +11,9 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/com/prft/cif/test/"
         )
 public class RunCukesTest {
+        public static void main(String[] args) throws Throwable {
+                String[] arguments = {"foo", "bar"};
+//                cucumber.api.cli.Main.main(arguments);
+                cucumber.api.cli.Main.main(arguments);
+        }
 }
