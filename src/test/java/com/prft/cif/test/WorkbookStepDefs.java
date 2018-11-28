@@ -178,8 +178,10 @@ public class WorkbookStepDefs {
          conf = HBaseConfiguration.create();
          conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
          conf.set("hbase.zookeeper.property.clientPort", "2181");
+        System.out.println("conf set - ================================");
+        System.out.println(conf.toString());
          conn = ConnectionFactory.createConnection(conf);
-
+         System.out.println('Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$');
 /*        Admin admin = conn.getAdmin();
         if (!admin.tableExists(tableName)) {
             admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
@@ -188,6 +190,7 @@ public class WorkbookStepDefs {
         Table table = conn.getTable(tableName);
         Scan scan = new Scan();
         ResultScanner scanner1 = table.getScanner(scan);
+        System.out.println('Scan - line 190... #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$');
 
         for (Result scn :scanner1){
             System.out.println("Hbase table scan-->"+scn);
