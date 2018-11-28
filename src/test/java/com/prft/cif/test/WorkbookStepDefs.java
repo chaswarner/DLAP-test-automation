@@ -188,14 +188,15 @@ public class WorkbookStepDefs {
         }*/
 
         Table table = conn.getTable(tableName);
-        System.out.println("Conn.getTable Success - 0");
+        System.out.println("Conn.getTable Success - 0    : : " +table.toString());
         Scan scan = new Scan();
         System.out.println("Scan Success - 0");
         ResultScanner scanner1 = table.getScanner(scan);
-        System.out.println("Scan Success - 1");
+        System.out.println("Scan Success - 1  ::    "+ scanner1.toString());
         for (Result scn :scanner1) {
-            System.out.println("Hbase table scan-->" + scn);
-            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
+            String key = Bytes.toString(scn.getRow());
+            System.out.println("Hbase table scan-->" + key);
+//            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
         }
     }
 
