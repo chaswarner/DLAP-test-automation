@@ -158,33 +158,22 @@ public class WorkbookStepDefs {
         assertEquals(jsonArr.getJSONObject(0).getString("sourceType"), "HIVE");
     }
 
-    @After
-    public void tearDown () throws Exception{
-    // Remove workbook .xlsx file and .completed files from W:\dlap_tst\cif\onboarding\
-
-    // Truncate Hive table
-
-    // Drop Hive table
-
-    // Delete folder at /env/zone/domain/dataset
-
-    }
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
         MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
         dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-        Thread.sleep(4000);
         System.out.println("DATASET ::: " + dataset.toString());
         System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
         System.out.println("Table Name ::: " + dataset.getName());
     }
-    @When("^I query Cloudera Navigator for the list of columns in the data set database$")
+
+    @When("^I query HBase for the row keys in the data set$")
 
     public void database_columns() throws Throwable {
          Connection conn =null;
          Configuration conf=null;
             TableName tableName = TableName.valueOf("dev_cif:filepattern");
-
+            System.setProperty("user.,name","csaload1");
             conf = HBaseConfiguration.create();
             conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
             conf.set("hbase.zookeeper.property.clientPort", "2181");
@@ -202,7 +191,6 @@ public class WorkbookStepDefs {
             for (Result scn :scanner1){
                 System.out.println("Hbase table scan-->"+scn);
                 System.out.println("Key **>"+table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
-
             }
     }
 

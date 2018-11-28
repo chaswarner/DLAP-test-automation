@@ -17,7 +17,7 @@ Feature: Cash Detail dataset on-boarding
   @SmokeTest
   Scenario: Curate data set schema validation.
     Given I have parsed a curate workbook
-    When I query Cloudera Navigator for the list of columns in the data set database
+    When I query HBase for the row keys in the data set
     Then I should see appropriate columns in the appropriate DB available via Impala
 
 ## Test that HBase contains sort key
