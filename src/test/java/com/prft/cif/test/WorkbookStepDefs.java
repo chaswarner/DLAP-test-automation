@@ -190,9 +190,11 @@ public class WorkbookStepDefs {
 
         // Instantiating HBaseAdmin class
         HBaseAdmin admin = new HBaseAdmin(conf);
+        System.out.println("HBaseAdmin  created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$");
 
         // Getting all the list of tables using HBaseAdmin object
         HTableDescriptor[] tableDescriptor = admin.listTables();
+        System.out.println("admin.listTables successfully *@$#%@$#%@$#$##@#@@#$@#$@#$");
 
         // printing all the table names.
         for (int i=0; i<tableDescriptor.length;i++ ) {
