@@ -112,9 +112,9 @@ public class WorkbookStepDefs {
         //Check for .completed file creation
         String completedFileName = wbFilePath+".completed";
         String errorFileName = wbFilePath+".error";
-        System.setProperty("user.name","csaload1");
-        System.setProperty("java.security.krb5.conf", "src/main/resources/krb5.conf");
-        System.setProperty("sun.security.krb5.debug", "true");
+//        System.setProperty("user.name","csaload1");
+//        System.setProperty("java.security.krb5.conf", "src/main/resources/krb5.conf");
+//        System.setProperty("sun.security.krb5.debug", "true");
 
 
 
@@ -183,12 +183,12 @@ public class WorkbookStepDefs {
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conf.set("hadoop.security.authentication", "kerberos");
-        conf.set("hbase.security.authentication", "kerberos");
-        conf.set("hbase.master.kerberos.principal", "hbase/_HOST@BCBSMAMD.NET");
-        conf.set("hbase.master.keytab.file", "src/test/resources/krb5.conf");
-        conf.set("hbase.regionserver.kerberos.principal", "hbase/_HOST@BCBSMAMD.NET");
-        conf.set("hbase.regionserver.keytab.file", "src/test/resources/krb5.conf");
+//        conf.set("hadoop.security.authentication", "kerberos");
+//        conf.set("hbase.security.authentication", "kerberos");
+//        conf.set("hbase.master.kerberos.principal", "hbase/_HOST@BCBSMAMD.NET");
+//        conf.set("hbase.master.keytab.file", "src/test/resources/krb5.conf");
+//        conf.set("hbase.regionserver.kerberos.principal", "hbase/_HOST@BCBSMAMD.NET");
+//        conf.set("hbase.regionserver.keytab.file", "src/test/resources/krb5.conf");
         conn = ConnectionFactory.createConnection(conf);
         System.out.println("Connection Success - 0");
 
