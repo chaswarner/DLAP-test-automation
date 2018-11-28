@@ -181,7 +181,7 @@ public class WorkbookStepDefs {
         System.out.println("conf set - ================================");
         System.out.println(conf.toString());
          conn = ConnectionFactory.createConnection(conf);
-         System.out.println('Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$');
+         System.out.println("Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$");
 /*        Admin admin = conn.getAdmin();
         if (!admin.tableExists(tableName)) {
             admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
@@ -190,7 +190,7 @@ public class WorkbookStepDefs {
         Table table = conn.getTable(tableName);
         Scan scan = new Scan();
         ResultScanner scanner1 = table.getScanner(scan);
-        System.out.println('Scan - line 190... #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$');
+        System.out.println("Scan - line 190... #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
 
         for (Result scn :scanner1){
             System.out.println("Hbase table scan-->"+scn);
