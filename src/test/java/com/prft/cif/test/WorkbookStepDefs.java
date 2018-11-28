@@ -110,7 +110,7 @@ public class WorkbookStepDefs {
         //Check for .completed file creation
         String completedFileName = wbFilePath+".completed";
         String errorFileName = wbFilePath+".error";
-        System.setProperty("user.,name","csaload1");
+        System.setProperty("user.name","csaload1");
 
 
         // throw exception if file not found or .error file found instead
@@ -174,25 +174,25 @@ public class WorkbookStepDefs {
     public void database_columns() throws Throwable {
          Connection conn =null;
          Configuration conf=null;
-            TableName tableName = TableName.valueOf("dev_cif:filepattern");
-            conf = HBaseConfiguration.create();
-            conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
-            conf.set("hbase.zookeeper.property.clientPort", "2181");
-            conn = ConnectionFactory.createConnection(conf);
+         TableName tableName = TableName.valueOf("dev_cif:filepattern");
+         conf = HBaseConfiguration.create();
+         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+         conf.set("hbase.zookeeper.property.clientPort", "2181");
+         conn = ConnectionFactory.createConnection(conf);
 
 /*        Admin admin = conn.getAdmin();
         if (!admin.tableExists(tableName)) {
             admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
         }*/
 
-            Table table = conn.getTable(tableName);
-            Scan scan = new Scan();
-            ResultScanner scanner1 = table.getScanner(scan);
+        Table table = conn.getTable(tableName);
+        Scan scan = new Scan();
+        ResultScanner scanner1 = table.getScanner(scan);
 
-            for (Result scn :scanner1){
-                System.out.println("Hbase table scan-->"+scn);
-                System.out.println("Key **>"+table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
-            }
+        for (Result scn :scanner1){
+            System.out.println("Hbase table scan-->"+scn);
+            System.out.println("Key **>"+table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
+        }
     }
 
 
