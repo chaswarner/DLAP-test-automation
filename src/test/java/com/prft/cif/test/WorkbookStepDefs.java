@@ -16,7 +16,6 @@ import cucumber.api.java.en.When;
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.client.Table;
@@ -60,6 +59,8 @@ public class WorkbookStepDefs {
     private String onboardingBaseStg;
     private String onboardingDirCurateStg;
     private String onboardingDirPublishStg;
+    private static Connection conn =null;
+    private static Configuration conf=null;
 
 
 
@@ -173,43 +174,28 @@ public class WorkbookStepDefs {
     @When("^I query HBase for the row keys in the data set$")
 
     public void database_columns() throws Throwable {
-         Connection conn =null;
-         Configuration conf=null;
-         TableName tableName = TableName.valueOf("dev_cif:filepattern");
-         conf = HBaseConfiguration.create();
-         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
-         conf.set("hbase.zookeeper.property.clientPort", "2181");
-        System.out.println("conf set - ================================");
-        System.out.println(conf.toString());
-         conn = ConnectionFactory.createConnection(conf);
-         System.out.println("Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$   :::  "+conn.toString());
+        TableName tableName = TableName.valueOf("dev_cif:filepattern");
+
+        conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+        conf.set("hbase.zookeeper.property.clientPort", "2181");
+        conn = ConnectionFactory.createConnection(conf);
+        System.out.println("Connection Success - 0");
+
 /*        Admin admin = conn.getAdmin();
         if (!admin.tableExists(tableName)) {
             admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
         }*/
 
-        // Instantiating HBaseAdmin class
-        HBaseAdmin admin = new HBaseAdmin(conf);
-        System.out.println("HBase admin line 193 #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
-
-        // Getting all the list of tables using HBaseAdmin object
-        HTableDescriptor[] tableDescriptor = admin.listTables();
-        System.out.println("HBase admin listtables line 197 #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
-
-        // printing all the table names.
-        for (int i=0; i<tableDescriptor.length;i++ ) {
-            System.out.println("Scan - line 190... #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
-            System.out.println(tableDescriptor[i].getNameAsString());
-        }
         Table table = conn.getTable(tableName);
-
+        System.out.println("Conn.getTable Success - 0");
         Scan scan = new Scan();
+        System.out.println("Scan Success - 0");
         ResultScanner scanner1 = table.getScanner(scan);
-        System.out.println("Scan - line 190... #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
-
-        for (Result scn :scanner1){
-            System.out.println("Hbase table scan-->"+scn);
-            System.out.println("Key **>"+table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
+        System.out.println("Scan Success - 1");
+        for (Result scn :scanner1) {
+            System.out.println("Hbase table scan-->" + scn);
+            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
         }
     }
 
