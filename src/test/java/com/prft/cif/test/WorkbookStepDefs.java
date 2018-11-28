@@ -182,7 +182,7 @@ public class WorkbookStepDefs {
         System.out.println("conf set - ================================");
         System.out.println(conf.toString());
          conn = ConnectionFactory.createConnection(conf);
-         System.out.println("Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$");
+         System.out.println("Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$   :::  "+conn.to);
 /*        Admin admin = conn.getAdmin();
         if (!admin.tableExists(tableName)) {
             admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
@@ -190,15 +190,15 @@ public class WorkbookStepDefs {
 
         // Instantiating HBaseAdmin class
         HBaseAdmin admin = new HBaseAdmin(conf);
-        System.out.println("HBaseAdmin  created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$");
+        System.out.println("HBase admin line 193 #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
 
         // Getting all the list of tables using HBaseAdmin object
         HTableDescriptor[] tableDescriptor = admin.listTables();
-        System.out.println("admin.listTables successfully *@$#%@$#%@$#$##@#@@#$@#$@#$");
+        System.out.println("HBase admin listtables line 197 #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
 
         // printing all the table names.
         for (int i=0; i<tableDescriptor.length;i++ ) {
-            System.out.println(" #$$###$#$##$@$#%@$#%@$#$##@#@@#$@#$@#$ TABLE NAMES  :: ");
+            System.out.println("Scan - line 190... #$$###$#$##$ *@$#%@$#%@$#$##@#@@#$@#$@#$");
             System.out.println(tableDescriptor[i].getNameAsString());
         }
         Table table = conn.getTable(tableName);
