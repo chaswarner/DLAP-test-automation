@@ -110,6 +110,8 @@ public class WorkbookStepDefs {
         //Check for .completed file creation
         String completedFileName = wbFilePath+".completed";
         String errorFileName = wbFilePath+".error";
+        System.setProperty("user.,name","csaload1");
+
 
         // throw exception if file not found or .error file found instead
 
@@ -173,7 +175,6 @@ public class WorkbookStepDefs {
          Connection conn =null;
          Configuration conf=null;
             TableName tableName = TableName.valueOf("dev_cif:filepattern");
-            System.setProperty("user.,name","csaload1");
             conf = HBaseConfiguration.create();
             conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
             conf.set("hbase.zookeeper.property.clientPort", "2181");
