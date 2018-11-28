@@ -182,7 +182,7 @@ public class WorkbookStepDefs {
         System.out.println("conf set - ================================");
         System.out.println(conf.toString());
          conn = ConnectionFactory.createConnection(conf);
-         System.out.println("Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$   :::  "+conn.to);
+         System.out.println("Connection created successfully *@$#%@$#%@$#$##@#@@#$@#$@#$   :::  "+conn.toString());
 /*        Admin admin = conn.getAdmin();
         if (!admin.tableExists(tableName)) {
             admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
