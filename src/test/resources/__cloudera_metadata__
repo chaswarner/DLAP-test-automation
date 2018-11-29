@@ -1,0 +1,6 @@
+{
+  "parcels_in_use": {
+    "CDH": "5.15.0-1.cdh5.15.0.p0.21", 
+    "CLABS_PHOENIX": "4.7.0-1.clabs_phoenix1.3.0.p0.000"
+  }
+}
