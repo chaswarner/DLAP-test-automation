@@ -30,8 +30,7 @@
       <dependency>
           <groupId>org.apache.hbase</groupId>
           <artifactId>hbase-client</artifactId>
-          <version>2.0.0</version>
-          <scope>provided</scope>
+          <version>1.2.0-cdh5.15.0</version>
       </dependency>
       <dependency>
           <groupId>org.slf4j</groupId>
@@ -101,42 +100,6 @@
           <groupId>org.codehaus.jettison</groupId>
           <artifactId>jettison</artifactId>
           <version>1.4.0</version>
-      </dependency>
-      <!-- ***** MYBATIS ***** -->
-      <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
-      <dependency>
-          <groupId>org.mybatis</groupId>
-          <artifactId>mybatis</artifactId>
-          <version>3.4.5</version>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-guice -->
-      <dependency>
-          <groupId>org.mybatis</groupId>
-          <artifactId>mybatis-guice</artifactId>
-          <version>3.7</version>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
-      <dependency>
-          <groupId>org.apache.spark</groupId>
-          <artifactId>spark-core_2.11</artifactId>
-          <version>2.2.1</version>
-          <scope>provided</scope>
-      </dependency>
-
-      <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-hive -->
-      <dependency>
-          <groupId>org.apache.spark</groupId>
-          <artifactId>spark-hive_2.11</artifactId>
-          <version>2.2.1</version>
-          <scope>provided</scope>
-      </dependency>
-
-      <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
-      <dependency>
-          <groupId>org.apache.spark</groupId>
-          <artifactId>spark-sql_2.11</artifactId>
-          <version>2.2.1</version>
-          <scope>provided</scope>
       </dependency>
       <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
       <dependency>
@@ -277,19 +240,6 @@
                     </configuration>
                 </execution>
             </executions>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.22.1</version>
-            <configuration>
-                <systemPropertyVariables>
-                    <PropertyName1>user.name</PropertyName1>
-                </systemPropertyVariables>
-                <environmentVariables>
-                    <EnvironmentVariable1>csaload1</EnvironmentVariable1>
-                </environmentVariables>
-            </configuration>
         </plugin>
         <plugin>
             <groupId>org.codehaus.mojo</groupId>

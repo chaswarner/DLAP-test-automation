@@ -112,7 +112,6 @@ public class WorkbookStepDefs {
         //Check for .completed file creation
         String completedFileName = wbFilePath+".completed";
         String errorFileName = wbFilePath+".error";
-//        System.setProperty("user.name","csaload1");
 //        System.setProperty("java.security.krb5.conf", "src/main/resources/krb5.conf");
 //        System.setProperty("sun.security.krb5.debug", "true");
 
