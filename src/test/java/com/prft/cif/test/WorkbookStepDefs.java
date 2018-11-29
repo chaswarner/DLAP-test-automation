@@ -195,6 +195,7 @@ public class WorkbookStepDefs {
     public void something_should_happen() throws Throwable {
 // compare columnname array with wbcolumnnames array
         wbcolumnnames.remove("Column Name");
+        wbcolumnnames.add("timestamp_");
         System.out.println("WB Column names   :  "+wbcolumnnames.toString());
         System.out.println("DB Column names   :  "+columnname.toString());
         System.out.println(columnname.equals(wbcolumnnames));
