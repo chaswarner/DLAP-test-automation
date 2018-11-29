@@ -149,12 +149,12 @@ public class WorkbookStepDefs {
 
     @When("^I query Impala for the expected database name$")
     public void something_is_done() throws Throwable {
-        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
-        System.out.println("DATABASENAME     "+databaseName);
-        String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
-        restClient.setQuery(query);
-        response = restClient.get();
-        System.out.println("$#$#$###$#$#"+response);
+    //        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
+    //        System.out.println("DATABASENAME     "+databaseName);
+    //        String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
+    //        restClient.setQuery(query);
+    //        response = restClient.get();
+    //        System.out.println("$#$#$###$#$#"+response);
 
     }
 
@@ -167,11 +167,11 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
-        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-        System.out.println("DATASET ::: " + dataset.toString());
-        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
-        System.out.println("Table Name ::: " + dataset.getName());
+//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
+//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
+//        System.out.println("DATASET ::: " + dataset.toString());
+//        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
+//        System.out.println("Table Name ::: " + dataset.getName());
     }
 
     @When("^I query HBase for the row keys in the data set$")
