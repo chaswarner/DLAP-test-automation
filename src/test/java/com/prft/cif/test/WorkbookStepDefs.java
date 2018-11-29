@@ -194,7 +194,7 @@ public class WorkbookStepDefs {
     @Then("^I should see Hive DB created with appropriate name in the correct location$")
     public void something_should_happen() throws Throwable {
 // compare columnname array with wbcolumnnames array
-        columnname.equals(wbcolumnnames);
+        assertEquals(columnname, wbcolumnnames);
     }
 
     @Given("^I have parsed a curate workbook$")
