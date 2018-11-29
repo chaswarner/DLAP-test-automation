@@ -141,7 +141,7 @@ public class WorkbookStepDefs {
 
             while(rs.next()){
                 //Retrieve by column name
-                String cname = rs.getString("Col_name");
+                String cname = rs.getString("name");
 //                String ctype = rs.getString("Column Type");
 
                 //Display values
