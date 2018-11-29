@@ -111,26 +111,26 @@
           <!--<version>1.1.0-cdh5.15.0</version>-->
           <!--<scope>provided</scope>-->
       <!--</dependency>-->
-      <!--<dependency>-->
-          <!--<groupId>org.apache.hadoop</groupId>-->
-          <!--<artifactId>hadoop-hdfs</artifactId>-->
-          <!--<version>2.6.0-cdh5.15.0</version>-->
-          <!--<scope>provided</scope>-->
-      <!--</dependency>-->
-      <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client &ndash;&gt;-->
-      <!--<dependency>-->
-          <!--<groupId>org.apache.hadoop</groupId>-->
-          <!--<artifactId>hadoop-client</artifactId>-->
-          <!--<version>2.6.0-cdh5.15.0</version>-->
-          <!--<scope>provided</scope>-->
-      <!--</dependency>-->
-      <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common &ndash;&gt;-->
-      <!--<dependency>-->
-          <!--<groupId>org.apache.hadoop</groupId>-->
-          <!--<artifactId>hadoop-common</artifactId>-->
-          <!--<version>2.6.0-cdh5.15.0</version>-->
-          <!--<scope>provided</scope>-->
-      <!--</dependency>-->
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>2.6.0-cdh5.15.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-client</artifactId>
+          <version>2.6.0-cdh5.15.0</version>
+          <scope>provided</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common -->
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>2.6.0-cdh5.15.0</version>
+          <scope>provided</scope>
+      </dependency>
       <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-auth -->
       <!--<dependency>-->
           <!--<groupId>org.apache.hadoop</groupId>-->
@@ -199,53 +199,53 @@
                     <!--</execution>-->
                 <!--</executions>-->
             <!--</plugin>-->
-        <plugin>
-            <!-- Build an executable JAR -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.1.0</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <classpathPrefix>com.prft.cif.test/</classpathPrefix>
-                        <mainClass>com.prft.cif.test.RunCukesTest</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>3.0.0</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <filters>
-                            <filter>
-                                <artifact>*:*</artifact>
-                                <excludes>
-                                    <exclude>META-INF/*.SF</exclude>
-                                    <exclude>META-INF/*.DSA</exclude>
-                                    <exclude>META-INF/*.RSA</exclude>
-                                </excludes>
-                            </filter>
-                        </filters>
-                        <finalName>${artifactId}</finalName>
-                        <createDependencyReducedPom>false</createDependencyReducedPom>
-                        <!--<transformers>-->
-                            <!--<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
-                                <!--<mainClass>com.prft.cif.test.RunCukesTests</mainClass>-->
-                            <!--</transformer>-->
-                        <!--</transformers>-->
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+        <!--<plugin>-->
+            <!--&lt;!&ndash; Build an executable JAR &ndash;&gt;-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-jar-plugin</artifactId>-->
+            <!--<version>3.1.0</version>-->
+            <!--<configuration>-->
+                <!--<archive>-->
+                    <!--<manifest>-->
+                        <!--<addClasspath>true</addClasspath>-->
+                        <!--<classpathPrefix>com.prft.cif.test/</classpathPrefix>-->
+                        <!--<mainClass>com.prft.cif.test.RunCukesTest</mainClass>-->
+                    <!--</manifest>-->
+                <!--</archive>-->
+            <!--</configuration>-->
+        <!--</plugin>-->
+        <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-shade-plugin</artifactId>-->
+            <!--<version>3.0.0</version>-->
+            <!--<executions>-->
+                <!--<execution>-->
+                    <!--<phase>package</phase>-->
+                    <!--<goals>-->
+                        <!--<goal>shade</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                        <!--<filters>-->
+                            <!--<filter>-->
+                                <!--<artifact>*:*</artifact>-->
+                                <!--<excludes>-->
+                                    <!--<exclude>META-INF/*.SF</exclude>-->
+                                    <!--<exclude>META-INF/*.DSA</exclude>-->
+                                    <!--<exclude>META-INF/*.RSA</exclude>-->
+                                <!--</excludes>-->
+                            <!--</filter>-->
+                        <!--</filters>-->
+                        <!--<finalName>${artifactId}</finalName>-->
+                        <!--<createDependencyReducedPom>false</createDependencyReducedPom>-->
+                        <!--&lt;!&ndash;<transformers>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<mainClass>com.prft.cif.test.RunCukesTests</mainClass>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</transformer>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</transformers>&ndash;&gt;-->
+                    <!--</configuration>-->
+                <!--</execution>-->
+            <!--</executions>-->
+        <!--</plugin>-->
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -254,31 +254,31 @@
                 <mainClass>com.prft.cif.test.RunCukesTest</mainClass>
             </configuration>
         </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>2.2.1</version>
-            <executions>
-                <execution>
-                    <id>package-jar-with-dependencies</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                    <configuration>
-                        <appendAssemblyId>false</appendAssemblyId>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                        <archive>
-                            <manifest>
-                                <mainClass>com.prft.cif.test.RunCukesTest</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+        <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-assembly-plugin</artifactId>-->
+            <!--<version>2.2.1</version>-->
+            <!--<executions>-->
+                <!--<execution>-->
+                    <!--<id>package-jar-with-dependencies</id>-->
+                    <!--<phase>package</phase>-->
+                    <!--<goals>-->
+                        <!--<goal>single</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                        <!--<appendAssemblyId>false</appendAssemblyId>-->
+                        <!--<descriptorRefs>-->
+                            <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+                        <!--</descriptorRefs>-->
+                        <!--<archive>-->
+                            <!--<manifest>-->
+                                <!--<mainClass>com.prft.cif.test.RunCukesTest</mainClass>-->
+                            <!--</manifest>-->
+                        <!--</archive>-->
+                    <!--</configuration>-->
+                <!--</execution>-->
+            <!--</executions>-->
+        <!--</plugin>-->
 
         </plugins>
     </build>
