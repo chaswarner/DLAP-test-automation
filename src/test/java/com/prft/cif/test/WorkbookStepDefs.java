@@ -53,6 +53,8 @@ public class WorkbookStepDefs {
     String wbFilePath = "./src/test/resources/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
     File wbfile = new File(wbFilePath);
     ArrayList<String> columnname = new ArrayList<>();
+    ArrayList<String> wbcolumnnames = new ArrayList<>();
+    ArrayList<String> dbcolumnnames = new ArrayList<>();
     ArrayList<String> columntype = new ArrayList<>();
 
 
@@ -134,7 +136,8 @@ public class WorkbookStepDefs {
             cellnum = rownum.getCell(12);
             String CurateCellType = dataFormatter.formatCellValue(cellnum);
             CurateDataType.add(CurateCellType);
-            System.out.println(CurateCellValue );
+            System.out.println(CurateCellValue);
+            wbcolumnnames.add(CurateCellValue);
         }
         if(columnname.size()== CurateColumn.size() ) {
             for (int i = 0; i < columnname.size(); i++) {
@@ -190,9 +193,8 @@ public class WorkbookStepDefs {
 
     @Then("^I should see Hive DB created with appropriate name in the correct location$")
     public void something_should_happen() throws Throwable {
-//        JSONArray jsonArr = new JSONArray(response);
-//        System.out.println(jsonArr.getJSONObject(0).getString("sourceType"));
-//        assertEquals(jsonArr.getJSONObject(0).getString("sourceType"), "HIVE");
+// compare columnname array with wbcolumnnames array
+        columnname.equals(wbcolumnnames);
     }
 
     @Given("^I have parsed a curate workbook$")
