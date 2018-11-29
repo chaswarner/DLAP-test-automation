@@ -6,7 +6,7 @@ Feature: Cash Detail dataset on-boarding
   Background : A workbook is on-boarded as a data set using cif-onboarding.
 
 ##Just check that a database exists with the right name. Database name should be
-
+  @SmokeTest
   Scenario: Curate data set db creation.
     Given I have parsed a workbook
     When I query Impala for the expected database name

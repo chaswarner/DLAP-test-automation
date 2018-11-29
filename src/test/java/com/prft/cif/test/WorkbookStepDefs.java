@@ -121,13 +121,38 @@ public class WorkbookStepDefs {
 
     @When("^I query Impala for the expected database name$")
     public void something_is_done() throws Throwable {
-    //        String databaseName = CIFDatasetUtil.getDatabaseName(dataset);
-    //        System.out.println("DATABASENAME     "+databaseName);
-    //        String query = "?limit=2&offset=0&query=((type:database)AND(originalName:"+databaseName+")AND(sourceType:HIVE))";
-    //        restClient.setQuery(query);
-    //        response = restClient.get();
-    //        System.out.println("$#$#$###$#$#"+response);
+        java.sql.Connection conn;
+        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
+        Statement stmt = null;
+        try {
+            //STEP 2: Register JDBC driver
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            //STEP 3: Open a connection-
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql;
+            sql = "describe test_curate_fin.cash_detail";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                //Retrieve by column name
+                String cname = rs.getString("Col_name");
+//                String ctype = rs.getString("Column Type");
+
+                //Display values
+                columnname.add(cname);
+                System.out.println(cname);
+//                System.out.println(", Column Type: " + ctype);
+//                columntype.add(ctype);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Then("^I should see Hive DB created with appropriate name in the correct location$")
