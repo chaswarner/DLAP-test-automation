@@ -110,13 +110,46 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-//        Thread.sleep(5000);
-//        System.out.println("DATASET ::: "+dataset.toString());
-//        System.out.println("DATASET ATTRIBUTES ::: "+dataset.getAttributes());
-//        System.out.println("BUSINESS DOMAIN ::: "+dataset.getBusinessDomain());
-//        System.out.println("CONTACT EMAIL ::: "+dataset.getContactEmail());
+        String tableName = null;
+        ArrayList<String> curateColNames = new ArrayList<String>();
+        Workbook workbook = null;
+        try {
+            workbook = WorkbookFactory.create(wbfile);
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        Sheet sheet = workbook.getSheetAt(0);
+        DataFormatter dataFormatter = new DataFormatter();
+        org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
+        Cell cellnum = rownum.getCell(1);
+        String cellval = dataFormatter.formatCellValue(cellnum);
+        System.out.println("Cell Value :: " + cellval);
+        ArrayList<String> CurateColumn = new ArrayList<String>();
+        ArrayList<String> CurateDataType = new ArrayList<String>();
+        for(int i=46; i<=sheet.getLastRowNum();i++) {
+            rownum = sheet.getRow(i);
+            cellnum = rownum.getCell(11);
+            String CurateCellValue = dataFormatter.formatCellValue(cellnum);
+            CurateColumn.add(CurateCellValue);
+            cellnum = rownum.getCell(12);
+            String CurateCellType = dataFormatter.formatCellValue(cellnum);
+            CurateDataType.add(CurateCellType);
+            System.out.println(CurateCellValue );
+        }
+        if(columnname.size()== CurateColumn.size() ) {
+            for (int i = 0; i < columnname.size(); i++) {
+                String actual = columnname.get(i);
+                String expected = CurateColumn.get(i);
+                assertEquals(actual, expected);
+            }
+        }
+            if(columntype.size()== CurateDataType.size() ) {
+                for (int i = 0; i < columntype.size(); i++) {
+                    String actual = columntype.get(i);
+                    String expected = CurateDataType.get(i);
+                    assertEquals(actual, expected);
+                }
+            }
     }
 
     @When("^I query Impala for the expected database name$")
@@ -146,7 +179,7 @@ public class WorkbookStepDefs {
 
                 //Display values
                 columnname.add(cname);
-                System.out.println(cname);
+                System.out.println("COLUMN NAME  :  "+cname);
 //                System.out.println(", Column Type: " + ctype);
 //                columntype.add(ctype);
             }
