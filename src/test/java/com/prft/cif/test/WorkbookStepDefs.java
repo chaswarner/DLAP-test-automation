@@ -122,17 +122,7 @@ public class WorkbookStepDefs {
 
 
         // Set-up REST client
-//        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-//        restClient.setUsername("csaload1");
-//        restClient.setPasswordPlain("C$@l0adP120d");
-//        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
-//        String[] extensions = new String[]{"xlsx"};
-////        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File("/"));
-//        File root = new File("/");
-//        System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-////        System.out.println(beforeOnboardingFilelist.toString());
-//        System.out.println(root.getAbsolutePath() + "::"+root.getPath());
-//        System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//
 
     }
 
@@ -203,8 +193,8 @@ public class WorkbookStepDefs {
         ResultScanner scanner1 = table.getScanner(scan);
         System.out.println("Scan Success - 1  ::    "+ scanner1.toString());
         for (Result scn :scanner1) {
-            String key = Bytes.toString(scn.getRow());
-            System.out.println("Hbase table scan-->" + key);
+//            String key = Bytes.toString(scn.getRow());
+            System.out.println("Hbase table scan-->" + scn);
 //            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
         }
     }

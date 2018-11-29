@@ -181,6 +181,13 @@
           <version>2.6.0-cdh5.15.0</version>
           <scope>provided</scope>
       </dependency>
+      <dependency>
+          <groupId>net.sf.cb2xml</groupId>
+          <artifactId>cb2xml</artifactId>
+          <version>0.90</version>
+          <systemPath>${project.basedir}/src/main/resources/cb2xml.jar</systemPath>
+          <scope>system</scope>
+      </dependency>
   </dependencies>
 
 
