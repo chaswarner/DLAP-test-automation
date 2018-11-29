@@ -1,15 +1,6 @@
 package com.prft.cif.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import com.prft.cif.test.conversion.MetadataWorkbook;
-import com.prft.cif.test.guice.inject.CIFInjector;
-import com.prft.cif.test.metadata.CIFDataset;
-import com.prft.cif.test.rest.CIFRestClient;
-import com.prft.cif.test.rest.NavigatorRestClient;
-import com.prft.cif.test.util.CIFDatasetUtil;
-import com.prft.cif.test.util.CIFHDFSUtil;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -45,11 +36,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WorkbookStepDefs {
 
-//    CIFRestClient restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-    CIFRestClient restClient;
     String response;
-    CIFDataset dataset;
-
 /*    @Inject
     private CIFHDFSUtil hdfsUtil;*/
 
