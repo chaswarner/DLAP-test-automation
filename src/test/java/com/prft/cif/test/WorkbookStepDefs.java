@@ -194,6 +194,7 @@ public class WorkbookStepDefs {
     @Then("^I should see Hive DB created with appropriate name in the correct location$")
     public void something_should_happen() throws Throwable {
 // compare columnname array with wbcolumnnames array
+        wbcolumnnames.remove("Column Name");
         System.out.println("WB Column names   :  "+wbcolumnnames.toString());
         System.out.println("DB Column names   :  "+columnname.toString());
         System.out.println(columnname.equals(wbcolumnnames));
