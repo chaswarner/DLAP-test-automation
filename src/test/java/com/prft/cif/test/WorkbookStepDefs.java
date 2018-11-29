@@ -1,6 +1,5 @@
 package com.prft.cif.test;
 
-import com.google.inject.Inject;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -49,10 +48,6 @@ public class WorkbookStepDefs {
     private static Connection conn =null;
     private static Configuration conf=null;
 
-
-
-    @Inject
-    private static Logger logger;
 
 
     String wbFilePath = "./src/test/resources/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
