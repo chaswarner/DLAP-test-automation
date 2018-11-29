@@ -122,17 +122,17 @@ public class WorkbookStepDefs {
 
 
         // Set-up REST client
-        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
-        restClient.setUsername("csaload1");
-        restClient.setPasswordPlain("C$@l0adP120d");
-        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
-        String[] extensions = new String[]{"xlsx"};
-//        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File("/"));
-        File root = new File("/");
-        System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-//        System.out.println(beforeOnboardingFilelist.toString());
-        System.out.println(root.getAbsolutePath() + "::"+root.getPath());
-        System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//        restClient = CIFInjector.createInstance(NavigatorRestClient.class);
+//        restClient.setUsername("csaload1");
+//        restClient.setPasswordPlain("C$@l0adP120d");
+//        restClient.setPasswordEncrypted("SthNm1MbsRMNcBUYw88hbA==:/crmsdMrCILWlZeaouNiMA==");
+//        String[] extensions = new String[]{"xlsx"};
+////        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File("/"));
+//        File root = new File("/");
+//        System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+////        System.out.println(beforeOnboardingFilelist.toString());
+//        System.out.println(root.getAbsolutePath() + "::"+root.getPath());
+//        System.out.println("###################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
     }
 
