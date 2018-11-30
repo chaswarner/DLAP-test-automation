@@ -102,8 +102,6 @@ public class WorkbookStepDefs {
 //
 //        }
 
-    }
-
 
         // throw exception if file not found or .error file found instead
 
