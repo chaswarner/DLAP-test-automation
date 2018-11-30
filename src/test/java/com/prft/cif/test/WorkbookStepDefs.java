@@ -207,13 +207,13 @@ public class WorkbookStepDefs {
         //Extracting the row key from workbook using POI
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(new File(excelFileName));
+            workbook = WorkbookFactory.create(wbfile);
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
         Sheet sheet = workbook.getSheetAt(0);
         DataFormatter dataFormatter = new DataFormatter();
-        Row rownum = sheet.getRow(2);
+        org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
         Cell cellnum = rownum.getCell(1);
         //String cellval = dataFormatter.formatCellValue(cellnum);
         String[] metadataCellVals = new String[0];
