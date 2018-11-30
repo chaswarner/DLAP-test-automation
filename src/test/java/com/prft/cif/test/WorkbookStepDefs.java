@@ -138,6 +138,7 @@ public class WorkbookStepDefs {
             System.out.println("Hbase table scan-->"+scn);
             finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
             table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+            System.out.println("DELETED ============");
         }
         tableName = TableName.valueOf("test_cif:dataset");
         conf = HBaseConfiguration.create();
@@ -149,7 +150,7 @@ public class WorkbookStepDefs {
         Scan dsscan = new Scan();
         ResultScanner scanner2 = table.getScanner(dsscan);
 
-        for (Result scn :scanner1){
+        for (Result scn :scanner2){
             System.out.println("Hbase table scan-->"+scn);
             table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
             System.out.println("DELETED ============");
@@ -203,7 +204,7 @@ public class WorkbookStepDefs {
             e.printStackTrace();
         }
     }
-    
+
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
         ArrayList<String> curateColNames = new ArrayList<String>();
