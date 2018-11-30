@@ -16,6 +16,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -70,7 +71,7 @@ public class WorkbookStepDefs {
 //        onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
 //        onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
 //        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
-//        onboardingDir = rb.getString("onboarding.dir").trim();
+          onboardingDir = rb.getString("onboarding.dir").trim();
 //        onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
 //        datafileStgDir = rb.getString("datafile.stg").trim();
 //        hdfsDatafileStgDir = rb.getString("hdfs.staging.folder").trim();
@@ -85,10 +86,12 @@ public class WorkbookStepDefs {
 //        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
 //        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 //        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
+        FileUtils.copyFileToDirectory(wbfile,new File(onboardingDir));
 //
+
 //
 //        // Sleep thread ?  I don't think there's a notification to plug in...
-//        Thread.sleep(30000);
+        Thread.sleep(30000);
 //
         System.out.println(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
