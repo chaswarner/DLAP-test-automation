@@ -90,7 +90,7 @@ public class WorkbookStepDefs {
 //        // Sleep thread ?  I don't think there's a notification to plug in...
 //        Thread.sleep(30000);
 //
-        System.out.println(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()));
+        System.out.println(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
 //        for (File file : beforeOnboardingFilelist) {
 //
