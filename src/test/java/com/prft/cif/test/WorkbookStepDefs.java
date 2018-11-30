@@ -51,6 +51,7 @@ public class WorkbookStepDefs {
     private static final String env = "test_";
     String sourceSystemCode = null, finalRowKeyName;
     String tableName;
+    String[] metadataCellVals;
 
 
     String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
@@ -114,7 +115,6 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
-        String tableName = null;
         ArrayList<String> curateColNames = new ArrayList<String>();
         Workbook workbook = null;
         try {
@@ -221,7 +221,7 @@ public class WorkbookStepDefs {
         org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
         Cell cellnum = rownum.getCell(1);
 //        String cellval = dataFormatter.formatCellValue(cellnum);
-        String[] metadataCellVals = new String[10];
+        metadataCellVals = new String[10];
         int j =0;
         System.out.println(Arrays.toString(metadataCellVals));
         for(int i = 2; i<=5; i++){
@@ -278,11 +278,14 @@ public class WorkbookStepDefs {
 
     @After
     public void tearDown() throws Exception {
-        FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
-        System.out.println("DELETING .completed FILE");
-        System.out.println(".completed FILE EXISTS  ?   : "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()){
+            System.out.println("DELETING .completed FILE");
+            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
 
-
+        } else if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists()) {
+            System.out.println("DELETING .error FILE");
+            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error"));
+        }
 
         System.out.println("DELETING HBASE ROW KEY");
         TableName tableName = TableName.valueOf("test_cif:filepattern");
@@ -314,7 +317,10 @@ public class WorkbookStepDefs {
             table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
         }
 
+
         System.out.println("TRUNCATING IMPALA TABLE");
+        String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
+        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
         java.sql.Connection conn;
         String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 //        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
@@ -325,7 +331,7 @@ public class WorkbookStepDefs {
             conn = DriverManager.getConnection(DB_URL, "", "");
             stmt = conn.createStatement();
             String truncateSql;
-            truncateSql = "truncate table"+env+"curate_fin.cif_test_cash_detail";
+            truncateSql = "truncate table "+finalTableName;
             ResultSet rs = stmt.executeQuery(truncateSql);
 
         } catch(Exception e){
@@ -340,7 +346,7 @@ public class WorkbookStepDefs {
             conn = DriverManager.getConnection(DB_URL, "", "");
             stmt = conn.createStatement();
             String dropSql;
-            dropSql = "drop table "+env+"curate_fin.cif_test_cash_detail";
+            dropSql = "drop table "+finalTableName;
             ResultSet rs = stmt.executeQuery(dropSql);
 
         } catch(Exception e){
