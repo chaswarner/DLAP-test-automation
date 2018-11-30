@@ -219,7 +219,7 @@ public class WorkbookStepDefs {
         String[] metadataCellVals = new String[0];
         String sourceSystemCode = null, finalRowKeyName;
         int j =0;
-        System.out.println(metadataCellVals);
+        System.out.println(Arrays.toString(metadataCellVals));
         for(int i = 2; i<=5; i++){
             rownum = sheet.getRow(2);
             cellnum = rownum.getCell(1);
