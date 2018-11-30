@@ -274,11 +274,13 @@ public class WorkbookStepDefs {
 
     @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
-        FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
-        System.out.println("DELETING .completed FILE");
-        System.out.println("EXISTS  ?    : "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
     }
 
-
+    @After
+    public void tearDown() throws Exception {
+        FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
+        System.out.println("DELETING .completed FILE");
+        System.out.println("EXISTS  ?    : "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+    }
 }
