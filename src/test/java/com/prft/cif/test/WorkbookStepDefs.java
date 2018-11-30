@@ -82,13 +82,13 @@ public class WorkbookStepDefs {
 //        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
 //        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
 //        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
-        FileUtils.copyFile(wbfile, new File("/tmp/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
+        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
 
 
         // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(30000);
 
-        assertTrue(new File("/tmp/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        assertTrue(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
 //        for (File file : beforeOnboardingFilelist) {
 //
