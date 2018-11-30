@@ -112,7 +112,98 @@ public class WorkbookStepDefs {
         // throw exception if file not found or .error file found instead
 
     }
+    @After
+    public void tearDown() throws Exception {
+        if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()){
+            System.out.println("DELETING .completed FILE");
+            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
 
+        } else if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists()) {
+            System.out.println("DELETING .error FILE");
+            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error"));
+        }
+
+        System.out.println("DELETING HBASE ROW KEY");
+        TableName tableName = TableName.valueOf("test_cif:filepattern");
+        conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+        conf.set("hbase.zookeeper.property.clientPort", "2181");
+        conn = ConnectionFactory.createConnection(conf);
+
+        Table table = conn.getTable(tableName);
+        Scan fpscan = new Scan();
+        ResultScanner scanner1 = table.getScanner(fpscan);
+
+        for (Result scn :scanner1){
+            System.out.println("Hbase table scan-->"+scn);
+            finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
+            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+        }
+        tableName = TableName.valueOf("test_cif:dataset");
+        conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+        conf.set("hbase.zookeeper.property.clientPort", "2181");
+        conn = ConnectionFactory.createConnection(conf);
+
+        table = conn.getTable(tableName);
+        Scan dsscan = new Scan();
+        ResultScanner scanner2 = table.getScanner(dsscan);
+
+        for (Result scn :scanner1){
+            System.out.println("Hbase table scan-->"+scn);
+            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+            System.out.println("DELETED ============");
+        }
+
+        Statement stmt = null;
+        java.sql.Connection conn;
+        String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
+        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
+        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+
+        System.out.println("TRUNCATING IMPALA TABLE");
+
+//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+        try {
+
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+            stmt = conn.createStatement();
+            String truncateSql;
+            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
+            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            stmt.execute(invalidatescdSql);
+            stmt.execute(invalidateSql);
+            truncateSql = "truncate table "+finalTableName;
+            stmt.execute(truncateSql);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("DROPPING IMPALA TABLE");
+
+        try {
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+            stmt = conn.createStatement();
+            String dropSql;
+            dropSql = "drop table "+finalTableName;
+            String dropScdSql = "drop table "+finalTableName+"_scd";
+            System.out.println(dropSql);
+            System.out.println(dropScdSql);
+            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
+            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            stmt.execute(invalidatescdSql);
+            stmt.execute(invalidateSql);
+            stmt.execute(dropSql);
+            stmt.execute(dropScdSql);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
         ArrayList<String> curateColNames = new ArrayList<String>();
@@ -278,97 +369,5 @@ public class WorkbookStepDefs {
     @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()){
-            System.out.println("DELETING .completed FILE");
-            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
-
-        } else if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists()) {
-            System.out.println("DELETING .error FILE");
-            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error"));
-        }
-
-        System.out.println("DELETING HBASE ROW KEY");
-        TableName tableName = TableName.valueOf("test_cif:filepattern");
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
-        conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conn = ConnectionFactory.createConnection(conf);
-
-        Table table = conn.getTable(tableName);
-        Scan fpscan = new Scan();
-        ResultScanner scanner1 = table.getScanner(fpscan);
-
-        for (Result scn :scanner1){
-            System.out.println("Hbase table scan-->"+scn);
-            finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
-            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-        }
-        tableName = TableName.valueOf("test_cif:dataset");
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
-        conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conn = ConnectionFactory.createConnection(conf);
-
-        table = conn.getTable(tableName);
-        Scan dsscan = new Scan();
-        ResultScanner scanner2 = table.getScanner(dsscan);
-
-        for (Result scn :scanner1){
-            System.out.println("Hbase table scan-->"+scn);
-            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-            System.out.println("DELETED ============");
-        }
-
-        Statement stmt = null;
-        java.sql.Connection conn;
-        String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
-        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
-        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-
-        System.out.println("TRUNCATING IMPALA TABLE");
-
-//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-        try {
-
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
-            stmt = conn.createStatement();
-            String truncateSql;
-            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
-            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
-            stmt.execute(invalidatescdSql);
-            stmt.execute(invalidateSql);
-            truncateSql = "truncate table "+finalTableName;
-            stmt.execute(truncateSql);
-
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        System.out.println("DROPPING IMPALA TABLE");
-
-        try {
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
-            stmt = conn.createStatement();
-            String dropSql;
-            dropSql = "drop table "+finalTableName;
-            String dropScdSql = "drop table "+finalTableName+"_scd";
-            System.out.println(dropSql);
-            System.out.println(dropScdSql);
-            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
-            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
-            stmt.execute(invalidatescdSql);
-            stmt.execute(invalidateSql);
-            stmt.execute(dropSql);
-            stmt.execute(dropScdSql);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
     }
 }
