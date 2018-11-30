@@ -349,9 +349,11 @@ public class WorkbookStepDefs {
             stmt = conn.createStatement();
             String dropSql;
             dropSql = "drop table "+finalTableName;
+            String dropScdSql = "drop table "+finalTableName+"_scd";
             ResultSet rs = stmt.executeQuery(dropSql);
+            ResultSet rsscd = stmt.executeQuery(dropScdSql);
             System.out.println("DROP TABLE RESULT ::  "+rs.toString());
-
+            System.out.println("DROP SCD TABLE RESULT ::  "+rsscd.toString());
         } catch(Exception e){
             e.printStackTrace();
         }
