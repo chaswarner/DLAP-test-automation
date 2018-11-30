@@ -216,7 +216,7 @@ public class WorkbookStepDefs {
         org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
         Cell cellnum = rownum.getCell(1);
         //String cellval = dataFormatter.formatCellValue(cellnum);
-        String[] metadataCellVals = new String[];
+        String[] metadataCellVals = new String[0];
         String sourceSystemCode = null, finalRowKeyName;
         int j =0;
         System.out.println(metadataCellVals);
