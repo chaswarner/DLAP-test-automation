@@ -267,7 +267,7 @@ public class WorkbookStepDefs {
             System.out.println("Hbase table scan-->" + scn);
 //            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
 //            System.out.println(table.get(new Get(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1"))));
-            System.out.println(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1"));
+            System.out.println(table.get(new Get(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1"))));
         }
     }
 
