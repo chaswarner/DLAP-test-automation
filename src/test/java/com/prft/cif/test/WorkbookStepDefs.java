@@ -90,7 +90,7 @@ public class WorkbookStepDefs {
 //        // Sleep thread ?  I don't think there's a notification to plug in...
 //        Thread.sleep(30000);
 //
-//        assertTrue(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        assertTrue(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
 //        for (File file : beforeOnboardingFilelist) {
 //
@@ -247,12 +247,6 @@ public class WorkbookStepDefs {
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
-//        conf.set("hadoop.security.authentication", "kerberos");
-//        conf.set("hbase.security.authentication", "kerberos");
-//        conf.set("hbase.master.kerberos.principal", "hbase/_HOST@BCBSMAMD.NET");
-//        conf.set("hbase.master.keytab.file", "src/test/resources/krb5.conf");
-//        conf.set("hbase.regionserver.kerberos.principal", "hbase/_HOST@BCBSMAMD.NET");
-//        conf.set("hbase.regionserver.keytab.file", "src/test/resources/krb5.conf");
         conn = ConnectionFactory.createConnection(conf);
         System.out.println("Connection Success - 0");
 
