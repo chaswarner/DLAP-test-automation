@@ -358,7 +358,6 @@ public class WorkbookStepDefs {
             String dropSql;
             dropSql = "drop table "+finalTableName;
             String dropScdSql = "drop table "+finalTableName+"_scd";
-            String dropTest = "drop table test_curate_fin.temp_test_case";
             System.out.println(dropSql);
             System.out.println(dropScdSql);
             String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
@@ -367,7 +366,6 @@ public class WorkbookStepDefs {
             stmt.execute(invalidateSql);
             stmt.execute(dropSql);
             stmt.execute(dropScdSql);
-            stmt.execute(dropTest);
         } catch(Exception e){
             e.printStackTrace();
         }
