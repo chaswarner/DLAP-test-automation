@@ -50,7 +50,7 @@ public class WorkbookStepDefs {
 
 
 
-    String wbFilePath = "./src/test/resources/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
+    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
     File wbfile = new File(wbFilePath);
     ArrayList<String> columnname = new ArrayList<>();
     ArrayList<String> wbcolumnnames = new ArrayList<>();
@@ -63,50 +63,45 @@ public class WorkbookStepDefs {
     @Before
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
-//
-//        onboardingDirCurateStg=rb.getString("onboarding.dir.curate.stg").trim();
-//        onboardingDirPublishStg=rb.getString("onboarding.dir.publish.stg").trim();
-//        onboardingBaseStg=rb.getString("onboarding.base.stg").trim();
-//        onboardingDir=rb.getString("onboarding.dir").trim();
-//        onboardingDirPublih=rb.getString("onboarding.dir.publish").trim();
+        private static ResourceBundle rb = ResourceBundle.getBundle("cif");
 
+        onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
+        onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
+        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
+        onboardingDir = rb.getString("onboarding.dir").trim();
+        onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
+        datafileStgDir = rb.getString("datafile.stg").trim();
+        hdfsDatafileStgDir = rb.getString("hdfs.staging.folder").trim();
+        prefixDataFile = rb.getString("prefix.data.file").trim();
+        postfixDataFile = rb.getString("postfix.data.file").trim();
 
-//        System.out.println("copied from "+onboardingDirCurateStg+" -->"+onboardingDir);
-//        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
-//        System.out.println("copied from "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
-//        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
+        String[] extensions = new String[]{"xlsx"};
+        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
+        System.out.println("copied from local to local "+onboardingDirCurateStg+" -->"+onboardingDir);
+        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
+        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
+        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 
         // Sleep thread ?  I don't think there's a notification to plug in...
-//        Thread.sleep(30000);
+        Thread.sleep(30000);
 
-//        for (File file : beforeOnboardingFilelist) {
-//
-////            System.out.println("before onboarding file list "+file.getAbsolutePath());
-////            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
-////            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
-//            if(file.getParent().endsWith("publish"))
-//                assertTrue(new File(""+onboardingDirPublih+"\\"+file.getName() + ".completed").exists());
-//            else
-//                assertTrue(new File(""+onboardingDir+"\\"+file.getName() + ".completed").exists());
-//        }
+        for (File file : beforeOnboardingFilelist) {
 
+            System.out.println("before onboarding file list " + file.getAbsolutePath());
+//            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
+//            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
+            if (file.getParent().endsWith("publish"))
+                assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
+            else
+                assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
 
+        }
 
-
-        //Check for .completed file creation
-        String completedFileName = wbFilePath+".completed";
-        String errorFileName = wbFilePath+".error";
-//        System.setProperty("java.security.krb5.conf", "src/main/resources/krb5.conf");
-//        System.setProperty("sun.security.krb5.debug", "true");
-
-
+    }
 
 
         // throw exception if file not found or .error file found instead
-
-
-        // Set-up REST client
-//
 
     }
 
@@ -155,7 +150,7 @@ public class WorkbookStepDefs {
             }
     }
 
-    @When("^I query Impala for the expected database name$")
+    @When("^I query Hive for the expected database name$")
     public void something_is_done() throws Throwable {
         java.sql.Connection conn;
         String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
@@ -191,7 +186,7 @@ public class WorkbookStepDefs {
         }
     }
 
-    @Then("^I should see Hive DB created with appropriate name in the correct location$")
+    @Then("^I should see Hive DB columns that match the columns from the workbook$")
     public void something_should_happen() throws Throwable {
 // compare columnname array with wbcolumnnames array
         wbcolumnnames.remove("Column Name");
@@ -248,7 +243,7 @@ public class WorkbookStepDefs {
 
 
 
-    @Then("^I should see appropriate columns in the appropriate DB available via Impala$")
+    @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
 //        String tableName = null;
 //        ArrayList<String> curateColNames = new ArrayList<String>();

@@ -7,18 +7,18 @@ Feature: Cash Detail dataset on-boarding
 
 ##Just check that a database exists with the right name. Database name should be
   @SmokeTest
-  Scenario: Curate data set db creation.
+  Scenario: Curate data set schema validation.
     Given I have parsed a workbook
-    When I query Impala for the expected database name
-    Then I should see Hive DB created with appropriate name in the correct location
+    When I query Hive for the expected database name
+    Then I should see Hive DB columns that match the columns from the workbook
 
 
 ## describe test_curate_fin.test_cash_detail - confirm the columns match what we expect from the workbook. Check Impala instead of Hive
   @SmokeTest
-  Scenario: Curate data set schema validation.
+  Scenario: HBase RowKey validation.
     Given I have parsed a curate workbook
     When I query HBase for the row keys in the data set
-    Then I should see appropriate columns in the appropriate DB available via Impala
+    Then I should see expected row keys in hbase
 
 ## Test that HBase contains sort key
 
