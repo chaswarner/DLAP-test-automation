@@ -211,7 +211,7 @@ public class WorkbookStepDefs {
     @When("^I query HBase for the row keys in the data set$")
 
     public void database_columns() throws Throwable {
-        TableName tableName = TableName.valueOf("test_cif:filepattern");
+        TableName tableName = TableName.valueOf("test_cif:dataset");
 
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
