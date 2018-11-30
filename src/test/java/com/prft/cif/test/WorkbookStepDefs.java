@@ -175,6 +175,10 @@ public class WorkbookStepDefs {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
+            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
+            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            stmt.execute(invalidatescdSql);
+            stmt.execute(invalidateSql);
             sql = "describe "+env+"curate_fin.cif_test_cash_detail";
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -328,11 +332,16 @@ public class WorkbookStepDefs {
 
 //        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
         try {
+
             Class.forName("org.apache.hive.jdbc.HiveDriver");
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, "", "");
             stmt = conn.createStatement();
             String truncateSql;
+            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
+            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            stmt.execute(invalidatescdSql);
+            stmt.execute(invalidateSql);
             truncateSql = "truncate table "+finalTableName;
             stmt.execute(truncateSql);
 
@@ -352,6 +361,10 @@ public class WorkbookStepDefs {
             String dropTest = "drop table test_curate_fin.temp_test_case";
             System.out.println(dropSql);
             System.out.println(dropScdSql);
+            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
+            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            stmt.execute(invalidatescdSql);
+            stmt.execute(invalidateSql);
             stmt.execute(dropSql);
             stmt.execute(dropScdSql);
             stmt.execute(dropTest);
