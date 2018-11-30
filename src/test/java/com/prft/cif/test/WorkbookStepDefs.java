@@ -49,6 +49,7 @@ public class WorkbookStepDefs {
     private static Configuration conf=null;
     private static final String env = "test_";
     String sourceSystemCode = null, finalRowKeyName;
+    String tableName;
 
 
     String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
@@ -124,6 +125,7 @@ public class WorkbookStepDefs {
         Cell cellnum = rownum.getCell(1);
         String cellval = dataFormatter.formatCellValue(cellnum);
         System.out.println("Cell Value :: " + cellval);
+        tableName = cellval;
         ArrayList<String> CurateColumn = new ArrayList<String>();
         ArrayList<String> CurateDataType = new ArrayList<String>();
         for(int i=46; i<=sheet.getLastRowNum();i++) {
@@ -170,7 +172,7 @@ public class WorkbookStepDefs {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "describe "+env+"curate_fin.cif_test_cash_detail";
+            sql = "describe "+env+"curate_fin."+tableName;
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
