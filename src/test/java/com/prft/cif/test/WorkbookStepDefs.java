@@ -86,14 +86,13 @@ public class WorkbookStepDefs {
 //        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
 //        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 //        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
+        System.out.println("COPYING WORKBOOK TO ONBOARDING DIRECTORY");
         FileUtils.copyFileToDirectory(wbfile,new File(onboardingDir));
-//
-
-//
+        System.out.println("WAITING 30 SECONDS .......");
 //        // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(30000);
 //
-        System.out.println(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        System.out.println(".completed FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
 //        for (File file : beforeOnboardingFilelist) {
 //
@@ -252,7 +251,6 @@ public class WorkbookStepDefs {
         conf.set("hbase.zookeeper.property.clientPort", "2181");
         conn = ConnectionFactory.createConnection(conf);
         System.out.println("Connection Success - 0");
-
         Table table = conn.getTable(tableName);
         System.out.println("Conn.getTable Success - 0    : : " +table.toString());
         System.out.println("ROWKEYVALUES    ::   "+table.get(new Get(Bytes.toBytes(finalRowKeyName))));
@@ -281,6 +279,20 @@ public class WorkbookStepDefs {
     public void tearDown() throws Exception {
         FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
         System.out.println("DELETING .completed FILE");
-        System.out.println("EXISTS  ?    : "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        System.out.println(".completed FILE EXISTS  ?   : "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        System.out.println("DELETING HBASE ROW KEY");
+        TableName tableName = TableName.valueOf("test_cif:dataset");
+        conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+        conf.set("hbase.zookeeper.property.clientPort", "2181");
+        conn = ConnectionFactory.createConnection(conf);
+        System.out.println("Connection Success - 0");
+        Table table = conn.getTable(tableName);
+        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+        System.out.println("TRUNCATING HIVE TABLE");
+
+        System.out.println("DROPPING HIVE TABLE");
+
+
     }
 }
