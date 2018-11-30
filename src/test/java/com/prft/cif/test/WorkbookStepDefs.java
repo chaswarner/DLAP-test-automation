@@ -93,6 +93,7 @@ public class WorkbookStepDefs {
         Thread.sleep(30000);
 //
         System.out.println(".completed FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+        System.out.println(".error     FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists());
 
 //        for (File file : beforeOnboardingFilelist) {
 //
@@ -280,19 +281,70 @@ public class WorkbookStepDefs {
         FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
         System.out.println("DELETING .completed FILE");
         System.out.println(".completed FILE EXISTS  ?   : "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+
+
+
         System.out.println("DELETING HBASE ROW KEY");
-        TableName tableName = TableName.valueOf("test_cif:dataset");
+        TableName tableName = TableName.valueOf("test_cif:filepattern");
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
         conn = ConnectionFactory.createConnection(conf);
-        System.out.println("Connection Success - 0");
+
         Table table = conn.getTable(tableName);
-        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-        System.out.println("TRUNCATING HIVE TABLE");
+        Scan fpscan = new Scan();
+        ResultScanner scanner1 = table.getScanner(fpscan);
 
-        System.out.println("DROPPING HIVE TABLE");
+        for (Result scn :scanner1){
+            System.out.println("Hbase table scan-->"+scn);
+            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+        }
+        tableName = TableName.valueOf("test_cif:dataset");
+        conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+        conf.set("hbase.zookeeper.property.clientPort", "2181");
+        conn = ConnectionFactory.createConnection(conf);
 
+        table = conn.getTable(tableName);
+        Scan dsscan = new Scan();
+        ResultScanner scanner2 = table.getScanner(dsscan);
 
+        for (Result scn :scanner1){
+            System.out.println("Hbase table scan-->"+scn);
+            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+        }
+
+        System.out.println("TRUNCATING IMPALA TABLE");
+        java.sql.Connection conn;
+        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+        Statement stmt = null;
+        try {
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+            stmt = conn.createStatement();
+            String truncateSql;
+            truncateSql = "truncate table"+env+"curate_fin.cif_test_cash_detail";
+            ResultSet rs = stmt.executeQuery(truncateSql);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println("DROPPING IMPALA TABLE");
+
+        try {
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+            stmt = conn.createStatement();
+            String dropSql;
+            dropSql = "drop table "+env+"curate_fin.cif_test_cash_detail";
+            ResultSet rs = stmt.executeQuery(dropSql);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
