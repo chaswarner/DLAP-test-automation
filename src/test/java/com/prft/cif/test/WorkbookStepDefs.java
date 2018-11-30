@@ -315,6 +315,7 @@ public class WorkbookStepDefs {
         for (Result scn :scanner1){
             System.out.println("Hbase table scan-->"+scn);
             table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+            System.out.println("DELETED ============");
         }
 
 
