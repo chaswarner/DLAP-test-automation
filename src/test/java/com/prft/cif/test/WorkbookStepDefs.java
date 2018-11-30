@@ -339,7 +339,6 @@ public class WorkbookStepDefs {
         } catch(Exception e){
             e.printStackTrace();
         }
-
         System.out.println("DROPPING IMPALA TABLE");
 
         try {
@@ -350,6 +349,8 @@ public class WorkbookStepDefs {
             String dropSql;
             dropSql = "drop table "+finalTableName;
             String dropScdSql = "drop table "+finalTableName+"_scd";
+            System.out.println(dropSql);
+            System.out.println(dropScdSql);
             stmt.executeQuery(dropSql);
             stmt.executeQuery(dropScdSql);
         } catch(Exception e){
