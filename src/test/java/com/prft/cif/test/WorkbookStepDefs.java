@@ -349,10 +349,12 @@ public class WorkbookStepDefs {
             String dropSql;
             dropSql = "drop table "+finalTableName;
             String dropScdSql = "drop table if exists"+finalTableName+"_scd";
+            String dropTest = "drop table test_curate_fin.temp_test_case";
             System.out.println(dropSql);
             System.out.println(dropScdSql);
             stmt.execute(dropSql);
             stmt.execute(dropScdSql);
+            stmt.execute(dropTest);
         } catch(Exception e){
             e.printStackTrace();
         }
