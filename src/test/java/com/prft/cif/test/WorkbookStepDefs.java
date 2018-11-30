@@ -231,11 +231,11 @@ public class WorkbookStepDefs {
         }
         System.out.println(metadataCellVals);
         if (metadataCellVals[2].equals("publish")){
-            sourceSystemCode = "publish";
+            metadataCellVals[2] = "publish";
         }else {
-            sourceSystemCode = "curate";
+            metadataCellVals[2] = "curate";
         }
-        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + ".test_" + metadataCellVals[0] + "." + metadataCellVals[3];
+        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + metadataCellVals[0] + "." + metadataCellVals[3];
         System.out.println("finalrowkeyname   ::  "+finalRowKeyName);
     }
 
