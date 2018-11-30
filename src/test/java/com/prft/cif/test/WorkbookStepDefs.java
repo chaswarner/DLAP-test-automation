@@ -47,7 +47,7 @@ public class WorkbookStepDefs {
     private String onboardingDirPublishStg;
     private static Connection conn =null;
     private static Configuration conf=null;
-
+    private static final String env = "test_";
 
 
     String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
@@ -82,13 +82,13 @@ public class WorkbookStepDefs {
 //        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
 //        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
 //        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
-        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
-
-
-        // Sleep thread ?  I don't think there's a notification to plug in...
-        Thread.sleep(30000);
-
-        assertTrue(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
+//        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
+//
+//
+//        // Sleep thread ?  I don't think there's a notification to plug in...
+//        Thread.sleep(30000);
+//
+//        assertTrue(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
 //        for (File file : beforeOnboardingFilelist) {
 //
@@ -169,7 +169,7 @@ public class WorkbookStepDefs {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "describe test_curate_fin.cash_detail";
+            sql = "describe "+env+"curate_fin.cif_test_cash_detail";
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
@@ -247,46 +247,7 @@ public class WorkbookStepDefs {
 
     @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
-//        String tableName = null;
-//        ArrayList<String> curateColNames = new ArrayList<String>();
-//        Workbook workbook = null;
-//        try {
-//            workbook = WorkbookFactory.create(wbfile);
-//        } catch (IOException ioe) {
-//            System.out.println(ioe);
-//        }
-//        Sheet sheet = workbook.getSheetAt(0);
-//        DataFormatter dataFormatter = new DataFormatter();
-//        Row rownum = sheet.getRow(2);
-//        Cell cellnum = rownum.getCell(1);
-//        String cellval = dataFormatter.formatCellValue(cellnum);
-//        System.out.println("Cell Value :: " + cellval);
-//        ArrayList<String> CurateColumn = new ArrayList<String>();
-//        ArrayList<String> CurateDataType = new ArrayList<String>();
-//        for(int i=46; i<=sheet.getLastRowNum();i++) {
-//            rownum = sheet.getRow(i);
-//            cellnum = rownum.getCell(11);
-//            String CurateCellValue = dataFormatter.formatCellValue(cellnum);
-//            CurateColumn.add(CurateCellValue);
-//            cellnum = rownum.getCell(12);
-//            String CurateCellType = dataFormatter.formatCellValue(cellnum);
-//            CurateDataType.add(CurateCellType);
-//            System.out.println(CurateCellValue );
-//        }
-//        if(columnname.size()== CurateColumn.size() ) {
-//            for (int i = 0; i < columnname.size(); i++) {
-//                String actual = columnname.get(i);
-//                String expected = CurateColumn.get(i);
-//                assertEquals(actual, expected);
-//            }
-//        }
-//            if(columntype.size()== CurateDataType.size() ) {
-//                for (int i = 0; i < columntype.size(); i++) {
-//                    String actual = columntype.get(i);
-//                    String expected = CurateDataType.get(i);
-//                    assertEquals(actual, expected);
-//                }
-//            }
+
     }
 
 
