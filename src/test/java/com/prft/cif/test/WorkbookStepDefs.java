@@ -304,6 +304,7 @@ public class WorkbookStepDefs {
 
         for (Result scn :scanner1){
             System.out.println("Hbase table scan-->"+scn);
+            finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
             table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
         }
         tableName = TableName.valueOf("test_cif:dataset");
