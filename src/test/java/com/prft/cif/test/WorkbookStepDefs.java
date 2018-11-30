@@ -48,6 +48,7 @@ public class WorkbookStepDefs {
     private static Connection conn =null;
     private static Configuration conf=null;
     private static final String env = "test_";
+    String sourceSystemCode = null, finalRowKeyName;
 
 
     String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
@@ -201,11 +202,35 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
-//        MetadataWorkbook metadataWorkbook = CIFInjector.createInstance(MetadataWorkbook.class, "workbookmapping.properties");
-//        dataset = metadataWorkbook.getDataset(wbfile, 0, "curate");
-//        System.out.println("DATASET ::: " + dataset.toString());
-//        System.out.println("DATASET ATTRIBUTES ::: " + dataset.getAttributes());
-//        System.out.println("Table Name ::: " + dataset.getName());
+        TableName tableName = TableName.valueOf("test_cif:dataset");
+
+        //Extracting the row key from workbook using POI
+        Workbook workbook = null;
+        try {
+            workbook = WorkbookFactory.create(new File(excelFileName));
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        Sheet sheet = workbook.getSheetAt(0);
+        DataFormatter dataFormatter = new DataFormatter();
+        Row rownum = sheet.getRow(2);
+        Cell cellnum = rownum.getCell(1);
+        //String cellval = dataFormatter.formatCellValue(cellnum);
+        String[] metadataCellVals = new String[0];
+        String sourceSystemCode = null, finalRowKeyName;
+        int j =0;
+        for(int i = 2; i<=5; i++){
+            rownum = sheet.getRow(2);
+            cellnum = rownum.getCell(1);
+            metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
+            j++;
+        }
+        if (metadataCellVals[2].equals("publish")){
+            sourceSystemCode = "publish";
+        }else {
+            sourceSystemCode = "curate";
+        }
+        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + ".test_" + metadataCellVals[0] + "." + metadataCellVals[3];
     }
 
     @When("^I query HBase for the row keys in the data set$")
@@ -225,11 +250,6 @@ public class WorkbookStepDefs {
         conn = ConnectionFactory.createConnection(conf);
         System.out.println("Connection Success - 0");
 
-/*        Admin admin = conn.getAdmin();
-        if (!admin.tableExists(tableName)) {
-            admin.createTable(new HTableDescriptor(tableName).addFamily(new HColumnDescriptor("cf")));
-        }*/
-
         Table table = conn.getTable(tableName);
         System.out.println("Conn.getTable Success - 0    : : " +table.toString());
         Scan scan = new Scan();
@@ -240,6 +260,7 @@ public class WorkbookStepDefs {
 //            String key = Bytes.toString(scn.getRow());
             System.out.println("Hbase table scan-->" + scn);
 //            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
+            System.out.println(table.get(new Get(Bytes.toBytes(finalRowKeyName))));
         }
     }
 
