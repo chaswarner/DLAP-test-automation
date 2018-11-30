@@ -235,7 +235,7 @@ public class WorkbookStepDefs {
         }else {
             metadataCellVals[2] = "curate";
         }
-        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + metadataCellVals[0] + "." + metadataCellVals[3];
+        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
         System.out.println("finalrowkeyname   ::  "+finalRowKeyName);
     }
 
@@ -258,7 +258,7 @@ public class WorkbookStepDefs {
 
         Table table = conn.getTable(tableName);
         System.out.println("Conn.getTable Success - 0    : : " +table.toString());
-        System.out.println(table.get(new Get(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1"))));
+        System.out.println("ROWKEYVALUES    ::   "+table.get(new Get(Bytes.toBytes(finalRowKeyName))));
 
 
 //        Scan scan = new Scan();
