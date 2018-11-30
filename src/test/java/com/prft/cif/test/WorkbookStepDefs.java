@@ -63,40 +63,44 @@ public class WorkbookStepDefs {
     @Before
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
-        private static ResourceBundle rb = ResourceBundle.getBundle("cif");
+        ResourceBundle rb = ResourceBundle.getBundle("cif");
 
-        onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
-        onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
-        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
-        onboardingDir = rb.getString("onboarding.dir").trim();
-        onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
-        datafileStgDir = rb.getString("datafile.stg").trim();
-        hdfsDatafileStgDir = rb.getString("hdfs.staging.folder").trim();
-        prefixDataFile = rb.getString("prefix.data.file").trim();
-        postfixDataFile = rb.getString("postfix.data.file").trim();
+//        onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
+//        onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
+//        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
+//        onboardingDir = rb.getString("onboarding.dir").trim();
+//        onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
+//        datafileStgDir = rb.getString("datafile.stg").trim();
+//        hdfsDatafileStgDir = rb.getString("hdfs.staging.folder").trim();
+//        prefixDataFile = rb.getString("prefix.data.file").trim();
+//        postfixDataFile = rb.getString("postfix.data.file").trim();
+//
+//        String[] extensions = new String[]{"xlsx"};
+//        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+//
+//        System.out.println("copied from local to local "+onboardingDirCurateStg+" -->"+onboardingDir);
+//        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
+//        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
+//        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
+        FileUtils.copyFile(wbfile, new File("/tmp/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
 
-        String[] extensions = new String[]{"xlsx"};
-        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
-
-        System.out.println("copied from local to local "+onboardingDirCurateStg+" -->"+onboardingDir);
-        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
-        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
-        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 
         // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(30000);
 
-        for (File file : beforeOnboardingFilelist) {
+        assertTrue(new File("/tmp/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 
-            System.out.println("before onboarding file list " + file.getAbsolutePath());
-//            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
-//            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
-            if (file.getParent().endsWith("publish"))
-                assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
-            else
-                assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
-
-        }
+//        for (File file : beforeOnboardingFilelist) {
+//
+//            System.out.println("before onboarding file list " + file.getAbsolutePath());
+////            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
+////            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
+//            if (file.getParent().endsWith("publish"))
+//                assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
+//            else
+//                assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
+//
+//        }
 
     }
 
