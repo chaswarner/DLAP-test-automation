@@ -334,7 +334,7 @@ public class WorkbookStepDefs {
             stmt = conn.createStatement();
             String truncateSql;
             truncateSql = "truncate table "+finalTableName;
-            stmt.executeQuery(truncateSql);
+            stmt.execute(truncateSql);
 
         } catch(Exception e){
             e.printStackTrace();
@@ -351,8 +351,8 @@ public class WorkbookStepDefs {
             String dropScdSql = "drop table "+finalTableName+"_scd";
             System.out.println(dropSql);
             System.out.println(dropScdSql);
-            stmt.executeQuery(dropSql);
-            stmt.executeQuery(dropScdSql);
+            stmt.execute(dropSql);
+            stmt.execute(dropScdSql);
         } catch(Exception e){
             e.printStackTrace();
         }
