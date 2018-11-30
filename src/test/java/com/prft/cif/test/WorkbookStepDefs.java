@@ -324,21 +324,21 @@ public class WorkbookStepDefs {
         System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
         String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
-//        System.out.println("TRUNCATING IMPALA TABLE");
+        System.out.println("TRUNCATING IMPALA TABLE");
 
-////        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-//        try {
-//            Class.forName("org.apache.hive.jdbc.HiveDriver");
-//            System.out.println("Connecting to database...");
-//            conn = DriverManager.getConnection(DB_URL, "", "");
-//            stmt = conn.createStatement();
-//            String truncateSql;
-//            truncateSql = "truncate table "+finalTableName;
-//            ResultSet rs = stmt.executeQuery(truncateSql);
-//
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
+//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+        try {
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, "", "");
+            stmt = conn.createStatement();
+            String truncateSql;
+            truncateSql = "truncate table "+finalTableName;
+            stmt.executeQuery(truncateSql);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
 
         System.out.println("DROPPING IMPALA TABLE");
 
@@ -350,10 +350,8 @@ public class WorkbookStepDefs {
             String dropSql;
             dropSql = "drop table "+finalTableName;
             String dropScdSql = "drop table "+finalTableName+"_scd";
-            ResultSet rs = stmt.executeQuery(dropSql);
-            ResultSet rsscd = stmt.executeQuery(dropScdSql);
-            System.out.println("DROP TABLE RESULT ::  "+rs.toString());
-            System.out.println("DROP SCD TABLE RESULT ::  "+rsscd.toString());
+            stmt.executeQuery(dropSql);
+            stmt.executeQuery(dropScdSql);
         } catch(Exception e){
             e.printStackTrace();
         }
