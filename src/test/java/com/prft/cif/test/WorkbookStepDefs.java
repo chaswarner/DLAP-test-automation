@@ -348,7 +348,7 @@ public class WorkbookStepDefs {
             stmt = conn.createStatement();
             String dropSql;
             dropSql = "drop table "+finalTableName;
-            String dropScdSql = "drop table "+finalTableName+"_scd";
+            String dropScdSql = "drop table if exists"+finalTableName+"_scd";
             System.out.println(dropSql);
             System.out.println(dropScdSql);
             stmt.execute(dropSql);
