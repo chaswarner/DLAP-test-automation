@@ -318,26 +318,27 @@ public class WorkbookStepDefs {
             System.out.println("DELETED ============");
         }
 
-
-        System.out.println("TRUNCATING IMPALA TABLE");
+        Statement stmt = null;
+        java.sql.Connection conn;
         String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
         System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
-        java.sql.Connection conn;
         String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-        Statement stmt = null;
-        try {
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
-            stmt = conn.createStatement();
-            String truncateSql;
-            truncateSql = "truncate table "+finalTableName;
-            ResultSet rs = stmt.executeQuery(truncateSql);
 
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+//        System.out.println("TRUNCATING IMPALA TABLE");
+
+////        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+//        try {
+//            Class.forName("org.apache.hive.jdbc.HiveDriver");
+//            System.out.println("Connecting to database...");
+//            conn = DriverManager.getConnection(DB_URL, "", "");
+//            stmt = conn.createStatement();
+//            String truncateSql;
+//            truncateSql = "truncate table "+finalTableName;
+//            ResultSet rs = stmt.executeQuery(truncateSql);
+//
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
 
         System.out.println("DROPPING IMPALA TABLE");
 
@@ -349,6 +350,7 @@ public class WorkbookStepDefs {
             String dropSql;
             dropSql = "drop table "+finalTableName;
             ResultSet rs = stmt.executeQuery(dropSql);
+            System.out.println("DROP TABLE RESULT ::  "+rs.toString());
 
         } catch(Exception e){
             e.printStackTrace();
