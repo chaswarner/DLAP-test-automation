@@ -219,7 +219,6 @@ public class WorkbookStepDefs {
         Cell cellnum = rownum.getCell(1);
 //        String cellval = dataFormatter.formatCellValue(cellnum);
         String[] metadataCellVals = new String[10];
-        String sourceSystemCode = null, finalRowKeyName;
         int j =0;
         System.out.println(Arrays.toString(metadataCellVals));
         for(int i = 2; i<=5; i++){
@@ -237,6 +236,7 @@ public class WorkbookStepDefs {
             sourceSystemCode = "curate";
         }
         finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + ".test_" + metadataCellVals[0] + "." + metadataCellVals[3];
+        System.out.println("finalrowkeyname   ::  "+finalRowKeyName);
     }
 
     @When("^I query HBase for the row keys in the data set$")
