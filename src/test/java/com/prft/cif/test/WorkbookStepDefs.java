@@ -224,7 +224,7 @@ public class WorkbookStepDefs {
             rownum = sheet.getRow(2);
             cellnum = rownum.getCell(1);
             System.out.println("CELLNUM$$$$$$$$$   ::  "+cellnum);
-            System.out.println("J  $$$$$$$$$   ::  "+cellnum);
+            System.out.println("J  $$$$$$$$$   ::  "+j);
             metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
             j++;
         }
