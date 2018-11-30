@@ -216,9 +216,10 @@ public class WorkbookStepDefs {
         org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
         Cell cellnum = rownum.getCell(1);
         //String cellval = dataFormatter.formatCellValue(cellnum);
-        String[] metadataCellVals = new String[0];
+        String[] metadataCellVals = new String[];
         String sourceSystemCode = null, finalRowKeyName;
         int j =0;
+        System.out.println(metadataCellVals);
         for(int i = 2; i<=5; i++){
             rownum = sheet.getRow(2);
             cellnum = rownum.getCell(1);
@@ -226,6 +227,7 @@ public class WorkbookStepDefs {
             metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
             j++;
         }
+        System.out.println(metadataCellVals);
         if (metadataCellVals[2].equals("publish")){
             sourceSystemCode = "publish";
         }else {
