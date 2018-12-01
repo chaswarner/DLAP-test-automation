@@ -264,19 +264,8 @@ public class WorkbookStepDefs {
         System.out.println("ROWKEYVALUES    ::   "+table.get(new Get(Bytes.toBytes(finalRowKeyName))));
         rowkeyresult = table.get(new Get(Bytes.toBytes(finalRowKeyName)));
 
-//        Scan scan = new Scan();
-//        ResultScanner scanner1 = table.getScanner(scan);
-//        String stringRow = finalRowKeyName;
-//        PrefixFilter prefixFilter = new PrefixFilter(Bytes.toBytes(stringRow));
-//        scan.setFilter(prefixFilter);
-//        scanner1 = table.getScanner(scan);
-//
-//         for (Result scn :scanner1){
-//                rowkey = (Bytes.toString(scn.getRow()));
-//                System.out.println("rowkey"+ rowkey);
-//        }
     }
-    
+
 
     @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
@@ -300,39 +289,20 @@ public class WorkbookStepDefs {
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
         conn = ConnectionFactory.createConnection(conf);
-
         Table table = conn.getTable(tableName);
-        Scan fpscan = new Scan();
-        ResultScanner scanner1 = table.getScanner(fpscan);
-
-        for (Result scn :scanner1){
-            System.out.println("Hbase table scan-->"+scn);
-            finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
-            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-        }
+        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
         tableName = TableName.valueOf("test_cif:dataset");
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
-        conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conn = ConnectionFactory.createConnection(conf);
-
         table = conn.getTable(tableName);
-        Scan dsscan = new Scan();
-        ResultScanner scanner2 = table.getScanner(dsscan);
-
-        for (Result scn :scanner1){
-            System.out.println("Hbase table scan-->"+scn);
-            table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-            System.out.println("DELETED ============");
-        }
-
-        Statement stmt = null;
-        java.sql.Connection conn;
-        String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
-        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
-        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
 
         System.out.println("TRUNCATING IMPALA TABLE");
+
+        String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
+
+        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
+        Statement stmt = null;
+        java.sql.Connection conn;
+        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
 //        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
         try {
