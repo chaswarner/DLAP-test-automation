@@ -293,7 +293,7 @@ public class WorkbookStepDefs {
         table.delete(new Delete(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1")));
         tableName = TableName.valueOf("test_cif:dataset");
         table = conn.getTable(tableName);
-        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+        table.delete(new Delete(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1")));
 
         System.out.println("TRUNCATING IMPALA TABLE");
 
