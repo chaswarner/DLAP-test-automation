@@ -9,6 +9,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class WorkbookStepDefs {
@@ -52,7 +54,8 @@ public class WorkbookStepDefs {
     String sourceSystemCode = null, finalRowKeyName;
     String tableName;
     String[] metadataCellVals;
-
+    String rowkey;
+    Result rowkeyresult;
 
     String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
     File wbfile = new File(wbFilePath);
@@ -259,25 +262,25 @@ public class WorkbookStepDefs {
         Table table = conn.getTable(tableName);
         System.out.println("Conn.getTable Success - 0    : : " +table.toString());
         System.out.println("ROWKEYVALUES    ::   "+table.get(new Get(Bytes.toBytes(finalRowKeyName))));
-
+        rowkeyresult = table.get(new Get(Bytes.toBytes(finalRowKeyName)));
 
 //        Scan scan = new Scan();
-//        System.out.println("Scan Success - 0");
 //        ResultScanner scanner1 = table.getScanner(scan);
-//        System.out.println("Scan Success - 1  ::    "+ scanner1.toString());
-//        for (Result scn :scanner1) {
-////            String key = Bytes.toString(scn.getRow());
-//            System.out.println("Hbase table scan-->" + scn);
-////            System.out.println("Key **>" + table.get(new Get(Bytes.toBytes("mo_.*_(fx|di)_.*_cddm.csv.*"))));
-////            System.out.println(table.get(new Get(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1"))));
+//        String stringRow = finalRowKeyName;
+//        PrefixFilter prefixFilter = new PrefixFilter(Bytes.toBytes(stringRow));
+//        scan.setFilter(prefixFilter);
+//        scanner1 = table.getScanner(scan);
+//
+//         for (Result scn :scanner1){
+//                rowkey = (Bytes.toString(scn.getRow()));
+//                System.out.println("rowkey"+ rowkey);
 //        }
     }
-
-
+    
 
     @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
-
+        assertNotNull(rowkeyresult);
     }
 
     @After
