@@ -290,6 +290,7 @@ public class WorkbookStepDefs {
         conf.set("hbase.zookeeper.property.clientPort", "2181");
         conn = ConnectionFactory.createConnection(conf);
         Table table = conn.getTable(tableName);
+        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];  
         table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
         tableName = TableName.valueOf("test_cif:dataset");
         table = conn.getTable(tableName);
