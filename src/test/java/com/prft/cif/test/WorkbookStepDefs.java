@@ -329,8 +329,8 @@ public class WorkbookStepDefs {
             conn = DriverManager.getConnection(DB_URL, "", "");
             stmt = conn.createStatement();
             String dropSql;
-            dropSql = "drop table "+finalTableName;
-            String dropScdSql = "drop table "+finalTableName+"_scd";
+            dropSql = "drop table test_curate_fin.cif_test_cash_detail";
+            String dropScdSql = "drop table test_curate_fin.cif_test_cash_detail_scd";
             System.out.println(dropSql);
             System.out.println(dropScdSql);
             String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
