@@ -297,9 +297,8 @@ public class WorkbookStepDefs {
 
         System.out.println("TRUNCATING IMPALA TABLE");
 
-        String finalTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
 
-        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  "+finalTableName);
+        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  test_curate_fin.cif_test_cash_detail");
         Statement stmt = null;
         java.sql.Connection conn;
         String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
@@ -316,7 +315,7 @@ public class WorkbookStepDefs {
             String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
             stmt.execute(invalidatescdSql);
             stmt.execute(invalidateSql);
-            truncateSql = "truncate table "+finalTableName;
+            truncateSql = "truncate table test_curate_fin.cif_test_cash_detail";
             stmt.execute(truncateSql);
 
         } catch(Exception e){
