@@ -111,6 +111,9 @@ public class WorkbookStepDefs {
                 assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
             }
             else {
+                System.out.print("check for assert true...-->");
+                assertTrue(true);
+                assertEquals("true","true");
                 System.out.print("Curate wb exists ?...-->");
                 assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
 
@@ -290,7 +293,7 @@ public class WorkbookStepDefs {
         }
 
         System.out.println("DELETING HBASE ROW KEY");
-        TableName tableName = TableName.valueOf("test_cif:filepattern");
+/*        TableName tableName = TableName.valueOf("test_cif:filepattern");
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
@@ -347,6 +350,6 @@ public class WorkbookStepDefs {
             stmt.execute(dropScdSql);
         } catch(Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 }
