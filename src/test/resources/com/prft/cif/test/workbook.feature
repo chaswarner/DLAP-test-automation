@@ -24,6 +24,7 @@ Feature: Cash Detail dataset on-boarding
 
 
 ##Test that HDFS structure has been created
+  @Ignore
 Scenario: SUCCESS folder is created in HDFS path at /env/zone/domain/file
     Given I have parsed a curate workbook
     When I query Cloudera Navigator for the existence of HDFS target folder for the parquet files
