@@ -88,9 +88,9 @@ public class WorkbookStepDefs {
         System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
 //
         System.out.println("COPYING file from curate stg to onboarding curate dir "+onboardingDirCurateStg+" -->"+onboardingDir);
-        FileUtils.moveDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
+        FileUtils.copyDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
         System.out.println("COPYING file from publish stg to onboarding publish dir "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
-        FileUtils.moveDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
+        FileUtils.copyDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 //        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
 //        System.out.println("COPYING WORKBOOK TO ONBOARDING DIRECTORY");
 //        FileUtils.copyFileToDirectory(wbfile,new File(onboardingDir));
