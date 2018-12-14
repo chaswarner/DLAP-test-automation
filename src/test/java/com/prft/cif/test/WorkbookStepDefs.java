@@ -82,21 +82,27 @@ public class WorkbookStepDefs {
         hdfsDatafileStgDir = rb.getString("hdfs.staging.folder").trim();
         prefixDataFile = rb.getString("prefix.data.file").trim();
         postfixDataFile = rb.getString("postfix.data.file").trim();*/
+        File a = new File("test");
 
         String[] extensions = new String[]{"xlsx"};
         List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
         System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
-//
-        System.out.println("COPYING file from curate stg to onboarding curate dir "+onboardingDirCurateStg+" -->"+onboardingDir);
-        FileUtils.moveDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
-        System.out.println("COPYING file from publish stg to onboarding publish dir "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
-        FileUtils.moveDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
+        for (File file : beforeOnboardingFilelist) {
+            if (file.getParent().endsWith("publish")){
+                System.out.println("COPYING file from curate stg to onboarding curate dir " + onboardingDirCurateStg + " -->" + onboardingDir);
+                String filePath=file.getPath().trim();
+                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
+            }else {
+                System.out.println("COPYING file from publish stg to onboarding publish dir " + onboardingDirPublishStg + " -->" + onboardingDirPublih);
+                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
+            }
+        }
 //        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
 //        System.out.println("COPYING WORKBOOK TO ONBOARDING DIRECTORY");
 //        FileUtils.copyFileToDirectory(wbfile,new File(onboardingDir));
         System.out.println("WAITING 30 SECONDS .......");
 //        // Sleep thread ?  I don't think there's a notification to plug in...
-        Thread.sleep(30000);
+        Thread.sleep(10000);
 
 //        System.out.println(".completed FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
 //        System.out.println(".error     FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists());
@@ -159,13 +165,13 @@ public class WorkbookStepDefs {
                 assertEquals(actual, expected);
             }
         }
-            if(columntype.size()== CurateDataType.size() ) {
-                for (int i = 0; i < columntype.size(); i++) {
-                    String actual = columntype.get(i);
-                    String expected = CurateDataType.get(i);
-                    assertEquals(actual, expected);
-                }
+        if(columntype.size()== CurateDataType.size() ) {
+            for (int i = 0; i < columntype.size(); i++) {
+                String actual = columntype.get(i);
+                String expected = CurateDataType.get(i);
+                assertEquals(actual, expected);
             }
+        }
     }
 
     @When("^I query Hive for the expected database name$")
