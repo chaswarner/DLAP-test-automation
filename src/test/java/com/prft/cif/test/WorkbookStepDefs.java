@@ -85,10 +85,11 @@ public class WorkbookStepDefs {
 
         String[] extensions = new String[]{"xlsx"};
         List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+        System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
 //
-        System.out.println("copied from local to local "+onboardingDirCurateStg+" -->"+onboardingDir);
+        System.out.println("COPYING file from curate stg to onboarding curate dir "+onboardingDirCurateStg+" -->"+onboardingDir);
         FileUtils.moveDirectory(new File(onboardingDirCurateStg), new File(onboardingDir));
-        System.out.println("copied from local to local "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
+        System.out.println("COPYING file from publish stg to onboarding publish dir "+onboardingDirPublishStg+" -->"+onboardingDirPublih);
         FileUtils.moveDirectory(new File(onboardingDirPublishStg), new File(onboardingDirPublih));
 //        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
 //        System.out.println("COPYING WORKBOOK TO ONBOARDING DIRECTORY");
@@ -105,11 +106,15 @@ public class WorkbookStepDefs {
             System.out.println("before onboarding file list " + file.getAbsolutePath());
             System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
             System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
-            if (file.getParent().endsWith("publish"))
+            if (file.getParent().endsWith("publish")) {
+                System.out.print("Publish wb exists ?...-->");
                 assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
-            else
+            }
+            else {
+                System.out.print("Curate wb exists ?...-->");
                 assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
 
+            }
         }
 
 
