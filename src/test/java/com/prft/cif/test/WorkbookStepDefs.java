@@ -112,9 +112,7 @@ public class WorkbookStepDefs {
             }
             else {
                 System.out.print("check for assert true...-->");
-                assertTrue(true);
-                assertEquals("true","true");
-                System.out.print("Curate wb exists ?...-->");
+                System.out.print("Curate wb exists ?...-->"+new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
                 assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
 
             }

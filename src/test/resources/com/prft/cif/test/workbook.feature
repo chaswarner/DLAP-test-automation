@@ -13,18 +13,18 @@ Feature: Cash Detail dataset on-boarding
     Then I should see Hive DB columns that match the columns from the workbook
 
 
-## describe test_curate_fin.test_cash_detail - confirm the columns match what we expect from the workbook. Check Impala instead of Hive
-  @SmokeTest
-  Scenario: HBase RowKey validation.
-    Given I have parsed a curate workbook
-    When I query HBase for the row keys in the data set
-    Then I should see expected row keys in hbase
-
-## Test that HBase contains sort key
-
-
-##Test that HDFS structure has been created
-  Scenario: SUCCESS folder is created in HDFS path at /env/zone/domain/file
-    Given I have parsed a curate workbook
-    When I query Cloudera Navigator for the existence of HDFS target folder for the parquet files
-    Then I should see the correct path and folder name
+### describe test_curate_fin.test_cash_detail - confirm the columns match what we expect from the workbook. Check Impala instead of Hive
+#  @SmokeTest
+#  Scenario: HBase RowKey validation.
+#    Given I have parsed a curate workbook
+#    When I query HBase for the row keys in the data set
+#    Then I should see expected row keys in hbase
+#
+### Test that HBase contains sort key
+#
+#
+###Test that HDFS structure has been created
+#  Scenario: SUCCESS folder is created in HDFS path at /env/zone/domain/file
+#    Given I have parsed a curate workbook
+#    When I query Cloudera Navigator for the existence of HDFS target folder for the parquet files
+#    Then I should see the correct path and folder name
