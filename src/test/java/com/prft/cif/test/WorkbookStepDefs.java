@@ -57,8 +57,8 @@ public class WorkbookStepDefs {
     String rowkey;
     Result rowkeyresult;
 
-/*    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
-    File wbfile = new File(wbFilePath);*/
+    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
+    File wbfile = new File(wbFilePath);
     ArrayList<String> columnname = new ArrayList<>();
     ArrayList<String> wbcolumnnames = new ArrayList<>();
     ArrayList<String> dbcolumnnames = new ArrayList<>();
@@ -80,7 +80,7 @@ public class WorkbookStepDefs {
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
-
+        System.out.println("In setup() method");
 
 
 
@@ -185,7 +185,7 @@ public class WorkbookStepDefs {
         ArrayList<String> curateColNames = new ArrayList<String>();
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
+            workbook = WorkbookFactory.create(wbfile);
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -278,6 +278,7 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
+        System.out.println("Absolute path of file -->"+beforeOnboardingFilelist.get(0).getAbsolutePath());
         TableName tableName = TableName.valueOf("test_cif:dataset");
 
         //Extracting the row key from workbook using POI
