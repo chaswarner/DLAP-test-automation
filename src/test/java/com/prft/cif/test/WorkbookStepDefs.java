@@ -73,17 +73,17 @@ public class WorkbookStepDefs {
     private static ResourceBundle rb = ResourceBundle.getBundle("cif");
 
     List<File> beforeOnboardingFilelist;
+
     private static boolean dunit = false;
 
     @Before
     public void setUp() throws Exception {
 
         if (!dunit) {
-
+            System.out.println("dunit variable value:-->"+dunit);
+            dunit = true;
             scanWorkbook();
             // do the beforeAll stuff...
-            dunit = true;
-
             addShutdownHook();
         }
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
