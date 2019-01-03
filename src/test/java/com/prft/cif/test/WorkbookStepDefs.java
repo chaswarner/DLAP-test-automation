@@ -75,9 +75,10 @@ public class WorkbookStepDefs {
     @BeforeClass
     public void test() throws Exception{
 
+        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
-        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
+
         System.out.println("Absolute path of file -->"+beforeOnboardingFilelist.get(0).getAbsolutePath());
         TableName tableName = TableName.valueOf("test_cif:dataset");
 
