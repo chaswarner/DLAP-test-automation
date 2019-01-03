@@ -64,9 +64,10 @@ public class WorkbookStepDefs {
     ArrayList<String> dbcolumnnames = new ArrayList<>();
     ArrayList<String> columntype = new ArrayList<>();
 
-    List<File> beforeOnboardingFilelist=null;
-
     private static ResourceBundle rb = ResourceBundle.getBundle("cif");
+
+    String[] extensions = new String[]{"xlsx"};
+    List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
 
     @Before
     public void setUp() throws Exception {
@@ -78,8 +79,7 @@ public class WorkbookStepDefs {
         onboardingDir = rb.getString("onboarding.dir").trim();
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
 
-        String[] extensions = new String[]{"xlsx"};
-        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
 
 
 /*
