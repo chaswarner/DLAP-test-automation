@@ -57,8 +57,8 @@ public class WorkbookStepDefs {
     String rowkey;
     Result rowkeyresult;
 
-    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
-    File wbfile = new File(wbFilePath);
+/*    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
+    File wbfile = new File(wbFilePath);*/
     ArrayList<String> columnname = new ArrayList<>();
     ArrayList<String> wbcolumnnames = new ArrayList<>();
     ArrayList<String> dbcolumnnames = new ArrayList<>();
@@ -139,13 +139,12 @@ public class WorkbookStepDefs {
         for (File file : beforeOnboardingFilelist) {
             if (file.getParent().endsWith("publish")){
                 System.out.println("COPYING file from publish stg to onboarding publish dir " + onboardingDirPublishStg + " -->" + onboardingDirPublih);
-                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
+                FileUtils.copyFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
             }else {
                 System.out.println("COPYING file from curate stg to onboarding curate dir " + onboardingDirCurateStg + " -->" + onboardingDir);
-                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDir),false);
+                FileUtils.copyFileToDirectory(new File(file.getPath()), new File(onboardingDir),false);
             }
         }
-
 
     }
 
@@ -160,9 +159,9 @@ public class WorkbookStepDefs {
     public void checkThenOnboarding() throws Throwable{
 
         System.out.println("File list is -->"+beforeOnboardingFilelist.toString());
-        assertTrue(new File("" + onboardingDir + "/" + beforeOnboardingFilelist.get(0).getName() + ".completed").exists());
+//        assertTrue(new File("" + onboardingDir + "/" + beforeOnboardingFilelist.get(0).getName() + ".completed").exists());
 
-/*        for (File file : beforeOnboardingFilelist) {
+        for (File file : beforeOnboardingFilelist) {
             System.out.println("before onboarding file list " + file.getAbsolutePath());
             System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
             System.out.println("Onboarding File path with completed "+""+onboardingDir+"/"+file.getName() + ".completed");
@@ -176,7 +175,7 @@ public class WorkbookStepDefs {
                 assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
 
             }
-        }*/
+        }
     }
 
 
@@ -186,7 +185,7 @@ public class WorkbookStepDefs {
         ArrayList<String> curateColNames = new ArrayList<String>();
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(wbfile);
+            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -284,7 +283,7 @@ public class WorkbookStepDefs {
         //Extracting the row key from workbook using POI
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(wbfile);
+            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -349,7 +348,7 @@ public class WorkbookStepDefs {
         }
 
         System.out.println("DELETING HBASE ROW KEY");
-/*        TableName tableName = TableName.valueOf("test_cif:filepattern");
+        TableName tableName = TableName.valueOf("test_cif:filepattern");
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
@@ -406,6 +405,6 @@ public class WorkbookStepDefs {
             stmt.execute(dropScdSql);
         } catch(Exception e){
             e.printStackTrace();
-        }*/
+        }
     }
 }
