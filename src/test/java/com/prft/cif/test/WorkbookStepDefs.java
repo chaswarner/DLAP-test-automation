@@ -90,6 +90,9 @@ public class WorkbookStepDefs {
 //        ResourceBundle rb = ResourceBundle.getBundle("cif");
 
         System.out.println("In setup() method");
+        System.out.println("final row key "+finalRowKeyName);
+        System.out.println("hive table name "+hiveTableName);
+        System.out.println("hive SCD table name "+hiveSCDTableName);
 /*
 //-------------------------------------------------------
         String[] extensions = new String[]{"xlsx"};
@@ -147,15 +150,16 @@ public class WorkbookStepDefs {
         dbURL = rb.getString("db.url").trim();
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
         System.out.println("In scanworkbook() method");
-        System.out.println("final row key"+finalRowKeyName);
-        System.out.println("hive table name"+hiveTableName);
-        System.out.println("hive SCD table name"+hiveSCDTableName);
+        System.out.println("final row key "+finalRowKeyName);
+        System.out.println("hive table name "+hiveTableName);
+        System.out.println("hive SCD table name "+hiveSCDTableName);
 
         System.out.println("************In scanWorkbook method***********");
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
 //        String[] extensions = new String[]{"xlsx"};
-        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+//        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
 
         System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
         TableName tableName = TableName.valueOf("test_cif:dataset");
@@ -373,11 +377,10 @@ public class WorkbookStepDefs {
             metadataCellVals[2] = "curate";
         }
         finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
-        */System.out.println("finalrowkeyname in @Given tag   ::  " + finalRowKeyName);
+        */System.out.println("finalrowkeyname in @Given tag   ::  "+finalRowKeyName);
     }
 
     @When("^I query HBase for the row keys in the data set$")
-
     public void database_columns() throws Throwable {
         TableName tableName = TableName.valueOf("test_cif:dataset");
 
