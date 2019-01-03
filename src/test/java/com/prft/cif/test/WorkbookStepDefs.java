@@ -25,6 +25,7 @@ import java.sql.Statement;
 import org.junit.Assert;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import org.junit.BeforeClass;
 
 import java.io.File;
 
@@ -48,10 +49,13 @@ public class WorkbookStepDefs {
     private String onboardingBaseStg;
     private String onboardingDirCurateStg;
     private String onboardingDirPublishStg;
+    private String dbURL;
     private static Connection conn =null;
     private static Configuration conf=null;
     private static final String env = "test_";
-    String sourceSystemCode = null, finalRowKeyName;
+    String sourceSystemCode = null;
+    String finalRowKeyName=null;
+    String hiveTableName=null;
     String tableName;
     String[] metadataCellVals;
     String rowkey;
@@ -68,6 +72,51 @@ public class WorkbookStepDefs {
 
     List<File> beforeOnboardingFilelist;
 
+    @BeforeClass
+    public void test() throws Exception{
+
+        String[] extensions = new String[]{"xlsx"};
+        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
+        System.out.println("Absolute path of file -->"+beforeOnboardingFilelist.get(0).getAbsolutePath());
+        TableName tableName = TableName.valueOf("test_cif:dataset");
+
+        //Extracting the row key from workbook using POI
+        Workbook workbook = null;
+        try {
+            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        Sheet sheet = workbook.getSheetAt(0);
+        DataFormatter dataFormatter = new DataFormatter();
+        org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
+        Cell cellnum = rownum.getCell(1);
+//        String cellval = dataFormatter.formatCellValue(cellnum);
+        metadataCellVals = new String[10];
+        int j =0;
+        System.out.println(Arrays.toString(metadataCellVals));
+        for(int i = 2; i<=5; i++){
+            rownum = sheet.getRow(i);
+            cellnum = rownum.getCell(1);
+            System.out.println("CELLNUM$$$$$$$$$   ::  "+cellnum);
+            System.out.println("J  $$$$$$$$$   ::  "+j);
+            metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
+            j++;
+        }
+        System.out.println(metadataCellVals);
+        if (metadataCellVals[2].equals("publish")){
+            metadataCellVals[2] = "publish";
+        }else {
+            metadataCellVals[2] = "curate";
+        }
+        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
+        hiveTableName= env+metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
+        System.out.println("Before class --> finalrowkeyname   ::  "+finalRowKeyName);
+        System.out.println("Before class --> Hive Table name   ::  "+hiveTableName);
+    }
+
+
 
     @Before
     public void setUp() throws Exception {
@@ -78,6 +127,7 @@ public class WorkbookStepDefs {
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
         onboardingDir = rb.getString("onboarding.dir").trim();
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
+        dbURL=rb.getString("db.url").trim();
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
         System.out.println("In setup() method");
@@ -185,7 +235,7 @@ public class WorkbookStepDefs {
         ArrayList<String> curateColNames = new ArrayList<String>();
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(wbfile);
+            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -228,7 +278,7 @@ public class WorkbookStepDefs {
     @When("^I query Hive for the expected database name$")
     public void something_is_done() throws Throwable {
         java.sql.Connection conn;
-        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+//        String dbURL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 //        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
         Statement stmt = null;
@@ -237,7 +287,7 @@ public class WorkbookStepDefs {
             Class.forName("org.apache.hive.jdbc.HiveDriver");
             //STEP 3: Open a connection-
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
+            conn = DriverManager.getConnection(dbURL, "", "");
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
@@ -366,14 +416,14 @@ public class WorkbookStepDefs {
         System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  test_curate_fin.cif_test_cash_detail");
         Statement stmt = null;
         java.sql.Connection conn;
-        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+//        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
 
 //        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
         try {
 
             Class.forName("org.apache.hive.jdbc.HiveDriver");
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
+            conn = DriverManager.getConnection(dbURL, "", "");
             stmt = conn.createStatement();
             String truncateSql;
             String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
@@ -391,7 +441,7 @@ public class WorkbookStepDefs {
         try {
             Class.forName("org.apache.hive.jdbc.HiveDriver");
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, "", "");
+            conn = DriverManager.getConnection(dbURL, "", "");
             stmt = conn.createStatement();
             String dropSql;
             dropSql = "drop table test_curate_fin.cif_test_cash_detail";
