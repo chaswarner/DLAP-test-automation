@@ -66,8 +66,8 @@ public class WorkbookStepDefs {
 
     private static ResourceBundle rb = ResourceBundle.getBundle("cif");
 
-    String[] extensions = new String[]{"xlsx"};
-    List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+    List<File> beforeOnboardingFilelist;
+
 
     @Before
     public void setUp() throws Exception {
@@ -78,6 +78,9 @@ public class WorkbookStepDefs {
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
         onboardingDir = rb.getString("onboarding.dir").trim();
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
+        String[] extensions = new String[]{"xlsx"};
+        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
 
 
 
