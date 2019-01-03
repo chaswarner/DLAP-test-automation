@@ -54,9 +54,9 @@ public class WorkbookStepDefs {
     private static Configuration conf = null;
     private static final String env = "test_";
     String sourceSystemCode = null;
-    String finalRowKeyName = null;
-    String hiveTableName = null;
-    String hiveSCDTableName = null;
+    private String finalRowKeyName = null;
+    private String hiveTableName = null;
+    private String hiveSCDTableName = null;
 
     String tableName;
     String[] metadataCellVals;
@@ -75,52 +75,6 @@ public class WorkbookStepDefs {
     List<File> beforeOnboardingFilelist;
     private static boolean dunit = false;
 
-    @BeforeClass
-    public void test() throws Exception {
-
-        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
-        String[] extensions = new String[]{"xlsx"};
-        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
-
-        System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
-        TableName tableName = TableName.valueOf("test_cif:dataset");
-
-        //Extracting the row key from workbook using POI
-        Workbook workbook = null;
-        try {
-            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
-        Sheet sheet = workbook.getSheetAt(0);
-        DataFormatter dataFormatter = new DataFormatter();
-        org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
-        Cell cellnum = rownum.getCell(1);
-//        String cellval = dataFormatter.formatCellValue(cellnum);
-        metadataCellVals = new String[10];
-        int j = 0;
-        System.out.println(Arrays.toString(metadataCellVals));
-        for (int i = 2; i <= 5; i++) {
-            rownum = sheet.getRow(i);
-            cellnum = rownum.getCell(1);
-            System.out.println("CELLNUM$$$$$$$$$   ::  " + cellnum);
-            System.out.println("J  $$$$$$$$$   ::  " + j);
-            metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
-            j++;
-        }
-        System.out.println(metadataCellVals);
-        if (metadataCellVals[2].equals("publish")) {
-            metadataCellVals[2] = "publish";
-        } else {
-            metadataCellVals[2] = "curate";
-        }
-        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
-        hiveTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
-        System.out.println("Before class --> finalrowkeyname   ::  " + finalRowKeyName);
-        System.out.println("Before class --> Hive Table name   ::  " + hiveTableName);
-    }
-
-
     @Before
     public void setUp() throws Exception {
 
@@ -134,23 +88,8 @@ public class WorkbookStepDefs {
         }
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
 //        ResourceBundle rb = ResourceBundle.getBundle("cif");
-        onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
-        onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
-        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
-        onboardingDir = rb.getString("onboarding.dir").trim();
-        onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
-        dbURL = rb.getString("db.url").trim();
-        String[] extensions = new String[]{"xlsx"};
-        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
         System.out.println("In setup() method");
-        System.out.println("final row key"+finalRowKeyName);
-        System.out.println("hive table name"+hiveTableName);
-        System.out.println("hive SCD table name"+hiveSCDTableName);
-
-
-
-
-
 /*
 //-------------------------------------------------------
         String[] extensions = new String[]{"xlsx"};
@@ -199,9 +138,23 @@ public class WorkbookStepDefs {
     }
 
     public void scanWorkbook() throws Exception {
+
+        onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
+        onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
+        onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
+        onboardingDir = rb.getString("onboarding.dir").trim();
+        onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
+        dbURL = rb.getString("db.url").trim();
+        String[] extensions = new String[]{"xlsx"};
+        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+        System.out.println("In setup() method");
+        System.out.println("final row key"+finalRowKeyName);
+        System.out.println("hive table name"+hiveTableName);
+        System.out.println("hive SCD table name"+hiveSCDTableName);
+
         System.out.println("************In scanWorkbook method***********");
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
-        String[] extensions = new String[]{"xlsx"};
+//        String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
 
         System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
@@ -365,7 +318,7 @@ public class WorkbookStepDefs {
 
                 //Display values
                 columnname.add(cname);
-                System.out.println("COLUMN NAME  :  " + cname);
+                System.out.println("@when2  COLUMN NAME  :  " + cname);
 //                System.out.println(", Column Type: " + ctype);
 //                columntype.add(ctype);
             }
@@ -457,7 +410,7 @@ public class WorkbookStepDefs {
             FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error"));
         }
 
-        System.out.println("DELETING HBASE ROW KEY");
+/*        System.out.println("DELETING HBASE ROW KEY");
         TableName tableName = TableName.valueOf("test_cif:filepattern");
         conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
@@ -515,14 +468,77 @@ public class WorkbookStepDefs {
             stmt.execute(dropScdSql);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    public void addShutdownHook() {
+    public void addShutdownHook() throws Exception {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 System.out.println("Shutdown Hook------>");
-//                RestUtil.deleteDefaultCampaign();
+
+                System.out.println("DELETING HBASE ROW KEY");
+                TableName tableName = TableName.valueOf("test_cif:filepattern");
+                conf = HBaseConfiguration.create();
+                conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
+                conf.set("hbase.zookeeper.property.clientPort", "2181");
+             try {
+                 conn = ConnectionFactory.createConnection(conf);
+                 Table table = conn.getTable(tableName);
+                 table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+                 tableName = TableName.valueOf("test_cif:dataset");
+                 table = conn.getTable(tableName);
+                 table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
+             }catch (Exception e) {
+                 e.printStackTrace();
+             }
+                System.out.println("TRUNCATING IMPALA TABLE");
+
+
+                System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  test_curate_fin.cif_test_cash_detail");
+                Statement stmt = null;
+                java.sql.Connection conn;
+//        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+
+//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+                try {
+
+                    Class.forName("org.apache.hive.jdbc.HiveDriver");
+                    System.out.println("Connecting to database...");
+                    conn = DriverManager.getConnection(dbURL, "", "");
+                    stmt = conn.createStatement();
+                    String truncateSql;
+                    String invalidateSql = "invalidate metadata "+hiveTableName;
+                    String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
+                    stmt.execute(invalidatescdSql);
+                    stmt.execute(invalidateSql);
+                    truncateSql = "truncate table "+hiveTableName;
+                    stmt.execute(truncateSql);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("DROPPING IMPALA TABLE");
+
+                try {
+                    Class.forName("org.apache.hive.jdbc.HiveDriver");
+                    System.out.println("Connecting to database...");
+                    conn = DriverManager.getConnection(dbURL, "", "");
+                    stmt = conn.createStatement();
+                    String dropSql;
+                    dropSql = "drop table "+hiveTableName;
+                    String dropScdSql = "drop table "+hiveSCDTableName;
+                    System.out.println(dropSql);
+                    System.out.println(dropScdSql);
+                    String invalidateSql = "invalidate metadata "+hiveTableName;
+                    String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
+                    stmt.execute(invalidatescdSql);
+                    stmt.execute(invalidateSql);
+                    stmt.execute(dropSql);
+                    stmt.execute(dropScdSql);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
