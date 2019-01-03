@@ -13,7 +13,7 @@ Feature: Cash Detail dataset on-boarding
     Then I should see completed file
 
 ##Just check that a database exists with the right name. Database name should be
-  @Ignore
+  @SmokeTest
   Scenario: Curate data set schema validation.
     Given I have parsed a workbook
     When I query Hive for the expected database name
@@ -21,7 +21,7 @@ Feature: Cash Detail dataset on-boarding
 
 
 ## describe test_curate_fin.test_cash_detail - confirm the columns match what we expect from the workbook. Check Impala instead of Hive
-  @Ignore
+  @SmokeTest
   Scenario: HBase RowKey validation.
     Given I have parsed a curate workbook
     When I query HBase for the row keys in the data set
