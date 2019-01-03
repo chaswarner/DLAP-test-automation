@@ -64,43 +64,38 @@ public class WorkbookStepDefs {
     ArrayList<String> dbcolumnnames = new ArrayList<>();
     ArrayList<String> columntype = new ArrayList<>();
 
+    List<File> beforeOnboardingFilelist;
 
     private static ResourceBundle rb = ResourceBundle.getBundle("cif");
 
     @Before
     public void setUp() throws Exception {
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
-        ResourceBundle rb = ResourceBundle.getBundle("cif");
-
+//        ResourceBundle rb = ResourceBundle.getBundle("cif");
         onboardingDirCurateStg = rb.getString("onboarding.dir.curate.stg").trim();
         onboardingDirPublishStg = rb.getString("onboarding.dir.publish.stg").trim();
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
         onboardingDir = rb.getString("onboarding.dir").trim();
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
 
-/*        datafileStgDir = rb.getString("datafile.stg").trim();
-        hdfsDatafileStgDir = rb.getString("hdfs.staging.folder").trim();
-        prefixDataFile = rb.getString("prefix.data.file").trim();
-        postfixDataFile = rb.getString("postfix.data.file").trim();*/
-        File a = new File("test");
-
+/*
+//-------------------------------------------------------
         String[] extensions = new String[]{"xlsx"};
         List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
         System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
         for (File file : beforeOnboardingFilelist) {
             if (file.getParent().endsWith("publish")){
-                System.out.println("COPYING file from curate stg to onboarding curate dir " + onboardingDirCurateStg + " -->" + onboardingDir);
-                String filePath=file.getPath().trim();
-                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
-            }else {
                 System.out.println("COPYING file from publish stg to onboarding publish dir " + onboardingDirPublishStg + " -->" + onboardingDirPublih);
                 FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
+            }else {
+                System.out.println("COPYING file from curate stg to onboarding curate dir " + onboardingDirCurateStg + " -->" + onboardingDir);
+                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDir),false);
             }
         }
 //        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
 //        System.out.println("COPYING WORKBOOK TO ONBOARDING DIRECTORY");
 //        FileUtils.copyFileToDirectory(wbfile,new File(onboardingDir));
-        System.out.println("WAITING 30 SECONDS .......");
+        System.out.println("WAITING 10 SECONDS .......");
 //        // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(10000);
 
@@ -111,7 +106,7 @@ public class WorkbookStepDefs {
 
             System.out.println("before onboarding file list " + file.getAbsolutePath());
             System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
-            System.out.println("Onboarding File path with completed "+""+onboardingDir+"\\"+file.getName() + ".completed");
+            System.out.println("Onboarding File path with completed "+""+onboardingDir+"/"+file.getName() + ".completed");
             if (file.getParent().endsWith("publish")) {
                 System.out.print("Publish wb exists ?...-->");
                 assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
@@ -124,10 +119,58 @@ public class WorkbookStepDefs {
             }
         }
 
-
+//----------------------------
         // throw exception if file not found or .error file found instead
+*/
 
     }
+
+    @Given("^I have copy the workbook in staging directory$")
+    public void checkGivenOnboarding() throws Throwable {
+
+        String[] extensions = new String[]{"xlsx"};
+        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+        System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
+        for (File file : beforeOnboardingFilelist) {
+            if (file.getParent().endsWith("publish")){
+                System.out.println("COPYING file from publish stg to onboarding publish dir " + onboardingDirPublishStg + " -->" + onboardingDirPublih);
+                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
+            }else {
+                System.out.println("COPYING file from curate stg to onboarding curate dir " + onboardingDirCurateStg + " -->" + onboardingDir);
+                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDir),false);
+            }
+        }
+
+
+    }
+
+    @When("^onbarding process kicks off$")
+    public void checkWhenOnboarding() throws Throwable {
+        System.out.println("WAITING 10 SECONDS .......");
+//        // Sleep thread ?  I don't think there's a notification to plug in...
+        Thread.sleep(10000);
+    }
+    @Then("^I should see .completed file$")
+    public void checkThenOnboarding() throws Throwable{
+        for (File file : beforeOnboardingFilelist) {
+
+            System.out.println("before onboarding file list " + file.getAbsolutePath());
+            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
+            System.out.println("Onboarding File path with completed "+""+onboardingDir+"/"+file.getName() + ".completed");
+            if (file.getParent().endsWith("publish")) {
+                System.out.print("Publish wb exists ?...-->");
+                assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
+            }
+            else {
+                System.out.print("check for assert true...-->");
+                System.out.println("Curate wb exists ?...-->"+new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
+                assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
+
+            }
+        }
+    }
+
+
 
     @Given("^I have parsed a workbook$")
     public void some_start_condition() throws Throwable {
