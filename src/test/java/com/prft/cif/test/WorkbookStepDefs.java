@@ -147,7 +147,7 @@ public class WorkbookStepDefs {
         dbURL = rb.getString("db.url").trim();
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
-        System.out.println("In setup() method");
+        System.out.println("In scanworkbook() method");
         System.out.println("final row key"+finalRowKeyName);
         System.out.println("hive table name"+hiveTableName);
         System.out.println("hive SCD table name"+hiveSCDTableName);
