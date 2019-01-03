@@ -10,7 +10,7 @@ Feature: Cash Detail dataset on-boarding
   Scenario: Check for completed file existance
     Given I have copy the workbook in staging directory
     When onbarding process kicks off
-    Then I should see .completed file
+    Then I should see completed file
 
 ##Just check that a database exists with the right name. Database name should be
   @Ignore

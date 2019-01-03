@@ -150,10 +150,14 @@ public class WorkbookStepDefs {
 //        // Sleep thread ?  I don't think there's a notification to plug in...
         Thread.sleep(10000);
     }
-    @Then("^I should see .completed file$")
-    public void checkThenOnboarding() throws Throwable{
-        for (File file : beforeOnboardingFilelist) {
 
+    @Then("^I should see completed file$")
+    public void checkThenOnboarding() throws Throwable{
+
+        System.out.println("File list is -->"+beforeOnboardingFilelist.toString());
+        assertTrue(new File("" + onboardingDir + "/" + beforeOnboardingFilelist.get(0).getName() + ".completed").exists());
+
+/*        for (File file : beforeOnboardingFilelist) {
             System.out.println("before onboarding file list " + file.getAbsolutePath());
             System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
             System.out.println("Onboarding File path with completed "+""+onboardingDir+"/"+file.getName() + ".completed");
@@ -167,7 +171,7 @@ public class WorkbookStepDefs {
                 assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
 
             }
-        }
+        }*/
     }
 
 
