@@ -56,6 +56,8 @@ public class WorkbookStepDefs {
     String sourceSystemCode = null;
     String finalRowKeyName = null;
     String hiveTableName = null;
+    String hiveSCDTableName = null;
+
     String tableName;
     String[] metadataCellVals;
     String rowkey;
@@ -127,6 +129,8 @@ public class WorkbookStepDefs {
             scanWorkbook();
             // do the beforeAll stuff...
             dunit = true;
+
+            addShutdownHook();
         }
         // Place workbook .xlsx file at hdfs://dlap_tst/cif/onboarding/
 //        ResourceBundle rb = ResourceBundle.getBundle("cif");
@@ -141,6 +145,7 @@ public class WorkbookStepDefs {
         System.out.println("In setup() method");
         System.out.println("final row key"+finalRowKeyName);
         System.out.println("hive table name"+hiveTableName);
+        System.out.println("hive SCD table name"+hiveSCDTableName);
 
 
 
@@ -233,6 +238,7 @@ public class WorkbookStepDefs {
         }
         finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
         hiveTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
+        hiveSCDTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "_scd";
         System.out.println("Before class --> finalrowkeyname   ::  " + finalRowKeyName);
         System.out.println("Before class --> Hive Table name   ::  " + hiveTableName);
     }
@@ -345,11 +351,11 @@ public class WorkbookStepDefs {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
-            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            String invalidateSql = "invalidate metadata "+hiveTableName;
+            String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
             stmt.execute(invalidatescdSql);
             stmt.execute(invalidateSql);
-            sql = "describe " + env + "curate_fin.cif_test_cash_detail";
+            sql = "describe " + env +hiveTableName;
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
@@ -381,7 +387,7 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
-        System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
+  /*      System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
         TableName tableName = TableName.valueOf("test_cif:dataset");
 
         //Extracting the row key from workbook using POI
@@ -414,7 +420,7 @@ public class WorkbookStepDefs {
             metadataCellVals[2] = "curate";
         }
         finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
-        System.out.println("finalrowkeyname   ::  " + finalRowKeyName);
+        */System.out.println("finalrowkeyname in @Given tag   ::  " + finalRowKeyName);
     }
 
     @When("^I query HBase for the row keys in the data set$")
@@ -458,10 +464,10 @@ public class WorkbookStepDefs {
         conf.set("hbase.zookeeper.property.clientPort", "2181");
         conn = ConnectionFactory.createConnection(conf);
         Table table = conn.getTable(tableName);
-        table.delete(new Delete(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1")));
+        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
         tableName = TableName.valueOf("test_cif:dataset");
         table = conn.getTable(tableName);
-        table.delete(new Delete(Bytes.toBytes("curate_fin.cif_test_cash_detail.v1")));
+        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
 
         System.out.println("TRUNCATING IMPALA TABLE");
 
@@ -479,11 +485,11 @@ public class WorkbookStepDefs {
             conn = DriverManager.getConnection(dbURL, "", "");
             stmt = conn.createStatement();
             String truncateSql;
-            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
-            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            String invalidateSql = "invalidate metadata "+hiveTableName;
+            String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
             stmt.execute(invalidatescdSql);
             stmt.execute(invalidateSql);
-            truncateSql = "truncate table test_curate_fin.cif_test_cash_detail";
+            truncateSql = "truncate table "+hiveTableName;
             stmt.execute(truncateSql);
 
         } catch (Exception e) {
@@ -497,12 +503,12 @@ public class WorkbookStepDefs {
             conn = DriverManager.getConnection(dbURL, "", "");
             stmt = conn.createStatement();
             String dropSql;
-            dropSql = "drop table test_curate_fin.cif_test_cash_detail";
-            String dropScdSql = "drop table test_curate_fin.cif_test_cash_detail_scd";
+            dropSql = "drop table "+hiveTableName;
+            String dropScdSql = "drop table "+hiveSCDTableName;
             System.out.println(dropSql);
             System.out.println(dropScdSql);
-            String invalidateSql = "invalidate metadata test_curate_fin.cif_test_cash_detail";
-            String invalidatescdSql = "invalidate metadata test_curate_fin.cif_test_cash_detail_scd";
+            String invalidateSql = "invalidate metadata "+hiveTableName;
+            String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
             stmt.execute(invalidatescdSql);
             stmt.execute(invalidateSql);
             stmt.execute(dropSql);
