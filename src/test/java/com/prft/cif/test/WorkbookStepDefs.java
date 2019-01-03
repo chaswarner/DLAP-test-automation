@@ -64,7 +64,7 @@ public class WorkbookStepDefs {
     ArrayList<String> dbcolumnnames = new ArrayList<>();
     ArrayList<String> columntype = new ArrayList<>();
 
-    List<File> beforeOnboardingFilelist;
+    List<File> beforeOnboardingFilelist=null;
 
     private static ResourceBundle rb = ResourceBundle.getBundle("cif");
 
@@ -77,6 +77,10 @@ public class WorkbookStepDefs {
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
         onboardingDir = rb.getString("onboarding.dir").trim();
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
+
+        String[] extensions = new String[]{"xlsx"};
+        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
+
 
 /*
 //-------------------------------------------------------
@@ -128,8 +132,6 @@ public class WorkbookStepDefs {
     @Given("^I have copy the workbook in staging directory$")
     public void checkGivenOnboarding() throws Throwable {
 
-        String[] extensions = new String[]{"xlsx"};
-        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
         System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
         for (File file : beforeOnboardingFilelist) {
             if (file.getParent().endsWith("publish")){
