@@ -152,10 +152,7 @@ public class WorkbookStepDefs {
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
 
-        System.out.println("In scanworkbook() method");
-        System.out.println("final row key "+finalRowKeyName);
-        System.out.println("hive table name "+hiveTableName);
-        System.out.println("hive SCD table name "+hiveSCDTableName);
+
 
         System.out.println("************In scanWorkbook method***********");
         onboardingBaseStg = rb.getString("onboarding.base.stg").trim();
@@ -314,11 +311,14 @@ public class WorkbookStepDefs {
             String sql;
             String invalidateSql = "invalidate metadata "+hiveTableName;
             String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
+            System.out.println("SQL invalidate metadata for --> "+invalidateSql);
+            System.out.println("SQL invalidate metadata for --> "+invalidatescdSql);
             stmt.execute(invalidatescdSql);
             stmt.execute(invalidateSql);
             sql = "describe " + env +hiveTableName;
             ResultSet rs = stmt.executeQuery(sql);
-
+            System.out.println("SQL describe --> "+sql);
+            System.out.println("Result set fromm --->"+rs.toString());
             while (rs.next()) {
                 //Retrieve by column name
                 String cname = rs.getString("name");
@@ -483,6 +483,7 @@ public class WorkbookStepDefs {
             public void run() {
                 System.out.println("Shutdown Hook------>");
 
+/*
                 System.out.println("DELETING HBASE ROW KEY");
                 TableName tableName = TableName.valueOf("test_cif:filepattern");
                 conf = HBaseConfiguration.create();
@@ -545,6 +546,7 @@ public class WorkbookStepDefs {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+*/
 
             }
         });
