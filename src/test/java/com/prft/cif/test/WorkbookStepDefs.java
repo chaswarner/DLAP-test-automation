@@ -485,7 +485,6 @@ public class WorkbookStepDefs {
             public void run() {
                 System.out.println("Shutdown Hook------>");
 
-/*
                 System.out.println("DELETING HBASE ROW KEY");
                 TableName tableName = TableName.valueOf("test_cif:filepattern");
                 conf = HBaseConfiguration.create();
@@ -548,7 +547,6 @@ public class WorkbookStepDefs {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-*/
 
             }
         });
