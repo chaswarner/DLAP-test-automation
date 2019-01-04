@@ -54,9 +54,9 @@ public class WorkbookStepDefs {
     private static Configuration conf = null;
     private static final String env = "test_";
     String sourceSystemCode = null;
-    private String finalRowKeyName = null;
-    private String hiveTableName = null;
-    private String hiveSCDTableName = null;
+    private String finalRowKeyName;
+    private String hiveTableName;
+    private String hiveSCDTableName;
 
     String tableName;
     String[] metadataCellVals;
@@ -79,10 +79,11 @@ public class WorkbookStepDefs {
     @Before
     public void setUp() throws Exception {
 
+        scanWorkbook();
+
         if (!dunit) {
             System.out.println("dunit variable value:-->"+dunit);
             dunit = true;
-            scanWorkbook();
             // do the beforeAll stuff...
             addShutdownHook();
         }
@@ -162,6 +163,7 @@ public class WorkbookStepDefs {
 //        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
 
         System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
+
         TableName tableName = TableName.valueOf("test_cif:dataset");
 
         //Extracting the row key from workbook using POI
@@ -227,6 +229,8 @@ public class WorkbookStepDefs {
     public void checkThenOnboarding() throws Throwable {
 
         System.out.println("File list is -->" + beforeOnboardingFilelist.toString());
+        System.out.println("workbook completed file name"+beforeOnboardingFilelist.get(0).getAbsolutePath()+".completed");
+        System.out.println("File is exit or not -->" + new File(beforeOnboardingFilelist.get(0).getAbsolutePath()+".completed").exists());
 //        assertTrue(new File("" + onboardingDir + "/" + beforeOnboardingFilelist.get(0).getName() + ".completed").exists());
 
         for (File file : beforeOnboardingFilelist) {
