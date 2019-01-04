@@ -410,73 +410,13 @@ public class WorkbookStepDefs {
 
     @After
     public void tearDown() throws Exception {
-        if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()) {
+/*        if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()) {
             System.out.println("DELETING .completed FILE");
             FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
 
         } else if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists()) {
             System.out.println("DELETING .error FILE");
             FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error"));
-        }
-
-/*        System.out.println("DELETING HBASE ROW KEY");
-        TableName tableName = TableName.valueOf("test_cif:filepattern");
-        conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
-        conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conn = ConnectionFactory.createConnection(conf);
-        Table table = conn.getTable(tableName);
-        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-        tableName = TableName.valueOf("test_cif:dataset");
-        table = conn.getTable(tableName);
-        table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-
-        System.out.println("TRUNCATING IMPALA TABLE");
-
-
-        System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  test_curate_fin.cif_test_cash_detail");
-        Statement stmt = null;
-        java.sql.Connection conn;
-//        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-
-//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-        try {
-
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(dbURL, "", "");
-            stmt = conn.createStatement();
-            String truncateSql;
-            String invalidateSql = "invalidate metadata "+hiveTableName;
-            String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
-            stmt.execute(invalidatescdSql);
-            stmt.execute(invalidateSql);
-            truncateSql = "truncate table "+hiveTableName;
-            stmt.execute(truncateSql);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("DROPPING IMPALA TABLE");
-
-        try {
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(dbURL, "", "");
-            stmt = conn.createStatement();
-            String dropSql;
-            dropSql = "drop table "+hiveTableName;
-            String dropScdSql = "drop table "+hiveSCDTableName;
-            System.out.println(dropSql);
-            System.out.println(dropScdSql);
-            String invalidateSql = "invalidate metadata "+hiveTableName;
-            String invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
-            stmt.execute(invalidatescdSql);
-            stmt.execute(invalidateSql);
-            stmt.execute(dropSql);
-            stmt.execute(dropScdSql);
-        } catch (Exception e) {
-            e.printStackTrace();
         }*/
     }
 
@@ -484,6 +424,44 @@ public class WorkbookStepDefs {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 System.out.println("Shutdown Hook------>");
+
+                for (File file : beforeOnboardingFilelist) {
+                    System.out.println("before onboarding file list " + file.getAbsolutePath());
+                    System.out.println("Absolute File path with completed " + file.getAbsolutePath() + ".completed");
+                    System.out.println("Onboarding File path with completed " + "" + onboardingDir + "/" + file.getName() + ".completed");
+                 try {
+                     if (file.getParent().endsWith("publish")) {
+
+                         String wbCompletedFileName=onboardingDirPublih + "/" + file.getName() + ".completed";
+                         String wbErrorFileName=onboardingDirPublih + "/" + file.getName() + ".error";
+                         System.out.print("Publish wb exists ?...-->");
+                         if (new File(wbCompletedFileName).exists()) {
+                             System.out.println("Publish "+wbCompletedFileName+" is exist");
+                             FileUtils.forceDelete(new File(wbCompletedFileName));
+                         } else if (new File(wbErrorFileName).exists()) {
+                             System.out.println("Publish "+wbErrorFileName+" is exist");
+                             FileUtils.forceDelete(new File(wbErrorFileName));
+                         }
+                     } else {
+                         System.out.print("check for assert true...-->");
+                         System.out.println("Curate wb exists ?...-->" + new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
+
+                         String wbCompletedFileName=onboardingDir + "/" + file.getName() + ".completed";
+                         String wbErrorFileName=onboardingDir + "/" + file.getName() + ".error";
+                         if (new File(wbCompletedFileName).exists()) {
+                             System.out.println("Curate "+wbCompletedFileName+" is exist");
+                             FileUtils.forceDelete(new File(wbCompletedFileName));
+                         } else if (new File(wbErrorFileName).exists()) {
+                             System.out.println("Curate "+wbErrorFileName+" is exist");
+                             FileUtils.forceDelete(new File(wbErrorFileName));
+                         }
+
+                     }
+                 } catch (Exception e){
+                     e.printStackTrace();
+                 }
+
+                }
 
                 System.out.println("DELETING HBASE ROW KEY");
                 TableName tableName = TableName.valueOf("test_cif:filepattern");
