@@ -149,6 +149,8 @@ public class WorkbookStepDefs {
         onboardingDir = rb.getString("onboarding.dir").trim();
         onboardingDirPublih = rb.getString("onboarding.dir.publish").trim();
         dbURL = rb.getString("db.url").trim();
+        System.out.println("dbURL ----> "+dbURL);
+
         String[] extensions = new String[]{"xlsx"};
         beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
 
@@ -315,9 +317,9 @@ public class WorkbookStepDefs {
             System.out.println("SQL invalidate metadata for --> "+invalidatescdSql);
             stmt.execute(invalidatescdSql);
             stmt.execute(invalidateSql);
-            sql = "describe " + env +hiveTableName;
-            ResultSet rs = stmt.executeQuery(sql);
+            sql = "describe "+hiveTableName;
             System.out.println("SQL describe --> "+sql);
+            ResultSet rs = stmt.executeQuery(sql);
             System.out.println("Result set fromm --->"+rs.toString());
             while (rs.next()) {
                 //Retrieve by column name
