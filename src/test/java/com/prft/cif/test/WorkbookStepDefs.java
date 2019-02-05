@@ -63,8 +63,8 @@ public class WorkbookStepDefs {
     String rowkey;
     Result rowkeyresult;
 
-    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
-    File wbfile = new File(wbFilePath);
+////    String wbFilePath = "./target/test-classes/fixtures/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx";
+//    File wbfile = new File(wbFilePath);
     ArrayList<String> columnname = new ArrayList<>();
     ArrayList<String> wbcolumnnames = new ArrayList<>();
     ArrayList<String> dbcolumnnames = new ArrayList<>();
@@ -79,7 +79,7 @@ public class WorkbookStepDefs {
     @Before
     public void setUp() throws Exception {
 
-        scanWorkbook();
+        scanWorkbook();  // This method run once for each scenario
 
         if (!dunit) {
             System.out.println("dunit variable value:-->"+dunit);
@@ -94,50 +94,6 @@ public class WorkbookStepDefs {
         System.out.println("final row key "+finalRowKeyName);
         System.out.println("hive table name "+hiveTableName);
         System.out.println("hive SCD table name "+hiveSCDTableName);
-/*
-//-------------------------------------------------------
-        String[] extensions = new String[]{"xlsx"};
-        List<File> beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(onboardingBaseStg), extensions, true);
-        System.out.println("List of file before onboarding--> "+beforeOnboardingFilelist.toString());
-        for (File file : beforeOnboardingFilelist) {
-            if (file.getParent().endsWith("publish")){
-                System.out.println("COPYING file from publish stg to onboarding publish dir " + onboardingDirPublishStg + " -->" + onboardingDirPublih);
-                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDirPublih),false);
-            }else {
-                System.out.println("COPYING file from curate stg to onboarding curate dir " + onboardingDirCurateStg + " -->" + onboardingDir);
-                FileUtils.moveFileToDirectory(new File(file.getPath()), new File(onboardingDir),false);
-            }
-        }
-//        FileUtils.copyFile(wbfile, new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx"));
-//        System.out.println("COPYING WORKBOOK TO ONBOARDING DIRECTORY");
-//        FileUtils.copyFileToDirectory(wbfile,new File(onboardingDir));
-        System.out.println("WAITING 10 SECONDS .......");
-//        // Sleep thread ?  I don't think there's a notification to plug in...
-        Thread.sleep(10000);
-
-//        System.out.println(".completed FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists());
-//        System.out.println(".error     FILE EXISTS  ?  :  "+new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists());
-
-        for (File file : beforeOnboardingFilelist) {
-
-            System.out.println("before onboarding file list " + file.getAbsolutePath());
-            System.out.println("Absolute File path with completed "+file.getAbsolutePath() + ".completed");
-            System.out.println("Onboarding File path with completed "+""+onboardingDir+"/"+file.getName() + ".completed");
-            if (file.getParent().endsWith("publish")) {
-                System.out.print("Publish wb exists ?...-->");
-                assertTrue(new File("" + onboardingDirPublih + "/" + file.getName() + ".completed").exists());
-            }
-            else {
-                System.out.print("check for assert true...-->");
-                System.out.println("Curate wb exists ?...-->"+new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
-                assertTrue(new File("" + onboardingDir + "/" + file.getName() + ".completed").exists());
-
-            }
-        }
-
-//----------------------------
-        // throw exception if file not found or .error file found instead
-*/
 
     }
 
@@ -183,12 +139,11 @@ public class WorkbookStepDefs {
         for (int i = 2; i <= 5; i++) {
             rownum = sheet.getRow(i);
             cellnum = rownum.getCell(1);
-            System.out.println("CELLNUM$$$$$$$$$   ::  " + cellnum);
-            System.out.println("J  $$$$$$$$$   ::  " + j);
+            System.out.println("Cell Value -->" + cellnum);
             metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
             j++;
         }
-        System.out.println(metadataCellVals);
+        System.out.println(metadataCellVals.toString());
         if (metadataCellVals[2].equals("publish")) {
             metadataCellVals[2] = "publish";
         } else {
@@ -197,8 +152,8 @@ public class WorkbookStepDefs {
         finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
         hiveTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0];
         hiveSCDTableName = env + metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "_scd";
-        System.out.println("Before class --> finalrowkeyname   ::  " + finalRowKeyName);
-        System.out.println("Before class --> Hive Table name   ::  " + hiveTableName);
+        System.out.println("Hbase Row key:finalrowkeyname -->" + finalRowKeyName);
+        System.out.println("Hive Table Name:hiveTableName -->" + hiveTableName);
     }
 
     @Given("^I have copy the workbook in staging directory$")
@@ -296,11 +251,10 @@ public class WorkbookStepDefs {
 
     @When("^I query Hive for the expected database name$")
     public void something_is_done() throws Throwable {
-        java.sql.Connection conn;
-//        String dbURL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
+        java.sql.Connection conn =null;
+        Statement stmt=null;
+        ResultSet rs =null;
 
-        Statement stmt = null;
         try {
             //STEP 2: Register JDBC driver
             Class.forName("org.apache.hive.jdbc.HiveDriver");
@@ -319,7 +273,7 @@ public class WorkbookStepDefs {
             stmt.execute(invalidateSql);
             sql = "describe "+hiveTableName;
             System.out.println("SQL describe --> "+sql);
-            ResultSet rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
             System.out.println("Result set fromm --->"+rs.toString());
             while (rs.next()) {
                 //Retrieve by column name
@@ -332,9 +286,18 @@ public class WorkbookStepDefs {
 //                System.out.println(", Column Type: " + ctype);
 //                columntype.add(ctype);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
         }
+
+
     }
 
     @Then("^I should see Hive DB columns that match the columns from the workbook$")
@@ -350,40 +313,7 @@ public class WorkbookStepDefs {
 
     @Given("^I have parsed a curate workbook$")
     public void parsing_data() throws Throwable {
-  /*      System.out.println("Absolute path of file -->" + beforeOnboardingFilelist.get(0).getAbsolutePath());
-        TableName tableName = TableName.valueOf("test_cif:dataset");
-
-        //Extracting the row key from workbook using POI
-        Workbook workbook = null;
-        try {
-            workbook = WorkbookFactory.create(new File(beforeOnboardingFilelist.get(0).getAbsolutePath()));
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
-        Sheet sheet = workbook.getSheetAt(0);
-        DataFormatter dataFormatter = new DataFormatter();
-        org.apache.poi.ss.usermodel.Row rownum = sheet.getRow(2);
-        Cell cellnum = rownum.getCell(1);
-//        String cellval = dataFormatter.formatCellValue(cellnum);
-        metadataCellVals = new String[10];
-        int j = 0;
-        System.out.println(Arrays.toString(metadataCellVals));
-        for (int i = 2; i <= 5; i++) {
-            rownum = sheet.getRow(i);
-            cellnum = rownum.getCell(1);
-            System.out.println("CELLNUM$$$$$$$$$   ::  " + cellnum);
-            System.out.println("J  $$$$$$$$$   ::  " + j);
-            metadataCellVals[j] = dataFormatter.formatCellValue(cellnum);
-            j++;
-        }
-        System.out.println(metadataCellVals);
-        if (metadataCellVals[2].equals("publish")) {
-            metadataCellVals[2] = "publish";
-        } else {
-            metadataCellVals[2] = "curate";
-        }
-        finalRowKeyName = metadataCellVals[2] + "_" + metadataCellVals[1] + "." + metadataCellVals[0] + "." + metadataCellVals[3];
-        */System.out.println("finalrowkeyname in @Given tag   ::  "+finalRowKeyName);
+        System.out.println("finalrowkeyname in @Given tag   ::  "+finalRowKeyName);
     }
 
     @When("^I query HBase for the row keys in the data set$")
@@ -400,24 +330,19 @@ public class WorkbookStepDefs {
         System.out.println("ROWKEYVALUES    ::   " + table.get(new Get(Bytes.toBytes(finalRowKeyName))));
         rowkeyresult = table.get(new Get(Bytes.toBytes(finalRowKeyName)));
 
+
     }
 
 
     @Then("^I should see expected row keys in hbase$")
     public void workbook_columns() throws Throwable {
         assertNotNull(rowkeyresult);
+
     }
 
     @After
     public void tearDown() throws Exception {
-/*        if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed").exists()) {
-            System.out.println("DELETING .completed FILE");
-            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.completed"));
 
-        } else if (new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error").exists()) {
-            System.out.println("DELETING .error FILE");
-            FileUtils.forceDelete(new File("/dlap_tst/cif/onboarding/Test_ME_FIN_Cash_Detail_DateFormatChange.xlsx.error"));
-        }*/
     }
 
     public void addShutdownHook() throws Exception {
@@ -484,9 +409,6 @@ public class WorkbookStepDefs {
                 System.out.println("FINAL TABLE NAME TO TRUNCATE AND DROP  :  test_curate_fin.cif_test_cash_detail");
                 Statement stmt = null;
                 java.sql.Connection conn;
-//        String DB_URL = "jdbc:hive2://impala.dr.bcbsma.com:21050/;principal=impala/impala.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
-
-//        String DB_URL = "jdbc:hive2://hive.dr.bcbsma.com:10000/;principal=hive/hive.dr.bcbsma.com@BCBSMAMD.NET;ssl=true";
                 try {
 
                     Class.forName("org.apache.hive.jdbc.HiveDriver");
