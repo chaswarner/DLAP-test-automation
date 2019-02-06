@@ -175,9 +175,9 @@ public class WorkbookStepDefs {
 
     @When("^onbarding process kicks off$")
     public void checkWhenOnboarding() throws Throwable {
-        System.out.println("WAITING 10 SECONDS .......");
+        System.out.println("WAITING 30 SECONDS .......");
 //        // Sleep thread ?  I don't think there's a notification to plug in...
-        Thread.sleep(10000);
+        Thread.sleep(30000);
     }
 
     @Then("^I should see completed file$")
