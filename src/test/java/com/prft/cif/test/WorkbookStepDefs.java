@@ -351,6 +351,9 @@ public class WorkbookStepDefs {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 System.out.println("Shutdown Hook------>");
+                Statement stmt = null;
+                java.sql.Connection conn=null;
+                org.apache.hadoop.hbase.client.Connection hbaseconn=null;
 
                 for (File file : beforeOnboardingFilelist) {
                     System.out.println("before onboarding file list " + file.getAbsolutePath());
@@ -391,24 +394,22 @@ public class WorkbookStepDefs {
                 }
 
                 try {
-                    System.out.println("DELETING HBASE ROW KEY");
+
+                    System.out.println("---------------------------------------");
+                    System.out.println("-------DELETING HBASE ROW KEY----------");
                     TableName tableName = TableName.valueOf("test_cif:filepattern");
                     conf = HBaseConfiguration.create();
                     conf.set("hbase.zookeeper.quorum", "mclmp01vr.bcbsma.com,mclmp02vr.bcbsma.com,mclmp03vr.bcbsma.com");
                     conf.set("hbase.zookeeper.property.clientPort", "2181");
-                    conn = ConnectionFactory.createConnection(conf);
-                    Table table = conn.getTable(tableName);
+                    hbaseconn = ConnectionFactory.createConnection(conf);
+                    Table table = hbaseconn.getTable(tableName);
                     table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
                     tableName = TableName.valueOf("test_cif:dataset");
-                    table = conn.getTable(tableName);
+                    table = hbaseconn.getTable(tableName);
                     table.delete(new Delete(Bytes.toBytes(finalRowKeyName)));
-//             }catch (Exception e) {
-//                 e.printStackTrace();
-//             }
-                    System.out.println("TRUNCATING IMPALA TABLE");
-                    Statement stmt = null;
-                    java.sql.Connection conn;
-//                try {
+
+                    System.out.println("---------------------------------------");
+                    System.out.println("--------- TRUNCATING IMPALA TABLE---------");
                     Class.forName("org.apache.hive.jdbc.HiveDriver");
                     System.out.println("Connecting to database...");
                     conn = DriverManager.getConnection(dbURL, "", "");
@@ -421,22 +422,12 @@ public class WorkbookStepDefs {
                     truncateSql = "truncate table "+hiveTableName;
                     stmt.execute(truncateSql);
 
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-                    System.out.println("DROPPING IMPALA TABLE");
-
-//                try {
-/*                    Class.forName("org.apache.hive.jdbc.HiveDriver");
-                    System.out.println("Connecting to database...");
-                    conn = DriverManager.getConnection(dbURL, "", "");
-                    stmt = conn.createStatement();*/
+                    System.out.println("---------------------------------------");
+                    System.out.println("------DROPPING IMPALA TABLE-------------");
                     String dropSql = "drop table "+hiveTableName;
                     String dropScdSql = "drop table "+hiveSCDTableName;
                     System.out.println("Drop Hive table sql-->"+dropSql);
                     System.out.println("Drop Hive table sql-->"+dropScdSql);
-//                    invalidateSql = "invalidate metadata "+hiveTableName;
-//                    invalidatescdSql = "invalidate metadata "+hiveSCDTableName;
                     stmt.execute(invalidatescdSql);
                     stmt.execute(invalidateSql);
                     stmt.execute(dropSql);
@@ -444,6 +435,18 @@ public class WorkbookStepDefs {
                 }
                 catch (Exception e) {
                     e.printStackTrace();
+                } finally {
+
+                    try {
+                        hbaseconn.close();
+                        stmt.close();
+                        conn.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
 
             }
