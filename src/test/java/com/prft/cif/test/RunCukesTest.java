@@ -11,11 +11,11 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/com/prft/cif/test/"
         )
 public class RunCukesTest {
-/*        public static void main(String[] args) throws Throwable {
+        public static void main(String[] args) throws Throwable {
                 String[] arguments = {"--tags @DataTest"};
 //                String[] arguments = {};
                 cucumber.api.cli.Main.main(arguments);
-        }*/
+        }
 }
 
 
