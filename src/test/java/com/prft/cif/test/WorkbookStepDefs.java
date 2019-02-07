@@ -438,6 +438,7 @@ public class WorkbookStepDefs {
                 } finally {
 
                     try {
+
                         hbaseconn.close();
                         stmt.close();
                         conn.close();
