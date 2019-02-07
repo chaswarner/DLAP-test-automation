@@ -12,7 +12,8 @@ import org.junit.runner.RunWith;
         )
 public class RunCukesTest {
         public static void main(String[] args) throws Throwable {
-                String[] arguments = {"--tags @SmokeTest"};
+//                String[] arguments = {"--tags @SmokeTest"};
+                String[] arguments = {};
                 cucumber.api.cli.Main.main(arguments);
                         cucumber.api.cli.Main.main(arguments);
         }
