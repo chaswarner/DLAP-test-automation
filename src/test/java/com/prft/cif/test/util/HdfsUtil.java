@@ -12,15 +12,16 @@ public class HdfsUtil {
         Configuration conf = new Configuration();
 // Set FileSystem URI
         conf.set("fs.defaultFS", "hdfs://nameservice9");
-// Because of Maven
+/*// Because of Maven
         conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
         conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
 // Set HADOOP user
         System.setProperty("HADOOP_USER_NAME", "hdfs");
-        System.setProperty("hadoop.home.dir", "/");
+        System.setProperty("hadoop.home.dir", "/");*/
         //Get the filesystem - HDFS
         fs = FileSystem.get(conf);
-
+        System.out.println("file system obj--hdfs-->"+fs.toString());
+        System.out.println("file system conf--hdfs-->"+conf.toString());
     }
 
     public void copyFileToHdfs(String srcFile, String destFile) throws Exception{
