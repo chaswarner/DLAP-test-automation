@@ -25,7 +25,7 @@ public class DataIngestionStepDefs {
     private List<File> beforeOnboardingFilelist=null;
     ResourceUtil ru;
 
-    DataIngestionStepDefs(ResourceUtil ru){
+    public DataIngestionStepDefs(ResourceUtil ru){
         this.ru=ru;
     }
 

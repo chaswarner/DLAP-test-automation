@@ -76,7 +76,7 @@ public class WorkbookStepDefs {
 
     private static boolean dunit = false;
 
-    @Before
+ /*   @Before
     public void setUp() throws Exception {
 
         scanWorkbook();  // This method run once for each scenario
@@ -96,7 +96,7 @@ public class WorkbookStepDefs {
         System.out.println("hive table name "+hiveTableName);
         System.out.println("hive SCD table name "+hiveSCDTableName);
 
-    }
+    }*/
 
     public void scanWorkbook() throws Exception {
 
@@ -342,6 +342,7 @@ public class WorkbookStepDefs {
 
     }
 
+/*
     @After
     public void tearDown() throws Exception {
 
@@ -454,4 +455,5 @@ public class WorkbookStepDefs {
         });
 
     }
+*/
 }
