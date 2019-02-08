@@ -23,13 +23,13 @@ public class DataIngestionStepDefs {
     private String onboardingDirCurateStg=null;
     private String onboardingDirPublishStg=null;*/
     private List<File> beforeOnboardingFilelist=null;
-    private ResourceUtil ru=null;
+    ResourceUtil ru;
 
     DataIngestionStepDefs(ResourceUtil ru){
         this.ru=ru;
     }
 
-    @Before
+/*    @Before
     public void setUp() throws Exception {
         System.out.println(" In setup() --->");
         ru.loadResources();
@@ -62,10 +62,12 @@ public class DataIngestionStepDefs {
         System.out.println("Data Ingestion-->getBaseStg---->"+ru.getBaseStg());
 
 
-    }
+    }*/
     @Given("^I have copy the data file in HDFS directory$")
     public void checkGivenOnboarding() throws Throwable {
         System.out.println(" In Given --->");
+        System.out.println("Getting prop from rb--->"+ru.getOnbDir());
+
     }
 
     @When("^Inotify process kicks off$")
@@ -79,10 +81,10 @@ public class DataIngestionStepDefs {
         System.out.println(" In Then --->");
 
     }
-
+/*
     @After
     public void tearDown() throws Exception {
         System.out.println(" In tearDown() --->");
-    }
+    }*/
 
 }
