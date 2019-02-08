@@ -30,7 +30,7 @@ public class SetupSteps  {
         if (!dunit) {
             System.out.println("Data Ingestion --> dunit variable value:-->" + dunit);
 
-            String[] extensions = new String[]{};
+            String[] extensions = new String[]{"xlsx"};
             beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(ru.getBaseStg()), extensions, true);
             System.out.println("Get base staging directory path-->"+ru.getBaseStg());
             System.out.println("List of file before onboarding--> " + beforeOnboardingFilelist.toString());
