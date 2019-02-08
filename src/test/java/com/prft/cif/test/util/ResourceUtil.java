@@ -27,5 +27,14 @@ public class ResourceUtil {
     public String getDbUrl() throws Exception{
         return rb.getString("db.url").trim();
     }
+    public String getDataFileStg() throws Exception{
+        return rb.getString("datafile.stg").trim();
+    }
+    public String getHdfsDataFileDir() throws Exception{
+        return rb.getString("hdfs.staging.folder").trim();
+    }
+    public String getEnvVar() throws Exception{
+        return rb.getString("env.var").trim();
+    }
 
 }
