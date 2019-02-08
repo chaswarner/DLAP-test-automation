@@ -24,7 +24,7 @@ public class DataIngestionStepDefs {
     private String onboardingBaseStg=null;
     private String onboardingDirCurateStg=null;
     private String onboardingDirPublishStg=null;*/
-    private List<File> beforeOnboardingFilelist=null;
+    private List<File> beforeCopyingDataFileList=null;
     ResourceUtil ru;
     WorkbookUtil wu;
     HdfsUtil hu;
@@ -44,10 +44,10 @@ public class DataIngestionStepDefs {
         System.out.println("Dataingestion -->Getting Data file HDFS dir--->"+ru.getHdfsDataFileDir());
         System.out.println("Dataingestion -->Getting prop from wu--->"+wu.getHiveTableName());
 
-/*        String[] extensions = new String[]{"xlsx"};
-        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(ru.getDataFileStg()), extensions, true);
-        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(ru.getDataFileStg()),null,true);
-        hu.copyFileToHdfs(ru.getDataFileStg(),ru.getHdfsDataFileDir());*/
+
+        beforeCopyingDataFileList = (List<File>) FileUtils.listFiles(new File(ru.getDataFileStg()),null,true);
+        System.out.println("Dataingestion -->Getting Datafile from list--->"+beforeCopyingDataFileList.get(0).toString());
+        hu.copyFileToHdfs(beforeCopyingDataFileList.get(0).toString(),ru.getHdfsDataFileDir());
 
 
     }
