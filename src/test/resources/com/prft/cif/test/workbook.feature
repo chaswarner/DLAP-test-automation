@@ -30,7 +30,6 @@ Feature: Cash Detail dataset on-boarding
 ### Test that HBase contains sort key
 #
 #
-
 ###Test that HDFS structure has been created
 #  Scenario: SUCCESS folder is created in HDFS path at /env/zone/domain/file
 #    Given I have parsed a curate workbook
