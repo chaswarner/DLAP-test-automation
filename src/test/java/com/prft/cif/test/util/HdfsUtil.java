@@ -2,6 +2,7 @@ package com.prft.cif.test.util;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.commons.lang.StringUtils;
 
 public class HdfsUtil {
 
@@ -28,10 +29,9 @@ public class HdfsUtil {
 
             Path src = new Path(srcFile);
             Path dest = new Path(destFile);
-            if (fs.exists(src) && fs.exists(dest.getParent())) {
-                fs.copyFromLocalFile(src, dest);
-
-            }
+               if(!(StringUtils.isBlank(src.toString()) && StringUtils.isBlank(dest.toString()))) {
+                   fs.copyFromLocalFile(src, dest);
+               }
         }
     }
 
