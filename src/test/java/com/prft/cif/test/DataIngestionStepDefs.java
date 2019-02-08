@@ -44,7 +44,10 @@ public class DataIngestionStepDefs {
         System.out.println("Dataingestion -->Getting Data file HDFS dir--->"+ru.getHdfsDataFileDir());
         System.out.println("Dataingestion -->Getting prop from wu--->"+wu.getHiveTableName());
 
-        hu.copyFileToHdfs(ru.getDataFileStg(),ru.getHdfsDataFileDir());
+/*        String[] extensions = new String[]{"xlsx"};
+        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(ru.getDataFileStg()), extensions, true);
+        beforeOnboardingFilelist = (List<File>) FileUtils.listFiles(new File(ru.getDataFileStg()),null,true);
+        hu.copyFileToHdfs(ru.getDataFileStg(),ru.getHdfsDataFileDir());*/
 
 
     }
