@@ -1,4 +1,5 @@
 package com.prft.cif.test;
+        import com.prft.cif.test.util.HdfsUtil;
         import com.prft.cif.test.util.ResourceUtil;
         import com.prft.cif.test.util.WorkbookUtil;
         import cucumber.api.java.After;
@@ -13,12 +14,14 @@ public class SetupSteps  {
 
     ResourceUtil ru;
     WorkbookUtil wu;
+    HdfsUtil hu;
     private static boolean dunit = false;
     private List<File> beforeOnboardingFilelist=null;
 
-    public SetupSteps(WorkbookUtil wu, ResourceUtil ru) {
+    public SetupSteps(WorkbookUtil wu, ResourceUtil ru, HdfsUtil hu) {
         this.ru = ru;
         this.wu=wu;
+        this.hu=hu;
     }
 
     @Before
@@ -26,6 +29,7 @@ public class SetupSteps  {
         System.out.println("before inside of SetupSteps--->");
         ru.loadResources();
         wu.scanWorkbook();
+        hu.initilizeHdfs();
 
         if (!dunit) {
             System.out.println("Data Ingestion --> dunit variable value:-->" + dunit);

@@ -19,7 +19,7 @@ public class HdfsUtil {
         System.setProperty("HADOOP_USER_NAME", "hdfs");
         System.setProperty("hadoop.home.dir", "/");
         //Get the filesystem - HDFS
-        FileSystem fs = FileSystem.get(conf);
+        fs = FileSystem.get(conf);
 
     }
 

@@ -1,5 +1,6 @@
 package com.prft.cif.test;
 
+import com.prft.cif.test.util.HdfsUtil;
 import com.prft.cif.test.util.WorkbookUtil;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -26,10 +27,12 @@ public class DataIngestionStepDefs {
     private List<File> beforeOnboardingFilelist=null;
     ResourceUtil ru;
     WorkbookUtil wu;
+    HdfsUtil hu;
 
-    public DataIngestionStepDefs(WorkbookUtil wu, ResourceUtil ru){
+    public DataIngestionStepDefs(WorkbookUtil wu, ResourceUtil ru, HdfsUtil hu){
         this.ru=ru;
         this.wu=wu;
+        this.hu=hu;
     }
 
 
@@ -37,7 +40,12 @@ public class DataIngestionStepDefs {
     public void checkGivenOnboarding() throws Throwable {
         System.out.println("Dataingestion --> In Given --->");
         System.out.println("Dataingestion -->Getting prop from rb--->"+ru.getOnbDir());
+        System.out.println("Dataingestion -->Getting Data file Stg dir--->"+ru.getDataFileStg());
+        System.out.println("Dataingestion -->Getting Data file HDFS dir--->"+ru.getHdfsDataFileDir());
         System.out.println("Dataingestion -->Getting prop from wu--->"+wu.getHiveTableName());
+
+        hu.copyFileToHdfs(ru.getDataFileStg(),ru.getHdfsDataFileDir());
+
 
     }
 
